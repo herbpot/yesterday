@@ -1,9 +1,0 @@
-fastapi==0.110.2
-uvicorn[standard]==0.29.0
-requests==2.31.0
-redis==5.0.4
-pytz==2024.1
-timezonefinder==6.4.1
-firebase-admin==6.5.0
-python-dotenv==1.0.1 
-meteostat==1.6.8
