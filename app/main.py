@@ -53,12 +53,12 @@ async def register_token(data: Token):
     return {"status": "ok"}
 
 # ─────────────── 일일 알림 (Cloud Scheduler) ─────────────── #
-@app.post("/notify_daily")
-async def notify_daily():
-    tokens = list(rdb.smembers("push_tokens"))
-    if not tokens:
-        return {"sent": 0}
-    sent = send_push(tokens,
-                     title="오늘/어제 기온 확인",
-                     body="앱을 열고 오늘과 어제의 기온 차이를 보세요!")
-    return {"sent": sent} 
+# @app.post("/notify_daily")
+# async def notify_daily():
+#     tokens = list(rdb.smembers("push_tokens"))
+#     if not tokens:
+#         return {"sent": 0}
+#     sent = send_push(tokens,
+#                      title="오늘/어제 기온 확인",
+#                      body="앱을 열고 오늘과 어제의 기온 차이를 보세요!")
+#     return {"sent": sent} 
