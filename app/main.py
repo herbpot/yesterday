@@ -31,6 +31,7 @@ class Token(BaseModel):
 @app.get("/compare")
 async def compare(lat: float, lon: float):
     try:
+        logger.info(f"compare: {lat}, {lon}")
         return get_compare(lat, lon, rdb)
     except ValueError as e:
         logger.error(f"compare: {e}")

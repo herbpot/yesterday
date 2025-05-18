@@ -31,6 +31,7 @@ def get_compare(lat: float, lon: float, rdb):
 
     # 어제 ~ 현재까지 시간별 데이터 가져오기
     df = Hourly(point, yest, now).fetch()
+    logger.info(f"df: {df.all()}, now: {now}, yest: {yest}")
 
     if now not in df.index or yest not in df.index:
         raise ValueError("기온 데이터가 누락되었습니다.")

@@ -1,0 +1,72 @@
+compare: 37.0, 126.0
+df: temp     True
+dwpt     True
+rhum     True
+prcp    False
+snow     True
+wdir     True
+wspd     True
+wpgt     True
+pres     True
+tsun     True
+coco     True
+dtype: bool, now: 2025-05-15 23:00:00, yest: 2025-05-14 23:00:00
+compare: 37.0, 127.0
+df: temp     True
+dwpt     True
+rhum     True
+prcp    False
+snow     True
+wdir     True
+wspd     True
+wpgt     True
+pres     True
+tsun     True
+coco     True
+dtype: bool, now: 2025-05-15 23:00:00, yest: 2025-05-14 23:00:00
+compare: 37.644936, 126.664919
+df: temp     True
+dwpt     True
+rhum     True
+prcp    False
+snow     True
+wdir     True
+wspd     True
+wpgt     True
+pres     True
+tsun     True
+coco     True
+dtype: bool, now: 2025-05-16 00:00:00, yest: 2025-05-15 00:00:00
+compare: 37.644798, 126.664744
+compare: 37.644904, 126.66486
+compare: 37.644963, 126.664929
+df: temp     True
+dwpt     True
+rhum     True
+prcp    False
+snow     True
+wdir     True
+wspd     True
+wpgt     True
+pres     True
+tsun     True
+coco     True
+dtype: bool, now: 2025-05-16 00:00:00, yest: 2025-05-15 00:00:00
+compare: 37.644782, 126.664728
+df: temp     True
+dwpt     True
+rhum     True
+prcp    False
+snow     True
+wdir     True
+wspd     True
+wpgt     True
+pres     True
+tsun     True
+coco     True
+dtype: bool, now: 2025-05-16 01:00:00, yest: 2025-05-15 01:00:00
+compare: 37.644983, 126.664943
+compare: 37.644781, 126.664728
+compare: 37.644983, 126.664952
+compare: 37.644945, 126.664898
+compare: 37.644787, 126.66474
