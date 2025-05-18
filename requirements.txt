@@ -7,3 +7,4 @@ timezonefinder==6.4.1
 firebase-admin==6.5.0
 python-dotenv==1.0.1 
 meteostat==1.6.8
+gunicorn
