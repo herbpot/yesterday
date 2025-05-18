@@ -9,8 +9,8 @@ from .push    import send_push
 
 rh = os.getenv("REDISCLOUD_URL", "localhost:6379")
 rdb = redis.Redis(
-    host=rh.split(":")[0],
-    port=int(rh.split(":")[1]),
+    host=":".join(rh.split(":")[:-1]),
+    port=int(rh.split(":")[-1]),
     decode_responses=True
 )
 
