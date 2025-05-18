@@ -7,9 +7,10 @@ from .logger import logger
 from .weather import get_compare, get_extremes
 from .push    import send_push
 
+rh = os.getenv("REDISCLOUD_URL", "localhost:6379")
 rdb = redis.Redis(
-    host=os.getenv("REDIS_HOST", "localhost"),
-    port=int(os.getenv("REDIS_PORT", "6379")),
+    host=rh.split(":")[0],
+    port=int(rh.split(":")[1]),
     decode_responses=True
 )
 
