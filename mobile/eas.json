@@ -4,6 +4,14 @@
     "appVersionSource": "remote"
   },
   "build": {
+    "local-android": {
+      "android": {
+        "buildType": "apk"
+      },
+      "env": {
+        "ANDROID_ADMOB_APP_ID": "ca-app-pub-4388792395765448~8035904086"
+      }
+    },
     "development": {
       "developmentClient": true,
       "distribution": "internal"

@@ -20,10 +20,10 @@ export default function ExtremesCard({
     <View className="p-5 mt-4 rounded-2xl bg-white dark:bg-bgDark shadow-card">
       {/* 최고 */}
       <View className="flex-row justify-between items-end">
-        <Text className="font-medium">최고기온</Text>
-        <Text className="text-xl font-bold tabular-nums">
+        <Text className="font-medium dark:text-textDark">최고기온</Text>
+        <Text className="text-xl font-bold tabular-nums dark:text-textDark">
           {todayMax.toFixed(1)}℃
-          <Text className="text-base font-medium">
+          <Text className="text-[#9A9A9A] dark:text-textDarkSub mt-1">
             {"  ("}
             {deltaMax >= 0 ? "+" : ""}
             {deltaMax.toFixed(1)}℃
@@ -36,14 +36,14 @@ export default function ExtremesCard({
       </Text>
 
       {/* 구분선 */}
-      <View className="h-px bg-[#E5E5E5] my-4" />
+      <View className="h-px bg-[#E5E5E5] dark:bg-borderDark my-4" />
 
       {/* 최저 */}
       <View className="flex-row justify-between items-end">
-        <Text className="font-medium">최저기온</Text>
-        <Text className="text-xl font-bold tabular-nums">
+        <Text className="font-medium dark:text-textDark">최저기온</Text>
+        <Text className="text-xl font-bold tabular-nums dark:text-textDark">
           {todayMin.toFixed(1)}℃
-          <Text className="text-base font-medium">
+          <Text className="text-[#9A9A9A] dark:text-textDarkSub mt-1">
             {"  ("}
             {deltaMin >= 0 ? "+" : ""}
             {deltaMin.toFixed(1)}℃
