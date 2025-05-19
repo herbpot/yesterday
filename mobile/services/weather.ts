@@ -7,14 +7,11 @@
 // ────────────────────────────────────────────────────────────────
 import * as Location from "expo-location";
 
-const DEFAULT_DEV_URL = "http://localhost:8080";
-const DEFAULT_PROD_URL = "https://tempdiff.vercel.app/api";
-
 // 📌 .env(또는 app.config.ts 의 extra)에 `EXPO_PUBLIC_API_BASE` 지정 가능
 export const API_BASE =
-  process.env.EXPO_PUBLIC_API_BASE ??
-  (__DEV__ ? DEFAULT_DEV_URL : DEFAULT_PROD_URL);
-
+  process.env.EXPO_PUBLIC_API_BASE 
+console.log(API_BASE);
+console.log(process.env.EXPO_PUBLIC_API_BASE);
 // ─── 타입 정의 ───────────────────────────────────────────────────
 export interface CompareResult {
   now: number;        // 현재 시각(°C)
@@ -65,13 +62,13 @@ async function apiGet<T>(path: string, query: Record<string, any>): Promise<T> {
 // ─── 1) 현재 vs 어제 같은 시각 비교 ───────────────────────────────
 export async function fetchCompare(): Promise<CompareResult> {
   const { lat, lon } = await getCoords();
-  return await apiGet<CompareResult>("/compare", { lat, lon });
+  return await apiGet<CompareResult>("compare", { lat, lon });
 }
 
 // ─── 2) 최고·최저 기온 비교 ─────────────────────────────────────
 export async function fetchExtremes(): Promise<ExtremesResult> {
   const { lat, lon } = await getCoords();
-  return await apiGet<ExtremesResult>("/extremes", { lat, lon });
+  return await apiGet<ExtremesResult>("extremes", { lat, lon });
 }
 
 // ─── 3) 캐싱(선택) ────────────────────────────────────────────────
