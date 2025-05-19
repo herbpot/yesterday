@@ -7,12 +7,7 @@ from .logger import logger
 from .weather import get_compare, get_extremes
 from .push    import send_push
 
-rh = os.getenv("REDISCLOUD_URL", "localhost:6379")
-rdb = redis.Redis(
-    host=":".join(rh.split(":")[:-1]),
-    port=int(rh.split(":")[-1]),
-    decode_responses=True
-)
+rdb = redis.from_url(os.getenv("REDISCLOUD_URL", "localhost:6379"))
 
 app = FastAPI(title="TempDiff API", version="1.0")
 
