@@ -10,8 +10,6 @@ import * as Location from "expo-location";
 // 📌 .env(또는 app.config.ts 의 extra)에 `EXPO_PUBLIC_API_BASE` 지정 가능
 export const API_BASE =
   process.env.EXPO_PUBLIC_API_BASE 
-console.log(API_BASE);
-console.log(process.env.EXPO_PUBLIC_API_BASE);
 // ─── 타입 정의 ───────────────────────────────────────────────────
 export interface CompareResult {
   now: number;        // 현재 시각(°C)

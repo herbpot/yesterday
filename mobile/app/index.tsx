@@ -32,7 +32,7 @@ import {
 
 /* ─── 상수 ─────────────────────────────────────────────── */
 const STORAGE_KEY = "alarmTime";
-const BANNER_ID = TestIds.BANNER; // 👉 실제 배포 시 실 광고 단위 ID로 교체
+const BANNER_ID = "ca-app-pub-4388792395765448/9451868044"; // 👉 실제 배포 시 실 광고 단위 ID로 교체
 
 /* ─── 유틸: 알람 저장/로드/스케줄 ────────────────────── */
 async function saveAlarmTime(h: number, m: number) {
@@ -65,17 +65,7 @@ async function scheduleDaily(hour: number, minute: number) {
 }
 
 const configureAdMob = async () => {
-  await mobileAds().setRequestConfiguration({
-    // Update all future requests suitable for parental guidance
-    maxAdContentRating: MaxAdContentRating.PG,
-
-    // Indicates that you want the ad request to be handled in a
-    // manner suitable for users under the age of consent.
-    tagForUnderAgeOfConsent: true,
-
-    // An array of test device IDs to allow.
-    testDeviceIdentifiers: ["EMULATOR"],
-  });
+  await mobileAds().initialize();
 };
 
 

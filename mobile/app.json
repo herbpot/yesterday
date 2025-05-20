@@ -1,0 +1,45 @@
+
+{
+    "react-native-google-mobile-ads":{
+        "android_app_id": "ca-app-pub-4388792395765448~8035904086"
+    },
+    "expo": {
+        "name": "어제보다",
+        "slug": "yesterday",
+        "version": "1.0.0",
+        "orientation": "portrait",
+        "icon": "./assets/icon.png",
+        "userInterfaceStyle": "light",
+        "newArchEnabled": true,
+        
+        "splash": {
+            "image": "./assets/splash-icon.png",
+            "resizeMode": "contain",
+            "backgroundColor": "#ffffff"
+        },
+        "ios": {
+            "supportsTablet": true
+        },
+        "android": {
+            "adaptiveIcon": {
+                "foregroundImage": "./assets/adaptive-icon.png",
+                "backgroundColor": "#ffffff"
+            },
+            "edgeToEdgeEnabled": true,
+            "package": "com.herb05.yesterday"
+        },
+        "web": {
+            "favicon": "./assets/favicon.png"
+        },
+        "extra": {
+            "eas": {
+                "projectId": "0646c609-ec9f-44bd-8b49-4800d6452722"
+            },
+            "EXPO_PUBLIC_API_BASE": "https://yesterday-94136ff83a00.herokuapp.com/",
+            "react-native-google-mobile-ads":{
+                "android_app_id": "ca-app-pub-4388792395765448~8035904086"
+            }
+        }
+    }
+}
+  
