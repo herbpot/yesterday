@@ -7,12 +7,20 @@ if not firebase_admin._apps and cred_path:
 else:
     logging.warning("Firebase not initialised – push disabled")
 
-def send_push(tokens: list[str], title: str, body: str) -> int:
-    if not firebase_admin._apps:
-        return 0
-    msg = messaging.MulticastMessage(
-        tokens=tokens,
-        notification=messaging.Notification(title=title, body=body)
-    )
-    rsp = messaging.send_multicast(msg)
-    return rsp.success_count 
+
+def send_push(messages: list[dict]) -> int:
+    multicast = [
+        messaging.Message(
+            token=m["token"],
+            notification=messaging.Notification(
+                title=m["title"], body=m["body"]
+            ),
+        )
+        for m in messages
+    ]
+    CHUNK = 500
+    total = 0
+    for i in range(0, len(multicast), CHUNK):
+        resp = messaging.send_all(multicast[i : i + CHUNK])
+        total += resp.success_count
+    return total

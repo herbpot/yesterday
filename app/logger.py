@@ -1,9 +1,6 @@
-class Logger:
-    def __init__(self):
-        self.fn = "yesterday.log"
+import logging
 
-    def info(self, message):
-        with open(self.fn, "a") as f:
-            f.write(f"{message}\n")
-
-logger = Logger()
+logger = logging.getLogger("..")
+handler = logging.StreamHandler()
+handler.setFormatter(logging.Formatter("%(asctime)s - %(levelname)s - %(message)s"))
+logger.addHandler(handler)
