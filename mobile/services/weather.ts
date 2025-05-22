@@ -27,7 +27,7 @@ export interface ExtremesResult {
 }
 
 // ─── 내부 유틸: 사용자 좌표 가져오기 ──────────────────────────────
-async function getCoords(): Promise<{ lat: number; lon: number }> {
+export async function getCoords(): Promise<{ lat: number; lon: number }> {
   const { status } = await Location.requestForegroundPermissionsAsync();
   if (status !== "granted") {
     throw new Error("위치 권한이 거부되었습니다."); // UI에서 Toast 등으로 안내

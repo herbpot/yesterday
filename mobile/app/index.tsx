@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import {
   Platform,
   ScrollView,
@@ -17,8 +17,6 @@ import DateTimePickerModal from "react-native-modal-datetime-picker";
 import mobileAds, {
   BannerAd,
   BannerAdSize,
-  TestIds,
-  MaxAdContentRating, 
 } from 'react-native-google-mobile-ads';
 
 import DiffCard from "../components/DiffCard";
@@ -29,6 +27,7 @@ import {
   CompareResult,
   ExtremesResult,
 } from "../services/weather";
+import { fetchNotification } from "../services/notification";
 
 /* ─── 상수 ─────────────────────────────────────────────── */
 const STORAGE_KEY = "alarmTime";
@@ -54,24 +53,6 @@ async function loadAlarmTime(): Promise<[number, number] | null> {
   const [h, m] = v.split(":").map(Number);
   return [h, m];
 }
-async function scheduleDaily(hour: number, minute: number) {
-  await Notifications.cancelAllScheduledNotificationsAsync();
-  const trigger = new Date();
-  trigger.setHours(hour, minute, 0, 0);
-  if (trigger < new Date()) trigger.setDate(trigger.getDate() + 1);
-  await Notifications.scheduleNotificationAsync({
-    content: {
-      title: "어제보다 알림",
-      body: "오늘의 기온 차이를 확인해보세요!",
-      sound: true,
-    },
-    trigger: {
-      hour,
-      minute,
-      repeats: true,
-    },
-  });
-}
 
 const configureAdMob = async () => {
   await mobileAds().initialize();
@@ -88,6 +69,8 @@ export default function Home() {
   const [snack, setSnack] = useState(false);
   const [showPicker, setShowPicker] = useState(false);
   const [alarmTime, setAlarmTime] = useState<Date>(new Date());
+  const [token, setToken] = useState<string | null>(null);
+  const uid = useRef<string>('user-' + /* secureStore id */).current;
 
   /* 초기 로딩 */
   useEffect(() => {
@@ -97,12 +80,9 @@ export default function Home() {
         const adapterStatuses = await mobileAds().initialize();
         console.log(adapterStatuses);
         const { status } = await Notifications.requestPermissionsAsync();
-        if (Platform.OS === "android") {
-          await Notifications.setNotificationChannelAsync("daily", {
-            name: "Daily Weather",
-            importance: Notifications.AndroidImportance.DEFAULT,
-            sound: true,
-          });
+        if (status == "granted") {
+          const t = (await Notifications.getDevicePushTokenAsync()).data;
+          setToken(t);
         }
         const [c, e] = await Promise.all([fetchCompare(), fetchExtremes()]);
         setCmp(c);
@@ -114,6 +94,7 @@ export default function Home() {
           d.setHours(saved[0], saved[1], 0, 0);
           setAlarmTime(d);
         }
+
       } catch (e: any) {
         setErr(e.message || "데이터를 불러오지 못했습니다.");
       } finally {
@@ -122,11 +103,17 @@ export default function Home() {
     })();
   }, []);
 
+  useEffect(() => {
+    if (!token || !alarmTime) return;
+    fetchNotification(uid, token, { hour: alarmTime.getHours(), minute: alarmTime.getMinutes() })
+      .catch(err => console.warn('register failed', err));
+  }, [token, alarmTime]);
+
   const onConfirm = (d: Date) => {
     setShowPicker(false);
     setAlarmTime(d);
     saveAlarmTime(d.getHours(), d.getMinutes());
-    scheduleDaily(d.getHours(), d.getMinutes());
+    fetchNotification(uid, token!, { hour: d.getHours(), minute: d.getMinutes()});
     setSnack(true);
   };
 
