@@ -70,7 +70,6 @@ export default function Home() {
   const [showPicker, setShowPicker] = useState(false);
   const [alarmTime, setAlarmTime] = useState<Date>(new Date());
   const [token, setToken] = useState<string | null>(null);
-  const uid = useRef<string>('user-' + /* secureStore id */).current;
 
   /* 초기 로딩 */
   useEffect(() => {
@@ -105,7 +104,7 @@ export default function Home() {
 
   useEffect(() => {
     if (!token || !alarmTime) return;
-    fetchNotification(uid, token, { hour: alarmTime.getHours(), minute: alarmTime.getMinutes() })
+    fetchNotification(token, { hour: alarmTime.getHours(), minute: alarmTime.getMinutes() })
       .catch(err => console.warn('register failed', err));
   }, [token, alarmTime]);
 
@@ -113,7 +112,7 @@ export default function Home() {
     setShowPicker(false);
     setAlarmTime(d);
     saveAlarmTime(d.getHours(), d.getMinutes());
-    fetchNotification(uid, token!, { hour: d.getHours(), minute: d.getMinutes()});
+    fetchNotification(token!, { hour: d.getHours(), minute: d.getMinutes()});
     setSnack(true);
   };
 

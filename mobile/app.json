@@ -1,45 +1,45 @@
-
 {
-    "react-native-google-mobile-ads":{
-        "android_app_id": "ca-app-pub-4388792395765448~8035904086"
+  "react-native-google-mobile-ads": {
+    "android_app_id": "ca-app-pub-4388792395765448~8035904086"
+  },
+  "expo": {
+    "name": "살짝더",
+    "slug": "slighto",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "newArchEnabled": true,
+    "splash": {
+      "image": "./assets/splash-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
     },
-    "expo": {
-        "name": "살짝더",
-        "slug": "slighto",
-        "version": "1.0.0",
-        "orientation": "portrait",
-        "icon": "./assets/icon.png",
-        "userInterfaceStyle": "light",
-        "newArchEnabled": true,
-        
-        "splash": {
-            "image": "./assets/splash-icon.png",
-            "resizeMode": "contain",
-            "backgroundColor": "#ffffff"
-        },
-        "ios": {
-            "supportsTablet": true
-        },
-        "android": {
-            "adaptiveIcon": {
-                "foregroundImage": "./assets/adaptive-icon.png",
-                "backgroundColor": "#ffffff"
-            },
-            "edgeToEdgeEnabled": true,
-            "package": "com.herb05.slighto"
-        },
-        "web": {
-            "favicon": "./assets/favicon.png"
-        },
-        "extra": {
-            "eas": {
-                "projectId": "9b38b3d6-e60d-49da-a842-b5db7f255336"
-            },
-            "EXPO_PUBLIC_API_BASE": "https://yesterday-94136ff83a00.herokuapp.com/",
-            "react-native-google-mobile-ads":{
-                "android_app_id": "ca-app-pub-4388792395765448~8035904086"
-            }
-        }
-    }
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      },
+      "edgeToEdgeEnabled": true,
+      "package": "com.herb05.slighto"
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "9b38b3d6-e60d-49da-a842-b5db7f255336"
+      },
+      "EXPO_PUBLIC_API_BASE": "https://yesterday-94136ff83a00.herokuapp.com/",
+      "react-native-google-mobile-ads": {
+        "android_app_id": "ca-app-pub-4388792395765448~8035904086"
+      }
+    },
+    "plugins": [
+      "expo-secure-store"
+    ]
+  }
 }
-  
