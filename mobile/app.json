@@ -4,8 +4,8 @@
         "android_app_id": "ca-app-pub-4388792395765448~8035904086"
     },
     "expo": {
-        "name": "어제보다",
-        "slug": "yesterday",
+        "name": "살짝더",
+        "slug": "slighto",
         "version": "1.0.0",
         "orientation": "portrait",
         "icon": "./assets/icon.png",
@@ -26,14 +26,14 @@
                 "backgroundColor": "#ffffff"
             },
             "edgeToEdgeEnabled": true,
-            "package": "com.herb05.yesterday"
+            "package": "com.herb05.slighto"
         },
         "web": {
             "favicon": "./assets/favicon.png"
         },
         "extra": {
             "eas": {
-                "projectId": "0646c609-ec9f-44bd-8b49-4800d6452722"
+                "projectId": "9b38b3d6-e60d-49da-a842-b5db7f255336"
             },
             "EXPO_PUBLIC_API_BASE": "https://yesterday-94136ff83a00.herokuapp.com/",
             "react-native-google-mobile-ads":{
