@@ -34,6 +34,16 @@ import {
 const STORAGE_KEY = "alarmTime";
 const BANNER_ID = "ca-app-pub-4388792395765448/9451868044"; // 👉 실제 배포 시 실 광고 단위 ID로 교체
 
+/* ── 알림 헨들러 설정 ────────────────────────────────────*/
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldPlaySound: true,
+    shouldSetBadge: true,
+    shouldShowBanner: true,
+    shouldShowList: true,
+  }),
+});
+
 /* ─── 유틸: 알람 저장/로드/스케줄 ────────────────────── */
 async function saveAlarmTime(h: number, m: number) {
   await AsyncStorage.setItem(STORAGE_KEY, `${h}:${m}`);
@@ -56,7 +66,6 @@ async function scheduleDaily(hour: number, minute: number) {
       sound: true,
     },
     trigger: {
-      channelId: Platform.OS === "android" ? "daily" : undefined,
       hour,
       minute,
       repeats: true,
