@@ -1,4 +1,4 @@
-package com.herb05.yesterday
+package com.herb05.slighto
 
 import android.app.Application
 import android.content.res.Configuration

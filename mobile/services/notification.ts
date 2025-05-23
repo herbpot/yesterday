@@ -1,6 +1,16 @@
 import { getCoords } from "./weather";
 import * as SecureStore from 'expo-secure-store';
 import { v4 as uuidv4 } from 'uuid';
+import * as Notifications from "expo-notifications";
+
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldPlaySound: true,
+    shouldSetBadge: true,
+    shouldShowBanner: true,
+    shouldShowList: true,
+  }),
+});
 
 export const API_BASE = process.env.EXPO_PUBLIC_API_BASE
 
@@ -29,3 +39,17 @@ export async function fetchNotification(fcm_token: string, { hour, minute }: { h
         }),
     });
 } 
+
+export async function reciveNotification(remoteMessage: any) {
+    console.log('Notification received:', remoteMessage);
+    const { title, body } = remoteMessage.notification || remoteMessage.data;
+    await Notifications.scheduleNotificationAsync({
+        content: {
+            title,
+            body,
+        },
+        trigger: {
+          seconds: 1,
+        },
+    });
+}

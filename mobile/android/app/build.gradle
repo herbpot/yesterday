@@ -87,9 +87,9 @@ android {
     buildToolsVersion rootProject.ext.buildToolsVersion
     compileSdk rootProject.ext.compileSdkVersion
 
-    namespace 'com.herb05.yesterday'
+    namespace 'com.herb05.slighto'
     defaultConfig {
-        applicationId 'com.herb05.yesterday'
+        applicationId 'com.herb05.slighto'
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

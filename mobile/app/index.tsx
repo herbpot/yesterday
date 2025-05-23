@@ -19,6 +19,11 @@ import mobileAds, {
   BannerAdSize,
 } from 'react-native-google-mobile-ads';
 
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
+
+import messaging from "@react-native-firebase/messaging"
+
 import DiffCard from "../components/DiffCard";
 import ExtremesCard from "../components/ExtremesCard";
 import {
@@ -27,21 +32,24 @@ import {
   CompareResult,
   ExtremesResult,
 } from "../services/weather";
-import { fetchNotification } from "../services/notification";
+import { 
+  fetchNotification,
+  reciveNotification,
+} from "../services/notification";
 
 /* ─── 상수 ─────────────────────────────────────────────── */
 const STORAGE_KEY = "alarmTime";
 const BANNER_ID = "ca-app-pub-4388792395765448/9451868044"; // 👉 실제 배포 시 실 광고 단위 ID로 교체
 
-/* ── 알림 헨들러 설정 ────────────────────────────────────*/
-Notifications.setNotificationHandler({
-  handleNotification: async () => ({
-    shouldPlaySound: true,
-    shouldSetBadge: true,
-    shouldShowBanner: true,
-    shouldShowList: true,
-  }),
+/* ─── Firebase 초기화 ────────────────────────────────── */
+const app = initializeApp()
+const analytics = getAnalytics(app);
+
+messaging().setBackgroundMessageHandler(async remoteMessage => {
+  console.log('Message handled in the background!', remoteMessage);
+  await reciveNotification(remoteMessage);
 });
+
 
 /* ─── 유틸: 알람 저장/로드/스케줄 ────────────────────── */
 async function saveAlarmTime(h: number, m: number) {
@@ -80,7 +88,7 @@ export default function Home() {
         console.log(adapterStatuses);
         const { status } = await Notifications.requestPermissionsAsync();
         if (status == "granted") {
-          const t = (await Notifications.getDevicePushTokenAsync()).data;
+          const t = await messaging().getToken();
           setToken(t);
         }
         const [c, e] = await Promise.all([fetchCompare(), fetchExtremes()]);
