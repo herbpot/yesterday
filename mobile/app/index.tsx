@@ -42,8 +42,19 @@ const STORAGE_KEY = "alarmTime";
 const BANNER_ID = "ca-app-pub-4388792395765448/9451868044"; // 👉 실제 배포 시 실 광고 단위 ID로 교체
 
 /* ─── Firebase 초기화 ────────────────────────────────── */
-const app = initializeApp()
-const analytics = getAnalytics(app);
+const firebaseConfig = {
+  apiKey: process.env.EXPO_PUBLIC_FIREBASE_API_KEY,
+  authDomain: process.env.EXPO_PUBLIC_FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.EXPO_PUBLIC_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.EXPO_PUBLIC_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.EXPO_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.EXPO_PUBLIC_FIREBASE_APP_ID,
+  measurementId: process.env.EXPO_PUBLIC_FIREBASE_MEASUREMENT_ID,
+};
+console.log(`Firebase Config: ${firebaseConfig}`);
+
+// const app = initializeApp(firebaseConfig);
+// const analytics = getAnalytics(app);
 
 messaging().setBackgroundMessageHandler(async remoteMessage => {
   console.log('Message handled in the background!', remoteMessage);
@@ -89,6 +100,9 @@ export default function Home() {
         const { status } = await Notifications.requestPermissionsAsync();
         if (status == "granted") {
           const t = await messaging().getToken();
+          if (__DEV__) {
+            console.log("FCM Token:", t);
+          }
           setToken(t);
         }
         const [c, e] = await Promise.all([fetchCompare(), fetchExtremes()]);

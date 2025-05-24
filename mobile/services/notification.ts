@@ -49,7 +49,9 @@ export async function reciveNotification(remoteMessage: any) {
             body,
         },
         trigger: {
+          type: 'timeInterval',
           seconds: 1,
-        },
+          repeats: false,
+        } as Notifications.TimeIntervalNotificationTrigger as Notifications.NotificationTriggerInput,
     });
 }
