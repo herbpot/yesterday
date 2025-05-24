@@ -92,8 +92,9 @@ async def notify_daily():
             continue
 
         # 실시간 Δ 계산
+        w = "덥네요" if diff['delta'] > 0 else "춥네요"
         diff = get_compare(float(data["lat"]), float(data["lon"]), rdb)
-        body = f"지금은 {diff['now']:.1f}°C, 어제보다 살짝더 {"더워요" if diff['delta'] > 0 else "추워요"}.({diff['delta']:+.1f}°C)"
+        body = f"오늘은({diff['today']:.1f}°C), 어제보다 살짝더 {w}.({diff['delta']:+.1f}°C)"
 
         messages.append(
             {
