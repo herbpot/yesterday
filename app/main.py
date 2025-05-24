@@ -9,11 +9,7 @@ from .push    import send_push
 from .storage import Subscriber, upsert_subscriber
 from .scheduler import start_scheduler
 
-rdb = redis.Redis(
-    host=os.getenv("REDIS_HOST", "localhost"),
-    port=int(os.getenv("REDIS_PORT", "6379")),
-    decode_responses=True
-)
+rdb = redis.from_url(os.getenv("REDISCLOUD_URL", "localhost:6379"))
 
 app = FastAPI(title="TempDiff API", version="1.0")
 
