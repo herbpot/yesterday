@@ -2,11 +2,7 @@
 from dataclasses import dataclass
 import os, redis, json
 
-rdb = redis.Redis(
-    host=os.getenv("REDIS_HOST", "localhost"),
-    port=int(os.getenv("REDIS_PORT", 6379)),
-    decode_responses=True,
-)
+rdb = redis.from_url(os.getenv("REDISCLOUD_URL"))
 
 SUB_KEY = "subs"           # uid 집합
 
