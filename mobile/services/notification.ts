@@ -1,5 +1,6 @@
 import { getCoords } from "./weather";
 import * as SecureStore from 'expo-secure-store';
+import 'react-native-get-random-values';
 import { v4 as uuidv4 } from 'uuid';
 import * as Notifications from "expo-notifications";
 
@@ -9,6 +10,8 @@ Notifications.setNotificationHandler({
     shouldSetBadge: true,
     shouldShowBanner: true,
     shouldShowList: true,
+    shuoldSetBedge: true,
+    priority: Notifications.AndroidNotificationPriority.HIGH,
   }),
 });
 
@@ -27,7 +30,7 @@ async function getUid(): Promise<string> {
 
 export async function fetchNotification(fcm_token: string, { hour, minute }: { hour: number; minute: number }) {
     const { lat, lon } = await getCoords();
-    await fetch(API_BASE + "/register", {
+    await fetch(API_BASE + "register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from "react";
 import {
-  Platform,
+  Alert,
   ScrollView,
   ActivityIndicator,
   View,
@@ -18,10 +18,6 @@ import mobileAds, {
   BannerAd,
   BannerAdSize,
 } from 'react-native-google-mobile-ads';
-
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-
 import messaging from "@react-native-firebase/messaging"
 
 import DiffCard from "../components/DiffCard";
@@ -57,10 +53,10 @@ console.log(`Firebase Config: ${firebaseConfig}`);
 // const analytics = getAnalytics(app);
 
 messaging().setBackgroundMessageHandler(async remoteMessage => {
-  console.log('Message handled in the background!', remoteMessage);
-  await reciveNotification(remoteMessage);
-});
 
+  // await reciveNotification(remoteMessage);
+  console.log('Message handled in the background!', remoteMessage);
+});
 
 /* ─── 유틸: 알람 저장/로드/스케줄 ────────────────────── */
 async function saveAlarmTime(h: number, m: number) {
@@ -126,7 +122,7 @@ export default function Home() {
 
   useEffect(() => {
     if (!token || !alarmTime) return;
-    fetchNotification(token, { hour: alarmTime.getHours(), minute: alarmTime.getMinutes() })
+    fetchNotification(token!, { hour: alarmTime.getHours(), minute: alarmTime.getMinutes() })
       .catch(err => console.warn('register failed', err));
   }, [token, alarmTime]);
 

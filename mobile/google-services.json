@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "141999124920",
+    "project_id": "yesterday-fb2b6",
+    "storage_bucket": "yesterday-fb2b6.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:141999124920:android:a0ea59c6e75aab02ff1f4d",
+        "android_client_info": {
+          "package_name": "com.herb05.slighto"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD6nsmnf8ANrVT14o6U71LLUvXtWYB6cuM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

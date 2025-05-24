@@ -26,6 +26,7 @@
     "react": "19.0.0",
     "react-dom": "19.0.0",
     "react-native": "0.79.2",
+    "react-native-get-random-values": "^1.11.0",
     "react-native-google-mobile-ads": "^15.2.0",
     "react-native-modal-datetime-picker": "^18.0.0",
     "react-native-paper": "^5.14.4",
