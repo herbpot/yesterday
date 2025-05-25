@@ -22,7 +22,7 @@ def job():
         diff = get_compare(sub.lat, sub.lon)
         w = "덥네요" if diff['delta'] > 0 else "춥네요"
         body = f"오늘은({diff['now']:.1f}°C), 어제보다 살짝더 {w}.({diff['delta']:+.1f}°C)"
-        messages.append({"token": sub.token, "title": "어제보다", "body": body})
+        messages.append({"token": sub.fcm_token, "title": "어제보다", "body": body})
 
     if messages:
         sent = send_push(messages)
