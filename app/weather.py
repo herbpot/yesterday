@@ -5,6 +5,7 @@ import zoneinfo, json
 from pandas import to_datetime
 
 from .logger import logger
+from .storage import rdb
 
 tf = TimezoneFinder()
 
@@ -18,7 +19,7 @@ def _tz(lat, lon):
     return zoneinfo.ZoneInfo(tz_name)
 
 # ───────── 현재 vs 어제 같은 시각 ───────── #
-def get_compare(lat: float, lon: float, rdb):
+def get_compare(lat: float, lon: float):
     tz = _tz(lat, lon)
     now = _round_hour(datetime.now())
     yest = (now - timedelta(days=1)).replace(tzinfo=None)
@@ -48,7 +49,7 @@ def get_compare(lat: float, lon: float, rdb):
     return payload
 
 # ───────── 오늘 / 어제 최고·최저 ───────── #
-def get_extremes(lat: float, lon: float, rdb):
+def get_extremes(lat: float, lon: float):
     today = _round_hour(datetime.today()).replace(hour=0)
     yest  = today - timedelta(days=1)
     cache_key = f"ext:{lat:.2f}:{lon:.2f}:{today}"

@@ -6,6 +6,12 @@ from .logger import logger
 
 SUB_KEY = "subs"           # uid 집합
 
+rdb = redis.from_url(
+    os.getenv("REDISCLOUD_URL"),
+    decode_responses=True,  # Redis에서 문자열로 디코딩
+    encoding="utf-8",       # UTF-8로 인코딩
+)
+
 @dataclass
 class Subscriber:
     uid: str
@@ -17,13 +23,13 @@ class Subscriber:
     minute: int
 
 # ───────────────── 저장 / 업데이트 (register 엔드포인트에서 호출)
-def upsert_subscriber(sub: Subscriber, rdb: redis.Redis) -> None:
+def upsert_subscriber(sub: Subscriber) -> None:
     logger.info(f"Upserting subscriber: {sub.uid} ({sub.lat}, {sub.lon})")
     rdb.hset(f"subs:{sub.uid}", mapping=sub.__dict__)
     rdb.sadd(SUB_KEY, sub.uid)
 
 # ───────────────── 전체 목록 가져오기 (스케줄러에서 사용)
-def list_subscribers(rdb: redis.Redis) -> list[Subscriber]:
+def list_subscribers() -> list[Subscriber]:
     subscribers: list[Subscriber] = []
     for uid in rdb.smembers(SUB_KEY):
         raw = rdb.hgetall(f"subs:{uid}")

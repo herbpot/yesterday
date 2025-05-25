@@ -7,14 +7,10 @@ import os, redis
 from .logger import logger
 from .weather import get_compare, get_extremes
 from .push    import send_push
-from .storage import Subscriber, upsert_subscriber
+from .storage import Subscriber, upsert_subscriber, list_subscribers
 from .scheduler import start_scheduler
 
-rdb = redis.from_url(
-    os.getenv("REDISCLOUD_URL"),
-    decode_responses=True,  # Redis에서 문자열로 디코딩
-    encoding="utf-8",       # UTF-8로 인코딩
-)
+
 
 app = FastAPI(title="TempDiff API", version="1.0")
 
@@ -39,7 +35,7 @@ app.add_event_handler("startup", _startup)
 @app.get("/compare")
 async def compare(lat: float, lon: float):
     try:
-        return get_compare(lat, lon, rdb)
+        return get_compare(lat, lon)
     except ValueError as e:
         logger.error(f"compare: {e}")
         raise HTTPException(400, str(e))
@@ -47,7 +43,7 @@ async def compare(lat: float, lon: float):
 @app.get("/extremes")
 async def extremes(lat: float, lon: float):
     try:
-        return get_extremes(lat, lon, rdb)
+        return get_extremes(lat, lon)
     except ValueError as e:
         logger.error(f"extremes: {e}")
         raise HTTPException(400, str(e))
@@ -73,39 +69,16 @@ TIME_WINDOW_MIN = 10   # 10분 단위로 배치 실행한다고 가정
 @app.post("/notify_daily")
 async def notify_daily():
     now_utc = datetime.utcnow().replace(tzinfo=timezone.utc)
-    uids = rdb.smembers("subs")
-    if not uids:
-        return {"sent": 0, "message": "No subscribers found."}
-
-    messages = []          # FCM Message 배열
-    for uid in uids:
-        data = rdb.hgetall(f"subs:{uid}")
-        logger.info(f"Loading subscriber: {uid} -> {data} ")
-        if not data:
-            continue
-        tz = pytz.timezone(data["tz"])
-        local_now = now_utc.astimezone(tz)
-
-        # 사용자가 지정한 시각 ± TIME_WINDOW_MIN 내?
-        if not (
-            local_now.hour == int(data["hour"])
-            and abs(local_now.minute - int(data["minute"])) < TIME_WINDOW_MIN
-        ):
-            continue
-
-        # 실시간 Δ 계산
-        diff = get_compare(float(data["lat"]), float(data["lon"]), rdb)
-        logger.info(f"Temperature diff for {uid}: {diff}")
+    messages = []
+    for sub in list_subscribers():              # DB / Redis 모두 OK
+        local = now_utc.astimezone(pytz.timezone(sub.tz))
+        if not (local.hour == sub.hour and local.minute - sub.minute < 5):
+            continue                            # “이번 5분 슬롯” 사용자만
+        
+        diff = get_compare(sub.lat, sub.lon)
         w = "덥네요" if diff['delta'] > 0 else "춥네요"
-        body = f"오늘은({diff['now']:.1f}°C), 어제보다 살짝더 {w}.({diff['delta']:+.1f}°C)"
-
-        messages.append(
-            {
-                "token": data["fcm_token"],
-                "title": "살짝더",
-                "body": body,
-            }
-        )
+        body = f"오늘은({diff['today']:.1f}°C), 어제보다 살짝더 {w}.({diff['delta']:+.1f}°C)"
+        messages.append({"token": sub.token, "title": "어제보다", "body": body})
 
     sent = send_push(messages)        # <-- send_push 수정 (멀티캐스트 지원)
     return {"sent": sent}
