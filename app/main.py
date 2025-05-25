@@ -72,12 +72,12 @@ async def notify_daily():
     messages = []
     for sub in list_subscribers():              # DB / Redis 모두 OK
         local = now_utc.astimezone(pytz.timezone(sub.tz))
-        if not (local.hour == sub.hour and local.minute - sub.minute < 5):
+        if not (local.hour == sub.hour and local.minute - sub.minute < TIME_WINDOW_MIN):
             continue                            # “이번 5분 슬롯” 사용자만
         
         diff = get_compare(sub.lat, sub.lon)
         w = "덥네요" if diff['delta'] > 0 else "춥네요"
-        body = f"오늘은({diff['today']:.1f}°C), 어제보다 살짝더 {w}.({diff['delta']:+.1f}°C)"
+        body = f"오늘은({diff['now']:.1f}°C), 어제보다 살짝더 {w}.({diff['delta']:+.1f}°C)"
         messages.append({"token": sub.token, "title": "어제보다", "body": body})
 
     sent = send_push(messages)        # <-- send_push 수정 (멀티캐스트 지원)
