@@ -1,8 +1,11 @@
 # app/storage.py
 from dataclasses import dataclass
-import os, redis, json
+import os, redis
+
+from .logger import logger
 
 rdb = redis.from_url(os.getenv("REDISCLOUD_URL"))
+logger.info(rdb)
 
 SUB_KEY = "subs"           # uid 집합
 
@@ -18,6 +21,7 @@ class Subscriber:
 
 # ───────────────── 저장 / 업데이트 (register 엔드포인트에서 호출)
 def upsert_subscriber(sub: Subscriber) -> None:
+    logger.info(f"Upserting subscriber: {sub.uid} ({sub.lat}, {sub.lon})")
     rdb.hset(f"subs:{sub.uid}", mapping=sub.__dict__)
     rdb.sadd(SUB_KEY, sub.uid)
 
@@ -26,6 +30,7 @@ def list_subscribers() -> list[Subscriber]:
     subscribers: list[Subscriber] = []
     for uid in rdb.smembers(SUB_KEY):
         raw = rdb.hgetall(f"subs:{uid}")
+        logger.info(f"Loading subscriber: {uid} -> {raw}")
         if not raw:        # 지워졌는데 집합에 남아 있을 수 있음
             rdb.srem(SUB_KEY, uid)
             continue
@@ -40,4 +45,5 @@ def list_subscribers() -> list[Subscriber]:
                 minute=int(raw.get("minute", 0)),
             )
         )
+    logger.info(f"Subscribers loaded: {len(subscribers)}")
     return subscribers

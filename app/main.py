@@ -9,7 +9,11 @@ from .push    import send_push
 from .storage import Subscriber, upsert_subscriber
 from .scheduler import start_scheduler
 
-rdb = redis.from_url(os.getenv("REDISCLOUD_URL"))
+rdb = redis.from_url(
+    os.getenv("REDISCLOUD_URL"),
+    decode_responses=True,  # Redis에서 문자열로 디코딩
+    encoding="utf-8",       # UTF-8로 인코딩
+)
 
 app = FastAPI(title="TempDiff API", version="1.0")
 
@@ -70,11 +74,12 @@ async def notify_daily():
     now_utc = datetime.utcnow().replace(tzinfo=timezone.utc)
     uids = rdb.smembers("subs")
     if not uids:
-        return {"sent": 0}
+        return {"sent": 0, "message": "No subscribers found."}
 
     messages = []          # FCM Message 배열
     for uid in uids:
         data = rdb.hgetall(f"subs:{uid}")
+        logger.info(f"Loading subscriber: {uid} -> {data} ")
         if not data:
             continue
         tz = pytz.timezone(data["tz"])
@@ -88,9 +93,10 @@ async def notify_daily():
             continue
 
         # 실시간 Δ 계산
-        w = "덥네요" if diff['delta'] > 0 else "춥네요"
         diff = get_compare(float(data["lat"]), float(data["lon"]), rdb)
-        body = f"오늘은({diff['today']:.1f}°C), 어제보다 살짝더 {w}.({diff['delta']:+.1f}°C)"
+        logger.info(f"Temperature diff for {uid}: {diff}")
+        w = "덥네요" if diff['delta'] > 0 else "춥네요"
+        body = f"오늘은({diff['now']:.1f}°C), 어제보다 살짝더 {w}.({diff['delta']:+.1f}°C)"
 
         messages.append(
             {

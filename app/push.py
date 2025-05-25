@@ -6,6 +6,7 @@ if not firebase_admin._apps and cred_path:
     initialize_app(credentials.Certificate(cred_path))
 else:
     logging.warning("Firebase not initialised – push disabled")
+    logging.warning(f"cred_path: {cred_path}")
 
 
 def send_push(messages: list[dict]) -> int:
@@ -21,6 +22,6 @@ def send_push(messages: list[dict]) -> int:
     CHUNK = 500
     total = 0
     for i in range(0, len(multicast), CHUNK):
-        resp = messaging.send_all(multicast[i : i + CHUNK])
+        resp = messaging.send_each(multicast[i : i + CHUNK])
         total += resp.success_count
     return total

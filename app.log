@@ -1,0 +1,58 @@
+2025-05-25 14:52:04,416 - INFO - Subscribers loaded: 0
+2025-05-25 15:00:04,365 - INFO - Subscribers loaded: 0
+2025-05-25 15:05:04,512 - INFO - Subscribers loaded: 0
+2025-05-25 15:10:12,483 - INFO - Subscribers loaded: 0
+2025-05-25 15:15:41,172 - INFO - Subscribers loaded: 0
+2025-05-25 15:21:10,080 - INFO - Subscribers loaded: 0
+2025-05-25 15:26:14,420 - INFO - Subscribers loaded: 0
+2025-05-25 16:18:42,620 - INFO - Subscribers loaded: 0
+2025-05-25 16:23:54,203 - INFO - Subscribers loaded: 0
+2025-05-25 16:27:56,989 - INFO - Upserting subscriber: 9bc999e9-74c0-4000-a1dd-f4741ddc7e76 (37.0, 126.0)
+2025-05-25 16:28:45,598 - INFO - Upserting subscriber: 9bc999e9-74c0-4000-a1dd-f4741ddc7e76 (37.0, 126.0)
+2025-05-25 16:31:00,920 - INFO - notify_daily: 1 subscribers
+2025-05-25 16:31:30,232 - INFO - notify_daily: 1 subscribers
+2025-05-25 16:31:35,683 - INFO - notify_daily: 1 subscribers
+2025-05-25 16:31:41,354 - INFO - notify_daily: 1 subscribers
+2025-05-25 16:33:47,717 - INFO - notify_daily: 1 subscribers, {b'9bc999e9-74c0-4000-a1dd-f4741ddc7e76'}
+2025-05-25 16:34:14,766 - INFO - Processing subscriber: {}
+2025-05-25 16:39:17,099 - INFO - Subscribers loaded: 0
+2025-05-25 16:44:32,200 - INFO - Subscribers loaded: 0
+2025-05-25 16:45:26,484 - INFO - <module 'redis' from 'D:\\Users\\user\\anaconda3\\Lib\\site-packages\\redis\\__init__.py'>
+2025-05-25 16:45:49,166 - INFO - Redis<ConnectionPool<Connection<host=localhost,port=6379,db=0>>>
+2025-05-25 16:46:20,214 - INFO - Upserting subscriber: 9bc999e9-74c0-4000-a1dd-f4741ddc7e76 (37.0, 126.0)
+2025-05-25 16:46:22,451 - INFO - Processing subscriber: {}
+2025-05-25 16:51:14,268 - INFO - Subscribers loaded: 0
+2025-05-25 16:56:39,260 - INFO - Subscribers loaded: 0
+2025-05-25 17:01:58,411 - INFO - Subscribers loaded: 0
+2025-05-25 17:04:41,250 - INFO - Redis<ConnectionPool<Connection<host=localhost,port=6379,db=0>>>
+2025-05-25 17:05:18,528 - INFO - Redis<ConnectionPool<Connection<host=localhost,port=6379,db=0>>>
+2025-05-25 17:06:57,907 - INFO - Redis<ConnectionPool<Connection<host=localhost,port=6379,db=0>>>
+2025-05-25 17:07:30,289 - INFO - Redis<ConnectionPool<Connection<host=localhost,port=6379,db=0>>>
+2025-05-25 17:07:58,648 - INFO - Upserting subscriber: 9bc999e9-74c0-4000-a1dd-f4741ddc7e76 (37.0, 126.0)
+2025-05-25 17:08:01,289 - INFO - Loading subscriber: b'9bc999e9-74c0-4000-a1dd-f4741ddc7e76' -> {} 
+2025-05-25 17:09:22,436 - INFO - Redis<ConnectionPool<Connection<host=localhost,port=6379,db=0>>>
+2025-05-25 17:09:23,311 - INFO - Loading subscriber: 9bc999e9-74c0-4000-a1dd-f4741ddc7e76 -> {b'lon': b'126.0', b'minute': b'5', b'hour': b'17', b'lat': b'37.0', b'tz': b'Asia/Seoul', b'uid': b'9bc999e9-74c0-4000-a1dd-f4741ddc7e76', b'fcm_token': b'dfwUEXVsTRWNMsFblUXE-b:APA91bGvqY6oM_IXr1o2yeP1dfI07uJobR5cIA-ByZTcL94qv2WwzbiV48eaLXsxpA58zeF8K80BahpzhzeugDTwkoKqTIRI_xgORwHvWHJZLXQ6PMGaVyA'} 
+2025-05-25 17:11:41,237 - INFO - Redis<ConnectionPool<Connection<host=localhost,port=6379,db=0>>>
+2025-05-25 17:11:52,237 - INFO - Redis<ConnectionPool<Connection<host=localhost,port=6379,db=0>>>
+2025-05-25 17:12:04,511 - INFO - Loading subscriber: 9bc999e9-74c0-4000-a1dd-f4741ddc7e76 -> {'lon': '126.0', 'minute': '5', 'hour': '17', 'lat': '37.0', 'tz': 'Asia/Seoul', 'uid': '9bc999e9-74c0-4000-a1dd-f4741ddc7e76', 'fcm_token': 'dfwUEXVsTRWNMsFblUXE-b:APA91bGvqY6oM_IXr1o2yeP1dfI07uJobR5cIA-ByZTcL94qv2WwzbiV48eaLXsxpA58zeF8K80BahpzhzeugDTwkoKqTIRI_xgORwHvWHJZLXQ6PMGaVyA'} 
+2025-05-25 17:12:26,066 - INFO - Redis<ConnectionPool<Connection<host=localhost,port=6379,db=0>>>
+2025-05-25 17:12:29,163 - INFO - Upserting subscriber: 9bc999e9-74c0-4000-a1dd-f4741ddc7e76 (37.0, 126.0)
+2025-05-25 17:12:31,372 - INFO - Loading subscriber: 9bc999e9-74c0-4000-a1dd-f4741ddc7e76 -> {'lon': '126.0', 'minute': '10', 'hour': '17', 'lat': '37.0', 'tz': 'Asia/Seoul', 'uid': '9bc999e9-74c0-4000-a1dd-f4741ddc7e76', 'fcm_token': 'dfwUEXVsTRWNMsFblUXE-b:APA91bGvqY6oM_IXr1o2yeP1dfI07uJobR5cIA-ByZTcL94qv2WwzbiV48eaLXsxpA58zeF8K80BahpzhzeugDTwkoKqTIRI_xgORwHvWHJZLXQ6PMGaVyA'} 
+2025-05-25 17:12:57,631 - INFO - Redis<ConnectionPool<Connection<host=localhost,port=6379,db=0>>>
+2025-05-25 17:12:58,474 - INFO - Loading subscriber: 9bc999e9-74c0-4000-a1dd-f4741ddc7e76 -> {'lon': '126.0', 'minute': '10', 'hour': '17', 'lat': '37.0', 'tz': 'Asia/Seoul', 'uid': '9bc999e9-74c0-4000-a1dd-f4741ddc7e76', 'fcm_token': 'dfwUEXVsTRWNMsFblUXE-b:APA91bGvqY6oM_IXr1o2yeP1dfI07uJobR5cIA-ByZTcL94qv2WwzbiV48eaLXsxpA58zeF8K80BahpzhzeugDTwkoKqTIRI_xgORwHvWHJZLXQ6PMGaVyA'} 
+2025-05-25 17:13:16,954 - INFO - Redis<ConnectionPool<Connection<host=localhost,port=6379,db=0>>>
+2025-05-25 17:13:17,938 - INFO - Loading subscriber: 9bc999e9-74c0-4000-a1dd-f4741ddc7e76 -> {'lon': '126.0', 'minute': '10', 'hour': '17', 'lat': '37.0', 'tz': 'Asia/Seoul', 'uid': '9bc999e9-74c0-4000-a1dd-f4741ddc7e76', 'fcm_token': 'dfwUEXVsTRWNMsFblUXE-b:APA91bGvqY6oM_IXr1o2yeP1dfI07uJobR5cIA-ByZTcL94qv2WwzbiV48eaLXsxpA58zeF8K80BahpzhzeugDTwkoKqTIRI_xgORwHvWHJZLXQ6PMGaVyA'} 
+2025-05-25 17:13:18,356 - INFO - Temperature diff for 9bc999e9-74c0-4000-a1dd-f4741ddc7e76: {'now': 13.9, 'yesterday': 13.8, 'delta': 0.1}
+2025-05-25 17:13:36,521 - INFO - Redis<ConnectionPool<Connection<host=localhost,port=6379,db=0>>>
+2025-05-25 17:13:37,518 - INFO - Loading subscriber: 9bc999e9-74c0-4000-a1dd-f4741ddc7e76 -> {'lon': '126.0', 'minute': '10', 'hour': '17', 'lat': '37.0', 'tz': 'Asia/Seoul', 'uid': '9bc999e9-74c0-4000-a1dd-f4741ddc7e76', 'fcm_token': 'dfwUEXVsTRWNMsFblUXE-b:APA91bGvqY6oM_IXr1o2yeP1dfI07uJobR5cIA-ByZTcL94qv2WwzbiV48eaLXsxpA58zeF8K80BahpzhzeugDTwkoKqTIRI_xgORwHvWHJZLXQ6PMGaVyA'} 
+2025-05-25 17:13:37,970 - INFO - Temperature diff for 9bc999e9-74c0-4000-a1dd-f4741ddc7e76: {'now': 13.9, 'yesterday': 13.8, 'delta': 0.1}
+2025-05-25 17:18:02,144 - INFO - Redis<ConnectionPool<Connection<host=localhost,port=6379,db=0>>>
+2025-05-25 17:18:05,911 - INFO - Upserting subscriber: 9bc999e9-74c0-4000-a1dd-f4741ddc7e76 (37.0, 126.0)
+2025-05-25 17:18:10,599 - INFO - Loading subscriber: 9bc999e9-74c0-4000-a1dd-f4741ddc7e76 -> {'lon': '126.0', 'minute': '15', 'hour': '17', 'lat': '37.0', 'tz': 'Asia/Seoul', 'uid': '9bc999e9-74c0-4000-a1dd-f4741ddc7e76', 'fcm_token': 'dfwUEXVsTRWNMsFblUXE-b:APA91bGvqY6oM_IXr1o2yeP1dfI07uJobR5cIA-ByZTcL94qv2WwzbiV48eaLXsxpA58zeF8K80BahpzhzeugDTwkoKqTIRI_xgORwHvWHJZLXQ6PMGaVyA'} 
+2025-05-25 17:18:11,139 - INFO - Temperature diff for 9bc999e9-74c0-4000-a1dd-f4741ddc7e76: {'now': 13.9, 'yesterday': 13.8, 'delta': 0.1}
+2025-05-25 17:18:45,359 - INFO - Redis<ConnectionPool<Connection<host=localhost,port=6379,db=0>>>
+2025-05-25 17:18:51,075 - INFO - Loading subscriber: 9bc999e9-74c0-4000-a1dd-f4741ddc7e76 -> {'lon': '126.0', 'minute': '15', 'hour': '17', 'lat': '37.0', 'tz': 'Asia/Seoul', 'uid': '9bc999e9-74c0-4000-a1dd-f4741ddc7e76', 'fcm_token': 'dfwUEXVsTRWNMsFblUXE-b:APA91bGvqY6oM_IXr1o2yeP1dfI07uJobR5cIA-ByZTcL94qv2WwzbiV48eaLXsxpA58zeF8K80BahpzhzeugDTwkoKqTIRI_xgORwHvWHJZLXQ6PMGaVyA'} 
+2025-05-25 17:18:51,586 - INFO - Temperature diff for 9bc999e9-74c0-4000-a1dd-f4741ddc7e76: {'now': 13.9, 'yesterday': 13.8, 'delta': 0.1}
+2025-05-25 17:19:19,954 - INFO - Redis<ConnectionPool<Connection<host=localhost,port=6379,db=0>>>
+2025-05-25 17:19:20,855 - INFO - Loading subscriber: 9bc999e9-74c0-4000-a1dd-f4741ddc7e76 -> {'lon': '126.0', 'minute': '15', 'hour': '17', 'lat': '37.0', 'tz': 'Asia/Seoul', 'uid': '9bc999e9-74c0-4000-a1dd-f4741ddc7e76', 'fcm_token': 'dfwUEXVsTRWNMsFblUXE-b:APA91bGvqY6oM_IXr1o2yeP1dfI07uJobR5cIA-ByZTcL94qv2WwzbiV48eaLXsxpA58zeF8K80BahpzhzeugDTwkoKqTIRI_xgORwHvWHJZLXQ6PMGaVyA'} 
+2025-05-25 17:19:21,366 - INFO - Temperature diff for 9bc999e9-74c0-4000-a1dd-f4741ddc7e76: {'now': 13.9, 'yesterday': 13.8, 'delta': 0.1}
