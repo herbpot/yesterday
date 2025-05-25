@@ -1,5 +1,6 @@
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import HTMLResponse
 from pydantic import BaseModel
 import os, redis
 
@@ -108,3 +109,9 @@ async def notify_daily():
 
     sent = send_push(messages)        # <-- send_push 수정 (멀티캐스트 지원)
     return {"sent": sent}
+
+@app.get("/privacy-policy", response_class=HTMLResponse)
+async def privacy_policy():
+    with open("./app/PrivacyPolicy.html", "r", encoding="utf-8") as f:
+        content = f.read()
+        return HTMLResponse(content=content)
