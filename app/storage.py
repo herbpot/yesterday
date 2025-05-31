@@ -28,6 +28,12 @@ def upsert_subscriber(sub: Subscriber) -> None:
     rdb.hset(f"subs:{sub.uid}", mapping=sub.__dict__)
     rdb.sadd(SUB_KEY, sub.uid)
 
+def delete_subscriber(uid: str) -> None:
+    logger.info(f"Deleting subscriber: {uid}")
+    rdb.srem(SUB_KEY, uid)  # 집합에서 제거
+    rdb.delete(f"subs:{uid}")  # 해시 삭제
+    logger.info(f"Subscriber {uid} deleted")
+
 # ───────────────── 전체 목록 가져오기 (스케줄러에서 사용)
 def list_subscribers() -> list[Subscriber]:
     subscribers: list[Subscriber] = []

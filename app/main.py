@@ -2,13 +2,13 @@ from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import HTMLResponse
 from pydantic import BaseModel
-import os, redis
+import sys, subprocess
 
 from .logger import logger
 from .weather import get_compare, get_extremes
-from .push    import send_push
-from .storage import Subscriber, upsert_subscriber, list_subscribers
+from .storage import Subscriber, upsert_subscriber, delete_subscriber
 from .scheduler import start_scheduler
+from .tasks import send_push_notification
 
 
 
@@ -27,7 +27,12 @@ class Token(BaseModel):
     token: str   # FCM / APNs
 
 async def _startup():
-    start_scheduler()          # 백그라운드 스레드로 5분 루프 시작
+    # start_scheduler()          # 백그라운드 스레드로 5분 루프 시작
+    subprocess.Popen(
+        ["celery", "-A", "app.tasks", "worker", "--loglevel=info"],
+        stdout=sys.stdout,
+        stderr=sys.stderr,
+    )
 
 app.add_event_handler("startup", _startup)
 
@@ -49,39 +54,23 @@ async def extremes(lat: float, lon: float):
         raise HTTPException(400, str(e))
 
 # ─────────────── 푸시 토큰 등록 ─────────────── #
-@app.post("/register_token")
-async def register_token(data: Token):
-    rdb.sadd("push_tokens", data.token)
-    return {"status": "ok"}
-
 @app.post("/register")
 async def register(sub: Subscriber):
     upsert_subscriber(sub)
     return {"status": "ok"}
 
+@app.post("/unregister")
+async def unregister(uid: str):
+    if not uid:
+        raise HTTPException(400, "uid is required")
+    delete_subscriber(uid)
+    return {"status": "ok"}
 
 # ─────────────── 일일 알림 (Cloud Scheduler) ─────────────── #
-from datetime import datetime, timezone
-import pytz, json
-
-TIME_WINDOW_MIN = 10   # 10분 단위로 배치 실행한다고 가정
 
 @app.post("/notify_daily")
 async def notify_daily():
-    now_utc = datetime.utcnow().replace(tzinfo=timezone.utc)
-    messages = []
-    for sub in list_subscribers():              # DB / Redis 모두 OK
-        local = now_utc.astimezone(pytz.timezone(sub.tz))
-        if not (local.hour == sub.hour and local.minute - sub.minute < TIME_WINDOW_MIN):
-            continue                            # “이번 5분 슬롯” 사용자만
-        
-        diff = get_compare(sub.lat, sub.lon)
-        w = "덥네요" if diff['delta'] > 0 else "춥네요"
-        body = f"오늘은({diff['now']:.1f}°C), 어제보다 살짝더 {w}.({diff['delta']:+.1f}°C)"
-        messages.append({"token": sub.fcm_token, "title": "어제보다", "body": body})
-
-    sent = send_push(messages)        # <-- send_push 수정 (멀티캐스트 지원)
-    return {"sent": sent}
+    return send_push_notification.apply_async()
 
 @app.get("/privacy-policy", response_class=HTMLResponse)
 async def privacy_policy():
