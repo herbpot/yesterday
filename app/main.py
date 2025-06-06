@@ -34,7 +34,7 @@ async def _startup():
         stderr=sys.stderr,
     )
 
-app.add_event_handler("startup", _startup)
+# app.add_event_handler("startup", _startup)
 
 # ─────────────── 기온 비교 ─────────────── #
 @app.get("/compare")
