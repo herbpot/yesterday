@@ -30,16 +30,18 @@ async function getUid(): Promise<string> {
 
 export async function fetchNotification(fcm_token: string, { hour, minute }: { hour: number; minute: number }) {
     const { lat, lon } = await getCoords();
-    await fetch(API_BASE + "register", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
+    const data = JSON.stringify({
             uid: await getUid(),
             fcm_token,
             lat, lon,
             tz: Intl.DateTimeFormat().resolvedOptions().timeZone,
             hour, minute,
-        }),
+        })
+    console.log("Registering notification with data(API "+ API_BASE + "register):", data);
+    await fetch(API_BASE + "register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: data,
     });
 } 
 

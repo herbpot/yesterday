@@ -1,217 +1,328 @@
-import { useEffect, useState, useRef } from "react";
+// App.tsx
+import React, { useEffect, useState, memo } from "react";
 import {
-  Alert,
-  ScrollView,
-  ActivityIndicator,
+  StatusBar,
+  SafeAreaView,
   View,
   Text,
   TouchableOpacity,
-  SafeAreaView,
+  StyleSheet,
+  ActivityIndicator,
+  ImageBackground,
 } from "react-native";
-import { Provider as PaperProvider, Snackbar } from "react-native-paper";
-import * as Notifications from "expo-notifications";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import DateTimePickerModal from "react-native-modal-datetime-picker";
+import * as Location from "expo-location";
+import Svg, { Path } from "react-native-svg";
 
-/* 🔸 AdMob */
-import mobileAds, {
-  BannerAd,
-  BannerAdSize,
-} from 'react-native-google-mobile-ads';
-import messaging from "@react-native-firebase/messaging"
+/* ───── API 헬퍼 ───── */
+const nowDate =	new Date();
+nowDate.setMonth(nowDate.getMonth() + 1);
+const yesterdayDate = new Date(nowDate);
+yesterdayDate.setDate(nowDate.getDate() - 1);
+const pad = (n: number) => String(n).padStart(2, "0");
 
-import DiffCard from "../components/DiffCard";
-import ExtremesCard from "../components/ExtremesCard";
-import {
-  fetchCompare,
-  fetchExtremes,
-  CompareResult,
-  ExtremesResult,
-} from "../services/weather";
-import { 
-  fetchNotification,
-  reciveNotification,
-} from "../services/notification";
+const openMeteoURL = (lat: number, lon: number) =>
+  `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}` +
+  `&current_weather=true&hourly=relativehumidity_2m,uv_index,apparent_temperature,temperature_2m&start_date=${yesterdayDate.getUTCFullYear()}-${pad(yesterdayDate.getUTCMonth())}-${pad(yesterdayDate.getUTCDate())}&end_date=${nowDate.getUTCFullYear()}-${pad(nowDate.getUTCMonth())}-${pad(nowDate.getUTCDate())}`;
 
-/* ─── 상수 ─────────────────────────────────────────────── */
-const STORAGE_KEY = "alarmTime";
-const BANNER_ID = "ca-app-pub-4388792395765448/9451868044"; // 👉 실제 배포 시 실 광고 단위 ID로 교체
-
-/* ─── Firebase 초기화 ────────────────────────────────── */
-const firebaseConfig = {
-  apiKey: process.env.EXPO_PUBLIC_FIREBASE_API_KEY,
-  authDomain: process.env.EXPO_PUBLIC_FIREBASE_AUTH_DOMAIN,
-  projectId: process.env.EXPO_PUBLIC_FIREBASE_PROJECT_ID,
-  storageBucket: process.env.EXPO_PUBLIC_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: process.env.EXPO_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
-  appId: process.env.EXPO_PUBLIC_FIREBASE_APP_ID,
-  measurementId: process.env.EXPO_PUBLIC_FIREBASE_MEASUREMENT_ID,
-};
-console.log(`Firebase Config: ${firebaseConfig}`);
-
-// const app = initializeApp(firebaseConfig);
-// const analytics = getAnalytics(app);
-
-messaging().setBackgroundMessageHandler(async remoteMessage => {
-
-  // await reciveNotification(remoteMessage);
-  console.log('Message handled in the background!', remoteMessage);
+/* ───── 공통 Diff 배지 ───── */
+type DiffProps = { diff: number; unit?: string };
+const DiffBadge = memo(({ diff, unit = "" }: DiffProps) => {
+  const up = diff >= 0;
+  return (
+    <View
+      style={[
+        styles.badge,
+        { backgroundColor: up ? COLORS.positiveBg : COLORS.negativeBg },
+      ]}
+    >
+      <Svg width={12} height={12} viewBox="0 0 24 24" fill={up ? COLORS.positive : COLORS.negative}>
+        <Path d={up ? "M12 4l6 8H6z" : "M12 20l-6-8h12z"} />
+      </Svg>
+      <Text
+        style={[
+          styles.badgeText,
+          { color: up ? COLORS.positive : COLORS.negative },
+        ]}
+      >
+        {up ? "+" : ""}
+        {Math.abs(diff).toFixed(1)}
+        {unit}
+      </Text>
+    </View>
+  );
 });
 
-/* ─── 유틸: 알람 저장/로드/스케줄 ────────────────────── */
-async function saveAlarmTime(h: number, m: number) {
-  await AsyncStorage.setItem(STORAGE_KEY, `${h}:${m}`);
-}
-async function loadAlarmTime(): Promise<[number, number] | null> {
-  const v = await AsyncStorage.getItem(STORAGE_KEY);
-  if (!v) return null;
-  const [h, m] = v.split(":").map(Number);
-  return [h, m];
-}
-
-const configureAdMob = async () => {
-  await mobileAds().initialize();
+const WEATHER_IMAGES: Record<string, string> = {
+  clear_day:   "https://twemoji.maxcdn.com/v/latest/72x72/2600.png", // ☀️
+  clear_night: "https://twemoji.maxcdn.com/v/latest/72x72/1f319.png", // 🌙
+  cloudy:      "https://twemoji.maxcdn.com/v/latest/72x72/26c5.png", // 🌤️
+  overcast:    "https://twemoji.maxcdn.com/v/latest/72x72/2601.png", // ☁️
+  rain:        "https://twemoji.maxcdn.com/v/latest/72x72/1f327.png", // 🌧️
+  snow:        "https://twemoji.maxcdn.com/v/latest/72x72/1f328.png", // 🌨️
+  thunder:     "https://twemoji.maxcdn.com/v/latest/72x72/26c8.png", // ⛈️
 };
 
+/* weathercode 그룹핑 */
+const codeToKey = (code: number, isDay: number): keyof typeof WEATHER_IMAGES => {
+  if (code === 0) return isDay ? "clear_day" : "clear_night"; // 맑음
+  if (code <= 3) return "cloudy"; // 부분적으로 흐림
+  if (code <= 45) return "overcast"; // 안개·짙은 안개
+  if (code <= 67) return "snow"; // 눈/진눈깨비
+  if (code <= 77) return "overcast"; // 서리·싸락눈
+  if (code <= 86) return "snow"; // 눈
+  if (code <= 99) return "thunder"; // 뇌우
+  return "rain"; // 비 포함 나머지
+};
 
-/* ─── Home ───────────────────────────────────────────── */
-export default function Home() {
-  const [cmp, setCmp] = useState<CompareResult | null>(null);
-  const [ext, setExt] = useState<ExtremesResult | null>(null);
+/* ───── 2-열 카드 ───── */
+type CardProps = { label: string; value: string; diff?: number; unit?: string };
+const InfoCard = ({ label, value, diff, unit = "" }: CardProps) => (
+  <View style={styles.card}>
+    <Text style={styles.cardLabel}>{label}</Text>
+    <Text style={styles.cardValue}>{value}</Text>
+    {diff !== undefined && <DiffBadge diff={diff} unit={unit} />}
+  </View>
+);
+
+/* ───── 메인 ───── */
+export default function App() {
+  /* 상태 */
   const [loading, setLoading] = useState(true);
   const [err, setErr] = useState<string | null>(null);
 
-  const [snack, setSnack] = useState(false);
-  const [showPicker, setShowPicker] = useState(false);
-  const [alarmTime, setAlarmTime] = useState<Date>(new Date());
-  const [token, setToken] = useState<string | null>(null);
+  /* 일별 최고기온 */
+  const [today, setToday] = useState<number | null>(null);
+  const [yesterday, setYesterday] = useState<number | null>(null);
 
-  /* 초기 로딩 */
-  useEffect(() => {
-    (async () => {
-      try {
-        await configureAdMob();
-        const adapterStatuses = await mobileAds().initialize();
-        console.log(adapterStatuses);
-        const { status } = await Notifications.requestPermissionsAsync();
-        if (status == "granted") {
-          const t = await messaging().getToken();
-          if (__DEV__) {
-            console.log("FCM Token:", t);
-          }
-          setToken(t);
-        }
-        const [c, e] = await Promise.all([fetchCompare(), fetchExtremes()]);
-        setCmp(c);
-        setExt(e);
+  /* 실시간 지표 + 어제 동시간대 지표 */
+  const [humidity, setHumidity] = useState<number | null>(null);
+  const [humidityY, setHumidityY] = useState<number | null>(null);
 
-        const saved = await loadAlarmTime();
-        if (saved) {
-          const d = new Date();
-          d.setHours(saved[0], saved[1], 0, 0);
-          setAlarmTime(d);
-        }
+  const [uv, setUv] = useState<number | null>(null);
+  const [uvY, setUvY] = useState<number | null>(null);
 
-      } catch (e: any) {
-        setErr(e.message || "데이터를 불러오지 못했습니다.");
-      } finally {
-        setLoading(false);
-      }
-    })();
-  }, []);
+  const [feels, setFeels] = useState<number | null>(null);
+  const [feelsY, setFeelsY] = useState<number | null>(null);
 
-  useEffect(() => {
-    if (!token || !alarmTime) return;
-    fetchNotification(token!, { hour: alarmTime.getHours(), minute: alarmTime.getMinutes() })
-      .catch(err => console.warn('register failed', err));
-  }, [token, alarmTime]);
+		const [imageKey, setImageKey] = useState<keyof typeof WEATHER_IMAGES>("clear_day");
 
-  const onConfirm = (d: Date) => {
-    setShowPicker(false);
-    setAlarmTime(d);
-    saveAlarmTime(d.getHours(), d.getMinutes());
-    fetchNotification(token!, { hour: d.getHours(), minute: d.getMinutes()});
-    setSnack(true);
+  /* ─── 데이터 로드 ─── */
+  const loadWeather = async () => {
+    try {
+      setLoading(true);
+      setErr(null);
+
+      const { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== "granted") throw new Error("위치 권한이 필요합니다.");
+
+      const { coords } = await Location.getCurrentPositionAsync({});
+      const res = await fetch(openMeteoURL(coords.latitude, coords.longitude));
+      const j = await res.json();
+
+						const { weathercode, is_day } = j.current_weather;
+      setImageKey(codeToKey(weathercode, is_day));
+
+      /* 일별 최고기온 */
+      const idxT = j.hourly.time.length - 1;
+      const idxY = idxT - 24;
+      setToday(j.hourly.temperature_2m[idxT]);
+      setYesterday(j.hourly.temperature_2m[idxY]);
+
+      /* 시간 배열 = 오늘 + 어제 (24 h × 2) */
+      const last = j.hourly.time.length - 1; // 현재 시각 index
+      const yesterdaySameHour = last - 24;
+
+      setHumidity(j.hourly.relativehumidity_2m[last]);
+      setHumidityY(j.hourly.relativehumidity_2m[yesterdaySameHour]);
+
+      setUv(j.hourly.uv_index[last]);
+      setUvY(j.hourly.uv_index[yesterdaySameHour]);
+
+      setFeels(j.hourly.apparent_temperature[last]);
+      setFeelsY(j.hourly.apparent_temperature[yesterdaySameHour]);
+    } catch (e: any) {
+      setErr(e.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
-  /* 상태별 뷰 */
-  if (loading) return <ActivityIndicator size="large" className="flex-1" />;
-  if (err)
-    return (
-      <View className="flex-1 items-center justify-center px-4">
-        <Text className="text-center text-lg">{err}</Text>
-      </View>
-    );
-  if (!cmp || !ext) return null;
+  useEffect(() => {
+    loadWeather();
+  }, []);
 
-  /* ─── UI ──────────────────────────────────────────── */
+  const tempDiff =
+    today !== null && yesterday !== null ? today - yesterday : undefined;
+
+  /* ─── UI ─── */
   return (
-    <PaperProvider>
-      <SafeAreaView className="flex-1 bg-bgLight dark:bg-bgDark">
-        {/* ⬇ 2 px 아래로 전체 이동 */}
-        <ScrollView
-          className="flex-1 mt-[2px] px-4 pt-6 space-y-6"
-          showsVerticalScrollIndicator={false}
+    <SafeAreaView style={styles.container}>
+      <StatusBar barStyle="dark-content" />
+
+      {/* 헤더 */}
+      <View style={styles.header}>
+        <View style={{ width: 48 }} />
+        <Text style={styles.headerTitle}>살짝더</Text>
+        <TouchableOpacity
+          style={styles.iconBtn}
+          accessibilityLabel="현재 위치로 새로고침"
+          onPress={loadWeather}
         >
-          <DiffCard
-            now={cmp.now}
-            yesterday={cmp.yesterday}
-            delta={cmp.delta}
-          />
+          <Svg width={22} height={22} viewBox="0 0 256 256" fill={COLORS.text}>
+												<Path d="M16.08,59.26A8,8,0,0,1,0,59.26a59,59,0,0,1,97.13-45V8a8,8,0,1,1,16.08,0V33.35a8,8,0,0,1-8,8L80.82,43.62a8,8,0,1,1-1.44-15.95l8-.73A43,43,0,0,0,16.08,59.26Zm22.77,19.6a8,8,0,0,1,1.44,16l-10.08.91A42.95,42.95,0,0,0,102,63.86a8,8,0,0,1,16.08,0A59,59,0,0,1,22.3,110v4.18a8,8,0,0,1-16.08,0V89.14h0a8,8,0,0,1,7.29-8l25.31-2.3Z"/>
+          </Svg>
+        </TouchableOpacity>
+      </View>
 
-          <ExtremesCard
-            todayMax={ext.today_max}
-            todayMin={ext.today_min}
-            yestMax={ext.yest_max}
-            yestMin={ext.yest_min}
-            deltaMax={ext.delta_max}
-            deltaMin={ext.delta_min}
-          />
+      {loading ? (
+        <View style={styles.centerBox}>
+          <ActivityIndicator size="large" color={COLORS.accent} />
+        </View>
+      ) : err ? (
+        <View style={styles.centerBox}>
+          <Text style={styles.errText}>{err}</Text>
+        </View>
+      ) : (
+        <View style={styles.body}>
+          {/* 오늘·어제 기온 */}
+          {/* <Text style={[FONTS.display, { color: COLORS.text }]}>오늘 기온</Text> */}
+          <Text style={[FONTS.body, { color: COLORS.text }]}>
+            현재&nbsp;:&nbsp;{today?.toFixed(1)}°C
+          </Text>
+          <Text style={[FONTS.body, { color: COLORS.text }]}>
+            어제&nbsp;:&nbsp;{yesterday?.toFixed(1)}°C
+          </Text>
+          {tempDiff !== undefined && <DiffBadge diff={tempDiff} unit="°C" />}
 
-          {/* 알림 카드 */}
-          <View className="rounded-2xl bg-cardDark p-6">
-            <TouchableOpacity
-              onPress={() => setShowPicker(true)}
-              activeOpacity={0.9}
-              className="rounded-xl py-3 items-center bg-primary/20 border border-primary/40"
-            >
-              <Text className="text-primary font-medium">알림 시간 설정</Text>
-            </TouchableOpacity>
-
-            <DateTimePickerModal
-              isVisible={showPicker}
-              mode="time"
-              is24Hour
-              date={alarmTime}
-              onConfirm={onConfirm}
-              onCancel={() => setShowPicker(false)}
+          {/* 이미지 */}
+          <View style={styles.imgWrapper}>
+            <ImageBackground
+              style={{ flex: 1 }}
+              resizeMode="cover"
+              source={{ uri: WEATHER_IMAGES[imageKey] }}
             />
-
-            <Text className="text-center mt-4 text-textDark tabular-nums">
-              현재 예약 |{" "}
-              {alarmTime.getHours().toString().padStart(2, "0")}:
-              {alarmTime.getMinutes().toString().padStart(2, "0")}
-            </Text>
           </View>
-        </ScrollView>
 
-        {/* 📢 AdMob 하단 배너 */}
-        <BannerAd
-          unitId={BANNER_ID}
-          size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
-        />
-      </SafeAreaView>
-
-      {/* 저장 알림 */}
-      <Snackbar
-        visible={snack}
-        onDismiss={() => setSnack(false)}
-        duration={2500}
-        theme={{ colors: { accent: "#4A90E2" } }}
-        action={{ label: "확인", onPress: () => {} }}
-      >
-        알림 시간이 저장되었습니다!
-      </Snackbar>
-    </PaperProvider>
+          {/* 2-열 카드 */}
+          <View style={styles.infoGrid}>
+            {humidity !== null && humidityY !== null && (
+              <InfoCard
+                label="습도"
+                value={`${humidity.toFixed(0)} %`}
+                diff={humidity - humidityY}
+                unit="%"
+              />
+            )}
+            {uv !== null && uvY !== null && (
+              <InfoCard
+                label="UV 지수"
+                value={uv.toFixed(1)}
+                diff={uv - uvY}
+              />
+            )}
+            {feels !== null && feelsY !== null && (
+              <InfoCard
+                label="체감"
+                value={`${feels.toFixed(1)}°C`}
+                diff={feels - feelsY}
+                unit="°C"
+              />
+            )}
+          </View>
+        </View>
+      )}
+    </SafeAreaView>
   );
 }
+
+/* ───── 스타일 ───── */
+const COLORS = {
+  background: "#ECEFF1",
+  text: "#1B1F23",
+  accent: "#2563EB",
+  positive: "#B91C1C",
+  positiveBg: "#FEE2E2",
+  negative: "#1E40AF",
+  negativeBg: "#DBEAFE",
+};
+
+const FONTS = {
+  display: {
+    fontSize: 32,
+    lineHeight: 36,
+    fontWeight: "700" as const,
+    letterSpacing: -0.5,
+  },
+  body: { fontSize: 16, lineHeight: 24 },
+};
+
+const styles = StyleSheet.create({
+  container: { 
+			flex: 1, 
+			backgroundColor: COLORS.background ,
+			paddingTop: StatusBar.currentHeight || 0
+		},
+  header: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+  },
+  headerTitle: { fontSize: 18, fontWeight: "700", color: COLORS.text },
+  iconBtn: { width: 48, alignItems: "flex-end" },
+
+  centerBox: { flex: 1, justifyContent: "center", alignItems: "center" },
+  errText: { color: "red" },
+
+  body: { alignItems: "center", paddingHorizontal: 16 },
+  imgWrapper: {
+    width: "60%",
+    aspectRatio: 16 / 9,
+    borderRadius: 12,
+    overflow: "hidden",
+    marginVertical: 24,
+  },
+
+  infoGrid: {
+    width: "100%",
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "space-between",
+  },
+  card: {
+    width: "48%",
+    backgroundColor: "#fff",
+    borderRadius: 12,
+    paddingVertical: 16,
+    alignItems: "center",
+    marginBottom: 12,
+    shadowColor: "#000",
+    shadowOpacity: 0.05,
+    shadowOffset: { width: 0, height: 2 },
+    shadowRadius: 4,
+    elevation: 2,
+  },
+  cardLabel: { fontSize: 14, color: "#6b7280", marginBottom: 4 },
+  cardValue: { fontSize: 18, fontWeight: "600", color: COLORS.text },
+
+  cta: {
+    backgroundColor: COLORS.accent,
+    paddingHorizontal: 26,
+    paddingVertical: 14,
+    borderRadius: 14,
+    marginTop: 8,
+  },
+  ctaTxt: { color: "#fff", fontWeight: "700" },
+
+  badge: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginTop: 6,
+    paddingHorizontal: 8,
+    paddingVertical: 3,
+    borderRadius: 9999,
+    gap: 4,
+  },
+  badgeText: { fontSize: 12, fontWeight: "600" },
+});

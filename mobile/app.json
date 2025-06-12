@@ -34,10 +34,6 @@
     "extra": {
       "eas": {
         "projectId": "9b38b3d6-e60d-49da-a842-b5db7f255336"
-      },
-      "EXPO_PUBLIC_API_BASE": "https://yesterday-94136ff83a00.herokuapp.com/",
-      "react-native-google-mobile-ads": {
-        "android_app_id": "ca-app-pub-4388792395765448~8035904086"
       }
     },
     "plugins": [

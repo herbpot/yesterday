@@ -42,6 +42,7 @@ export async function getCoords(): Promise<{ lat: number; lon: number }> {
 // ─── 공통 fetch 래퍼: 에러·상태코드·CORS 처리 ───────────────────
 async function apiGet<T>(path: string, query: Record<string, any>): Promise<T> {
   const q = new URLSearchParams(query).toString();
+  console.log(`API request: ${API_BASE}${path}?${q}`);
   const res = await fetch(`${API_BASE}${path}?${q}`, {
     method: "GET",
     headers: { Accept: "application/json" },
