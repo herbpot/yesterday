@@ -37,7 +37,25 @@
       }
     },
     "plugins": [
-      "expo-secure-store"
+      "expo-secure-store",
+      [
+        "react-native-android-widget", {
+          "fonts": ["./assets/fonts/ChosunCentennial_ttf.ttf"],
+          "widgets": [
+            {
+              "name": "TempWidget",     
+              "label": "Temp Widget",   
+              "minWidth": "220dp",
+              "minHeight": "55dp",
+              "targetCellWidth": 3,
+              "targetCellHeight": 1,
+              "description": "온도 위젯",
+              "previewImage": "./assets/widget-preview/ttt.png",
+              "updatePeriodMillis": 3600000
+            }
+          ]
+        }
+      ]
     ]
   }
 }

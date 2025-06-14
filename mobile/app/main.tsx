@@ -16,7 +16,7 @@ import {
   BannerAd,
   BannerAdSize,
 } from 'react-native-google-mobile-ads';
-import { transform } from "@babel/core";
+import { getCoords, fetchWeather, parseWeather, WEATHER_IMAGES } from "../services/weather_"; // 날씨 서비스 (필요시 추가)
 
 const BANNER_ID = "ca-app-pub-4388792395765448/9451868044"; // 👉 실제 배포 시 실 광고 단위 ID로 교체
 
@@ -59,28 +59,6 @@ const DiffBadge = memo(({ diff, unit = "" }: DiffProps) => {
   );
 });
 
-const WEATHER_IMAGES: Record<string, string> = {
-  clear_day:   "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/2600.png", // ☀️
-  clear_night: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f319.png", // 🌙
-  cloudy:      "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/26c5.png", // 🌤️
-  overcast:    "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/2601.png", // ☁️
-  rain:        "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f327.png", // 🌧️
-  snow:        "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f328.png", // 🌨️
-  thunder:     "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/26c8.png", // ⛈️
-};
-
-/* weathercode 그룹핑 */
-const codeToKey = (code: number, isDay: number): keyof typeof WEATHER_IMAGES => {
-  if (code === 0) return isDay ? "clear_day" : "clear_night"; // 맑음
-  if (code <= 3) return "cloudy"; // 부분적으로 흐림
-  if (code <= 45) return "overcast"; // 안개·짙은 안개
-  if (code <= 67) return "snow"; // 눈/진눈깨비
-  if (code <= 77) return "overcast"; // 서리·싸락눈
-  if (code <= 86) return "snow"; // 눈
-  if (code <= 99) return "thunder"; // 뇌우
-  return "rain"; // 비 포함 나머지
-};
-
 /* ───── 2-열 카드 ───── */
 type CardProps = { label: string; value: string; diff?: number; unit?: string };
 const InfoCard = ({ label, value, diff, unit = "" }: CardProps) => (
@@ -119,34 +97,25 @@ export default function AppMain({navigation}: { navigation: any }) {
       setLoading(true);
       setErr(null);
 
-      const { status } = await Location.requestForegroundPermissionsAsync();
-      if (status !== "granted") throw new Error("위치 권한이 필요합니다.");
+      /* ➊ 위치 권한 & 좌표 */
+      const coords = await getCoords();
 
-      const { coords } = await Location.getCurrentPositionAsync({});
-      const res = await fetch(openMeteoURL(coords.latitude, coords.longitude));
-      const j = await res.json();
+      /* ➋ 날씨 API 호출 */
+      const raw = await fetchWeather(coords);
 
-						const { weathercode, is_day } = j.current_weather;
-      setImageKey(codeToKey(weathercode, is_day));
+      /* ➌ 데이터 파싱·가공 */
+      const parsed = parseWeather(raw);
 
-      /* 일별 최고기온 */
-      const idxT = j.hourly.time.length - 1;
-      const idxY = idxT - 24;
-      setToday(j.hourly.temperature_2m[idxT]);
-      setYesterday(j.hourly.temperature_2m[idxY]);
-
-      /* 시간 배열 = 오늘 + 어제 (24 h × 2) */
-      const last = j.hourly.time.length - 1; // 현재 시각 index
-      const yesterdaySameHour = last - 24;
-
-      setHumidity(j.hourly.relativehumidity_2m[last]);
-      setHumidityY(j.hourly.relativehumidity_2m[yesterdaySameHour]);
-
-      setUv(j.hourly.uv_index[last]);
-      setUvY(j.hourly.uv_index[yesterdaySameHour]);
-
-      setFeels(j.hourly.apparent_temperature[last]);
-      setFeelsY(j.hourly.apparent_temperature[yesterdaySameHour]);
+      /* ➍ 상태 반영 */
+      setImageKey(parsed.imageKey);
+      setToday(parsed.todayTemp);
+      setYesterday(parsed.yesterdayTemp);
+      setHumidity(parsed.humidity);
+      setHumidityY(parsed.humidityY);
+      setUv(parsed.uv);
+      setUvY(parsed.uvY);
+      setFeels(parsed.feels);
+      setFeelsY(parsed.feelsY);
     } catch (e: any) {
       setErr(e.message);
     } finally {

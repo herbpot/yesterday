@@ -6,34 +6,31 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import AppMain from "./main";                    // 기존 날씨 화면 (위 코드)
 import NotificationSettings from "./NotificationSettings";
-import mobileAds from 'react-native-google-mobile-ads';
 import messaging from "@react-native-firebase/messaging"
 import "react-native-gesture-handler";
 import { enableScreens } from "react-native-screens";
+import { AppRegistry } from 'react-native';
+import { registerWidgetTaskHandler } from 'react-native-android-widget';
+import { widgetTaskHandler } from './widgetHandler/TempWidgetHandler'; // 위젯 핸들러
+import { expo } from '../app.json';
 
 enableScreens(); // React Navigation의 성능 향상을 위해 스크린 최적화
 
 const Stack = createStackNavigator();
 
-const configureAdMob = async () => {
-  await mobileAds().initialize();
-};
 
 messaging().setBackgroundMessageHandler(async remoteMessage => {
 
   // await reciveNotification(remoteMessage);
   console.log('Message handled in the background!', remoteMessage);
 });
+// index.tsx
+
+AppRegistry.registerComponent(expo.name, () => App);
+registerWidgetTaskHandler(widgetTaskHandler);
 
 
 export default function App() {
-  useEffect(() => {
-    (async () => {
-      // await configureAdMob();
-      // const adapterStatuses = await mobileAds().initialize();
-      // console.log(adapterStatuses);
-    })();
-  }, []);
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Home"
