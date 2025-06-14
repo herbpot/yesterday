@@ -10,7 +10,7 @@ const COLORS = {
   primary: '#f74f4f',
   text: '#222222',
   subText: '#4FC3F7',
-  card: '#FFFFFFFF',     // 8자리 → 알파 고정
+  card: "rgba(255,255,255,0.7)",     // 8자리 → 알파 고정
 };
 
 export function TempWidget({ data }: { data: ParsedWeather }) {

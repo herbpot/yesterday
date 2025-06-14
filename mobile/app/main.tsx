@@ -144,7 +144,7 @@ export default function AppMain({navigation}: { navigation: any }) {
       {/* 헤더 */}
       <View style={styles.header}>
         <TouchableOpacity
-          style={styles.iconBtn}
+          style={styles.iconBtnl}
           accessibilityLabel="알림설정"
           onPress={() => navigation.navigate("Settings")}
         >
@@ -273,6 +273,7 @@ const styles = StyleSheet.create({
   },
   headerTitle: { fontSize: 18, fontWeight: "700", color: COLORS.text },
   iconBtn: { width: 48, alignItems: "flex-end" },
+  iconBtnl: { width: 48, alignItems: "flex-start" },
 
   centerBox: { flex: 1, justifyContent: "center", alignItems: "center" },
   errText: { color: "red" },
