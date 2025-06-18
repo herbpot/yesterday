@@ -14,10 +14,11 @@ const COLORS = {
 };
 
 export function TempWidget({ data }: { data: ParsedWeather }) {
-  const diff = data.todayTemp - data.yesterdayTemp;
+  const diff = Math.round(data.todayTemp - data.yesterdayTemp);
   const diffPrefix = diff > 0 ? '+' : '';      // 양수 기호
   const diffColor = diff > 0 ? COLORS.primary : COLORS.subText;
   const diffArrow = diff > 0 ? '▲' : diff < 0 ? '▼' : '▪';
+  console.log(`기온 차이: ${diff}, ${diffArrow}, ${diffPrefix}, ${WEATHER_IMAGES[data.imageKey]}`);
 
   return (
     <FlexWidget

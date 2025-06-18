@@ -1,39 +1,71 @@
-import * as Location from "expo-location";
+import { PermissionsAndroid, Platform, Linking } from "react-native";
+import BackgroundFetch from "react-native-background-fetch";
+import Geolocation from "react-native-geolocation-service";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
-export async function getCoords(): Promise<Location.LocationObjectCoords> {
-  const { status } = await Location.requestForegroundPermissionsAsync();
-  if (status !== "granted") throw new Error("위치 권한이 필요합니다.");
-  const { coords } = await Location.getCurrentPositionAsync({});
-  return coords;
+export async function ensureLocationPermission() {
+  if (Platform.OS === 'android') {
+    console.log("위치 권한 요청 중...");
+    const fg = await PermissionsAndroid.requestMultiple(
+      [
+        PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+        PermissionsAndroid.PERMISSIONS.ACCESS_BACKGROUND_LOCATION,
+      ],
+    );
+    console.log(fg)
+  }
+  return true;
+}
+
+export async function initBackgroundLocation() {
+  // 퍼미션 (foreground + background)
+  console.log("init background job")
+  await BackgroundFetch.configure(
+    { minimumFetchInterval: 10, enableHeadless: true },
+    async taskId => {
+      console.log("background locationion")
+      Geolocation.getCurrentPosition(
+        async pos => {
+          await AsyncStorage.setItem(
+            'userLocation',
+            JSON.stringify({ lat: pos.coords.latitude, lon: pos.coords.longitude })
+          );
+          console.log("background: ", pos)
+          BackgroundFetch.finish(taskId);
+        },
+        err => {
+          console.warn(err);
+          BackgroundFetch.finish(taskId);
+        },
+        { accuracy: { android: 'low' }, timeout: 10000 }
+      );
+    },
+    taskId => console.log(`timeout: ${taskId}`)
+  );
+  await BackgroundFetch.start();
+}
+
+export async function getCoords(): Promise<LocationCoords> {
+
+  // const loc = await AsyncStorage.getItem('userLocation')
+  // if (loc) { 
+  //   console.log("저장된 위치 정보:", loc);
+  //   return JSON.parse(loc) as LocationCoords;
+  // }else {
+  //   console.log("위치 정보가 없으므로 새로 요청합니다.");
+    Geolocation.getCurrentPosition(async (pos) => {
+      await AsyncStorage.setItem(
+        'userLocation',
+        JSON.stringify({ lat: pos.coords.latitude, lon: pos.coords.longitude })
+      );
+      console.log("gelolcation:", pos)
+    });
+    return JSON.parse(await AsyncStorage.getItem('userLocation')) as LocationCoords;
+  // }
 }
 
 const openMeteoURL = (lat: number, lon: number) =>
-  `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&hourly=temperature_2m,relativehumidity_2m,uv_index,apparent_temperature&current_weather=true&timezone=auto`;
-
-const codeToKey = (code: number, isDay: 0 | 1): string => {
-  /* Open-Meteo WMO weather-code → 이미지 자원 키 맵 */
-  const table: Record<number, string> = {
-    0: "clear",
-    1: "mainlyClear",
-    2: "partlyCloudy",
-    3: "overcast",
-    45: "fog",
-    48: "depositingRime",
-    51: "drizzleLight",
-    53: "drizzleModerate",
-    55: "drizzleDense",
-    61: "rainSlight",
-    63: "rainModerate",
-    65: "rainHeavy",
-    71: "snowSlight",
-    73: "snowModerate",
-    75: "snowHeavy",
-    95: "thunderstorm",
-    99: "thunderstormHail",
-  };
-  const key = table[code] ?? "unknown";
-  return `${key}_${isDay ? "day" : "night"}`;
-};
+  `${process.env.EXPO_PUBLIC_API_BASE}meteo-weather/weather?lat=${lat}&lon=${lon}`;
 
 export const WEATHER_IMAGES: Record<string, string> = {
   clear_day:   "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/2600.png", // ☀️
@@ -45,16 +77,16 @@ export const WEATHER_IMAGES: Record<string, string> = {
   thunder:     "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/26c8.png", // ⛈️
 };
 
-export async function fetchWeather(coords: Location.LocationObjectCoords) {
+export async function fetchWeather(coords: LocationCoords): Promise<ParsedWeather> {
   try {
-    const url = openMeteoURL(coords.latitude, coords.longitude)
+    const url = openMeteoURL(coords.lat, coords.lon)
     console.log("날씨 데이터 요청 URL:", url);
     const res = await fetch(url);
     if (!res.ok) throw new Error("날씨 데이터를 불러오지 못했습니다.");
-    return res.json();
+    return await res.json() as ParsedWeather;
   } catch (error: Error | any) {
     console.error("날씨 데이터 요청 실패:", error.message);
-    throw new Error("날씨 데이터를 불러오지 못했습니다. fetchError");
+    throw error;
   }
 }
 
@@ -71,24 +103,7 @@ export type ParsedWeather = {
   feelsY: number;
 };
 
-export function parseWeather(j: any): ParsedWeather {
-  const {
-    current_weather: { weathercode, is_day },
-    hourly,
-  } = j;
-
-  const last = hourly.time.length - 1;          // 현재 시각 index
-  const yesterdaySameHour = last - 24;         // 어제 동일 시각 index
-
-  return {
-    imageKey: codeToKey(weathercode, is_day),
-    todayTemp: hourly.temperature_2m[last],
-    yesterdayTemp: hourly.temperature_2m[yesterdaySameHour],
-    humidity: hourly.relativehumidity_2m[last],
-    humidityY: hourly.relativehumidity_2m[yesterdaySameHour],
-    uv: hourly.uv_index[last],
-    uvY: hourly.uv_index[yesterdaySameHour],
-    feels: hourly.apparent_temperature[last],
-    feelsY: hourly.apparent_temperature[yesterdaySameHour],
-  };
+export type LocationCoords = {
+  lat: number;
+  lon: number;
 }

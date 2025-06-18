@@ -10,13 +10,12 @@ import {
   ActivityIndicator,
   ImageBackground,
 } from "react-native";
-import * as Location from "expo-location";
 import Svg, { Path } from "react-native-svg";
 import {
   BannerAd,
   BannerAdSize,
 } from 'react-native-google-mobile-ads';
-import { getCoords, fetchWeather, parseWeather, WEATHER_IMAGES } from "../services/weather_"; // 날씨 서비스 (필요시 추가)
+import { getCoords, fetchWeather, WEATHER_IMAGES, initBackgroundLocation, ensureLocationPermission } from "../services/weather_"; // 날씨 서비스 (필요시 추가)
 
 const BANNER_ID = "ca-app-pub-4388792395765448/9451868044"; // 👉 실제 배포 시 실 광고 단위 ID로 교체
 
@@ -26,10 +25,6 @@ nowDate.setMonth(nowDate.getMonth() + 1);
 const yesterdayDate = new Date(nowDate);
 yesterdayDate.setDate(nowDate.getDate() - 1);
 const pad = (n: number) => String(n).padStart(2, "0");
-
-const openMeteoURL = (lat: number, lon: number) =>
-  `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}` +
-  `&current_weather=true&hourly=relativehumidity_2m,uv_index,apparent_temperature,temperature_2m&start_date=${yesterdayDate.getUTCFullYear()}-${pad(yesterdayDate.getUTCMonth())}-${pad(yesterdayDate.getUTCDate())}&end_date=${nowDate.getUTCFullYear()}-${pad(nowDate.getUTCMonth())}-${pad(nowDate.getUTCDate())}`;
 
 /* ───── 공통 Diff 배지 ───── */
 type DiffProps = { diff: number; unit?: string };
@@ -101,10 +96,9 @@ export default function AppMain({navigation}: { navigation: any }) {
       const coords = await getCoords();
 
       /* ➋ 날씨 API 호출 */
-      const raw = await fetchWeather(coords);
-
-      /* ➌ 데이터 파싱·가공 */
-      const parsed = parseWeather(raw);
+      console.log("날씨 데이터 요청 중...");
+      console.log("좌표:", coords);
+      const parsed = await fetchWeather(coords);
 
       /* ➍ 상태 반영 */
       setImageKey(parsed.imageKey);
@@ -124,7 +118,13 @@ export default function AppMain({navigation}: { navigation: any }) {
   };
 
   useEffect(() => {
-    loadWeather();
+    async function init() {
+      console.log("앱 시작: 위치 권한 요청 및 초기화");
+      console.log(await ensureLocationPermission());
+      await loadWeather();
+      await initBackgroundLocation();
+    }
+    init();
   }, []);
 
   const tempDiff =

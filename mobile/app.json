@@ -26,7 +26,16 @@
         "backgroundColor": "#ffffff"
       },
       "edgeToEdgeEnabled": true,
-      "package": "com.herb05.slighto"
+      "package": "com.herb05.slighto",
+      "permissions": [
+        "ACCESS_FINE_LOCATION",
+        "ACCESS_COARSE_LOCATION",
+        "READ_EXTERNAL_STORAGE",
+        "WRITE_EXTERNAL_STORAGE",
+        "FOREGROUND_SERVICE",
+        "REQUEST_IGNORE_BATTERY_OPTIMIZATIONS",
+        "ACCESS_BACKGROUND_LOCATION",
+      ]
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -54,6 +63,11 @@
               "updatePeriodMillis": 3600000
             }
           ]
+        }
+      ],
+      [
+        "react-native-background-fetch", {
+          "mavenRepositoryURL": "https://maven.transistorsoft.com/releases"
         }
       ]
     ]
