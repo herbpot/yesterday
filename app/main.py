@@ -8,7 +8,8 @@ from .logger import logger
 from .weather import get_compare, get_extremes
 from .storage import Subscriber, upsert_subscriber, delete_subscriber
 from .scheduler import start_scheduler
-from .tasks import send_push_notification
+from .tasks import send_push_notification, test_task
+from .meteo_weather import app as meteo_weather_router
 
 
 
@@ -29,29 +30,31 @@ class Token(BaseModel):
 async def _startup():
     # start_scheduler()          # 백그라운드 스레드로 5분 루프 시작
     subprocess.Popen(
-        ["celery", "-A", "app.tasks", "worker", "--loglevel=info"],
+        ["celery", "-A", "app.tasks", "worker", "--loglevel=info"], # 실제 동작 시 "--pool=solo" 제거
         stdout=sys.stdout,
         stderr=sys.stderr,
     )
 
-# app.add_event_handler("startup", _startup)
+app.add_event_handler("startup", _startup)
 
 # ─────────────── 기온 비교 ─────────────── #
-@app.get("/compare")
-async def compare(lat: float, lon: float):
-    try:
-        return get_compare(lat, lon)
-    except ValueError as e:
-        logger.error(f"compare: {e}")
-        raise HTTPException(400, str(e))
 
-@app.get("/extremes")
-async def extremes(lat: float, lon: float):
-    try:
-        return get_extremes(lat, lon)
-    except ValueError as e:
-        logger.error(f"extremes: {e}")
-        raise HTTPException(400, str(e))
+app.include_router(meteo_weather_router)
+# @app.get("/compare")
+# async def compare(lat: float, lon: float):
+#     try:
+#         return get_compare(lat, lon)
+#     except ValueError as e:
+#         logger.error(f"compare: {e}")
+#         raise HTTPException(400, str(e))
+
+# @app.get("/extremes")
+# async def extremes(lat: float, lon: float):
+#     try:
+#         return get_extremes(lat, lon)
+#     except ValueError as e:
+#         logger.error(f"extremes: {e}")
+#         raise HTTPException(400, str(e))
 
 # ─────────────── 푸시 토큰 등록 ─────────────── #
 @app.post("/register")
@@ -68,9 +71,15 @@ async def unregister(uid: str):
 
 # ─────────────── 일일 알림 (Cloud Scheduler) ─────────────── #
 
-@app.post("/notify_daily")
+@app.get("/test")
+async def test():
+    test_task.delay()  # Celery 작업으로 테스트 실행
+    return {"status": "ok", "message": "Test endpoint is working"}
+
+@app.get("/notify_daily")
 async def notify_daily():
-    return send_push_notification.apply_async()
+    send_push_notification.delay()  # Celery 작업으로 푸시 알림 전송
+    return {"status": "ok", "message": "Daily notification task started"}
 
 @app.get("/privacy-policy", response_class=HTMLResponse)
 async def privacy_policy():

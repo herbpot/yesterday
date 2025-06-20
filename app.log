@@ -64,3 +64,21 @@
 2025-05-25 17:25:20,409 - INFO - Subscribers loaded: 0
 2025-05-25 21:13:17,893 - INFO - Redis<ConnectionPool<Connection<host=localhost,port=6379,db=0>>>
 2025-05-25 21:13:55,729 - INFO - Redis<ConnectionPool<Connection<host=localhost,port=6379,db=0>>>
+2025-06-15 20:36:23,638 - INFO - [Mongo] Upserting subscriber: c34a1113-4fdf-4fb5-b2ff-d4a25d780915 (-120.0, 25.0)
+2025-06-15 20:36:23,638 - INFO - [Mongo] Upserting subscriber: c34a1113-4fdf-4fb5-b2ff-d4a25d780915 (-120.0, 25.0)
+2025-06-15 23:00:57,380 - INFO - Test task executed successfully!
+2025-06-15 23:00:57,380 - INFO - Test task executed successfully!
+2025-06-15 23:01:11,817 - ERROR - [Mongo] Error loading subscriber: c34a1113-4fdf-4fb5-b2ff-d4a25d780915 -> 'dict' object has no attribute 'uid'
+2025-06-15 23:01:11,817 - ERROR - [Mongo] Error loading subscriber: c34a1113-4fdf-4fb5-b2ff-d4a25d780915 -> 'dict' object has no attribute 'uid'
+2025-06-15 23:01:11,818 - INFO - [Mongo] Total subscribers loaded: 1
+2025-06-15 23:01:11,818 - INFO - [Mongo] Total subscribers loaded: 1
+2025-06-15 23:01:11,818 - ERROR - [SEND] 알림 전송 실패: 'dict' object has no attribute 'tz'
+2025-06-15 23:01:11,818 - ERROR - [SEND] 알림 전송 실패: 'dict' object has no attribute 'tz'
+2025-06-15 23:02:53,249 - INFO - [Mongo] Loaded subscriber: c34a1113-4fdf-4fb5-b2ff-d4a25d780915
+2025-06-15 23:02:53,249 - INFO - [Mongo] Loaded subscriber: c34a1113-4fdf-4fb5-b2ff-d4a25d780915
+2025-06-15 23:02:53,250 - INFO - [Mongo] Total subscribers loaded: 1
+2025-06-15 23:02:53,250 - INFO - [Mongo] Total subscribers loaded: 1
+2025-06-15 23:02:53,251 - INFO - [SEND] 알림 전송 완료 (0건)
+2025-06-15 23:02:53,251 - INFO - [SEND] 알림 전송 완료 (0건)
+2025-06-15 23:14:01,073 - INFO - Test task executed successfully!
+2025-06-15 23:14:01,073 - INFO - Test task executed successfully!

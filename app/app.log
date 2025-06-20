@@ -1,0 +1,371 @@
+2025-06-13 20:34:06,585 - INFO - GET https://weather.googleapis.com/v1/currentConditions:lookup with params: {'location.latitude': 37.5665, 'location.longitude': 126.978, 'key': 'AIzaSyBNur41R1i2tYwnIG7XHnWp-pm4gAmSA8M', 'units': 'CELSIUS', 'languageCode': 'ko'}
+2025-06-13 21:36:08,987 - INFO - GET https://weather.googleapis.com/v1/currentConditions:lookup with params: {'location.latitude': 37.5665, 'location.longitude': 126.978, 'key': 'AIzaSyBNur41R1i2tYwnIG7XHnWp-pm4gAmSA8M', 'languageCode': 'ko'}
+2025-06-13 23:18:41,315 - INFO - API 호출: https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtNcst with params: {'base_date': '20250613', 'base_time': '2200', 'nx': 60, 'ny': 127}
+2025-06-13 23:18:42,968 - INFO - API 호출: https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtNcst with params: {'base_date': '20250612', 'base_time': '2200', 'nx': 60, 'ny': 127}
+2025-06-13 23:19:30,367 - INFO - API 호출: https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtNcst with params: {'base_date': '20250613', 'base_time': '2200', 'nx': 60, 'ny': 127}
+2025-06-13 23:19:30,368 - DEBUG - 응답: {"response":{"header":{"resultCode":"00","resultMsg":"NORMAL_SERVICE"},"body":{"dataType":"JSON","items":{"item":[{"baseDate":"20250613","baseTime":"2300","category":"PTY","nx":60,"ny":127,"obsrValue"
+2025-06-13 23:19:32,039 - INFO - API 호출: https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtNcst with params: {'base_date': '20250612', 'base_time': '2200', 'nx': 60, 'ny': 127}
+2025-06-13 23:19:32,039 - DEBUG - 응답: {"response":{"header":{"resultCode":"10","resultMsg":"최근 1일 간의 자료만 제공합니다."}}}
+2025-06-13 23:20:23,874 - INFO - API 호출: https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtNcst with params: {'base_date': '20250613', 'base_time': '2200', 'nx': 60, 'ny': 127}
+2025-06-13 23:20:23,874 - DEBUG - 응답: {"response":{"header":{"resultCode":"00","resultMsg":"NORMAL_SERVICE"},"body":{"dataType":"JSON","items":{"item":[{"baseDate":"20250613","baseTime":"2300","category":"PTY","nx":60,"ny":127,"obsrValue"
+2025-06-13 23:20:25,613 - INFO - API 호출: https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtNcst with params: {'base_date': '20250612', 'base_time': '2200', 'nx': 60, 'ny': 127}
+2025-06-13 23:20:25,614 - DEBUG - 응답: {"response":{"header":{"resultCode":"10","resultMsg":"최근 1일 간의 자료만 제공합니다."}}}
+2025-06-13 23:25:09,936 - INFO - API 호출: https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtNcst with params: {'base_date': '20250614', 'base_time': '0000', 'nx': 60, 'ny': 127}
+2025-06-13 23:25:09,938 - DEBUG - 응답: {"response":{"header":{"resultCode":"03","resultMsg":"NO_DATA"}}}
+2025-06-13 23:25:33,537 - INFO - API 호출: https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtNcst with params: {'base_date': '20250613', 'base_time': '2300', 'nx': 60, 'ny': 127}
+2025-06-13 23:25:33,538 - DEBUG - 응답: {"response":{"header":{"resultCode":"00","resultMsg":"NORMAL_SERVICE"},"body":{"dataType":"JSON","items":{"item":[{"baseDate":"20250613","baseTime":"2300","category":"PTY","nx":60,"ny":127,"obsrValue"
+2025-06-13 23:25:35,126 - INFO - API 호출: https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtNcst with params: {'base_date': '20250612', 'base_time': '2300', 'nx': 60, 'ny': 127}
+2025-06-13 23:25:35,126 - DEBUG - 응답: {"response":{"header":{"resultCode":"10","resultMsg":"최근 1일 간의 자료만 제공합니다."}}}
+2025-06-13 23:26:51,766 - INFO - API 호출: https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtNcst with params: {'base_date': '20250614', 'base_time': '0000', 'nx': 60, 'ny': 127}
+2025-06-13 23:26:51,769 - DEBUG - 응답: {"response":{"header":{"resultCode":"03","resultMsg":"NO_DATA"}}}
+2025-06-13 23:27:27,929 - INFO - API 호출: https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtNcst with params: {'base_date': '20250613', 'base_time': '2200', 'nx': 60, 'ny': 127}
+2025-06-13 23:27:27,929 - DEBUG - 응답: {"response":{"header":{"resultCode":"00","resultMsg":"NORMAL_SERVICE"},"body":{"dataType":"JSON","items":{"item":[{"baseDate":"20250613","baseTime":"2300","category":"PTY","nx":60,"ny":127,"obsrValue"
+2025-06-13 23:27:29,587 - INFO - API 호출: https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtNcst with params: {'base_date': '20250612', 'base_time': '2300', 'nx': 60, 'ny': 127}
+2025-06-13 23:27:29,587 - DEBUG - 응답: {"response":{"header":{"resultCode":"10","resultMsg":"최근 1일 간의 자료만 제공합니다."}}}
+2025-06-13 23:27:51,543 - INFO - API 호출: https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtNcst with params: {'base_date': '20250613', 'base_time': '2300', 'nx': 60, 'ny': 127}
+2025-06-13 23:27:51,543 - DEBUG - 응답: {"response":{"header":{"resultCode":"00","resultMsg":"NORMAL_SERVICE"},"body":{"dataType":"JSON","items":{"item":[{"baseDate":"20250613","baseTime":"2300","category":"PTY","nx":60,"ny":127,"obsrValue"
+2025-06-13 23:27:53,250 - INFO - API 호출: https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtNcst with params: {'base_date': '20250613', 'base_time': '0000', 'nx': 60, 'ny': 127}
+2025-06-13 23:27:53,250 - DEBUG - 응답: {"response":{"header":{"resultCode":"00","resultMsg":"NORMAL_SERVICE"},"body":{"dataType":"JSON","items":{"item":[{"baseDate":"20250613","baseTime":"0000","category":"PTY","nx":60,"ny":127,"obsrValue"
+2025-06-13 23:27:56,137 - INFO - API 호출: https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtFcst with params: {'base_date': '20250613', 'base_time': '2330', 'nx': 60, 'ny': 127, 'numOfRows': 2880}
+2025-06-13 23:27:56,138 - DEBUG - 응답: {"response":{"header":{"resultCode":"00","resultMsg":"NORMAL_SERVICE"},"body":{"dataType":"JSON","items":{"item":[{"baseDate":"20250613","baseTime":"2330","category":"LGT","fcstDate":"20250614","fcstT
+2025-06-13 23:33:55,570 - INFO - API 호출: https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtFcst with params: {'base_date': '20250613', 'base_time': '2330', 'nx': 60, 'ny': 127, 'numOfRows': 2880}
+2025-06-13 23:33:55,571 - DEBUG - 응답: {"response":{"header":{"resultCode":"00","resultMsg":"NORMAL_SERVICE"},"body":{"dataType":"JSON","items":{"item":[{"baseDate":"20250613","baseTime":"2330","category":"LGT","fcstDate":"20250614","fcstT
+2025-06-13 23:33:55,572 - DEBUG - API 응답 아이템 수: 60
+2025-06-13 23:34:59,643 - INFO - API 호출: https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtFcst with params: {'base_date': '20250613', 'base_time': '2330', 'nx': 60, 'ny': 127, 'numOfRows': 2880}
+2025-06-13 23:34:59,644 - DEBUG - 응답: {"response":{"header":{"resultCode":"00","resultMsg":"NORMAL_SERVICE"},"body":{"dataType":"JSON","items":{"item":[{"baseDate":"20250613","baseTime":"2330","category":"LGT","fcstDate":"20250614","fcstT
+2025-06-13 23:34:59,645 - DEBUG - API 응답 아이템 수: 60
+2025-06-13 23:34:59,653 - DEBUG - 오늘 기온: []
+2025-06-13 23:34:59,653 - DEBUG - 어제 기온: []
+2025-06-13 23:35:39,229 - INFO - API 호출: https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtFcst with params: {'base_date': '20250613', 'base_time': '2330', 'nx': 60, 'ny': 127, 'numOfRows': 2880}
+2025-06-13 23:35:39,231 - DEBUG - 응답: {"response":{"header":{"resultCode":"00","resultMsg":"NORMAL_SERVICE"},"body":{"dataType":"JSON","items":{"item":[{"baseDate":"20250613","baseTime":"2330","category":"LGT","fcstDate":"20250614","fcstT
+2025-06-13 23:35:39,232 - DEBUG - API 응답 아이템 수: 60
+2025-06-13 23:35:39,242 - DEBUG - 2025-06-14 00:00:00 ~ 2025-06-14 05:00:00
+2025-06-13 23:35:39,242 - DEBUG - 오늘 기온: []
+2025-06-13 23:35:39,242 - DEBUG - 어제 기온: []
+2025-06-13 23:36:33,825 - INFO - API 호출: https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtFcst with params: {'base_date': '20250613', 'base_time': '2330', 'nx': 60, 'ny': 127, 'numOfRows': 2880}
+2025-06-13 23:36:33,825 - DEBUG - 응답: {"response":{"header":{"resultCode":"00","resultMsg":"NORMAL_SERVICE"},"body":{"dataType":"JSON","items":{"item":[{"baseDate":"20250613","baseTime":"2330","category":"LGT","fcstDate":"20250614","fcstT
+2025-06-13 23:36:33,826 - DEBUG - API 응답 아이템 수: 60
+2025-06-13 23:36:33,833 - DEBUG - 2025-06-14 00:00:00 ~ 2025-06-14 05:00:00
+2025-06-13 23:36:33,834 - DEBUG - 오늘 기온: []
+2025-06-13 23:36:33,834 - DEBUG - 어제 기온: []
+2025-06-13 23:37:34,654 - INFO - API 호출: https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtFcst with params: {'base_date': '20250612', 'base_time': '2330', 'nx': 60, 'ny': 127, 'numOfRows': 2880}
+2025-06-13 23:37:34,655 - DEBUG - 응답: {"response":{"header":{"resultCode":"00","resultMsg":"NORMAL_SERVICE"},"body":{"dataType":"JSON","items":{"item":[{"baseDate":"20250612","baseTime":"2330","category":"LGT","fcstDate":"20250613","fcstT
+2025-06-13 23:37:34,656 - DEBUG - API 응답 아이템 수: 60
+2025-06-13 23:37:34,669 - DEBUG - 2025-06-13 00:00:00 ~ 2025-06-13 05:00:00
+2025-06-13 23:37:34,670 - DEBUG - 오늘 기온: [24.0, 22.0, 22.0, 20.0, 20.0, 20.0]
+2025-06-13 23:37:34,671 - DEBUG - 어제 기온: []
+2025-06-13 23:38:16,618 - INFO - API 호출: https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtNcst with params: {'base_date': '20250613', 'base_time': '2300', 'nx': 60, 'ny': 127}
+2025-06-13 23:38:16,618 - DEBUG - 응답: {"response":{"header":{"resultCode":"00","resultMsg":"NORMAL_SERVICE"},"body":{"dataType":"JSON","items":{"item":[{"baseDate":"20250613","baseTime":"2300","category":"PTY","nx":60,"ny":127,"obsrValue"
+2025-06-13 23:38:16,619 - DEBUG - API 응답 아이템 수: 8
+2025-06-13 23:38:17,768 - INFO - API 호출: https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtNcst with params: {'base_date': '20250613', 'base_time': '0000', 'nx': 60, 'ny': 127}
+2025-06-13 23:38:17,768 - DEBUG - 응답: {"response":{"header":{"resultCode":"00","resultMsg":"NORMAL_SERVICE"},"body":{"dataType":"JSON","items":{"item":[{"baseDate":"20250613","baseTime":"0000","category":"PTY","nx":60,"ny":127,"obsrValue"
+2025-06-13 23:38:17,769 - DEBUG - API 응답 아이템 수: 8
+2025-06-13 23:38:19,530 - INFO - API 호출: https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtFcst with params: {'base_date': '20250611', 'base_time': '2330', 'nx': 60, 'ny': 127, 'numOfRows': 2880}
+2025-06-13 23:38:19,531 - DEBUG - 응답: {"response":{"header":{"resultCode":"00","resultMsg":"NORMAL_SERVICE"},"body":{"dataType":"JSON","items":{"item":[{"baseDate":"20250611","baseTime":"2330","category":"LGT","fcstDate":"20250612","fcstT
+2025-06-13 23:38:19,532 - DEBUG - API 응답 아이템 수: 60
+2025-06-13 23:38:19,540 - DEBUG - 2025-06-12 00:00:00 ~ 2025-06-12 05:00:00
+2025-06-13 23:38:19,541 - DEBUG - 오늘 기온: []
+2025-06-13 23:38:19,541 - DEBUG - 어제 기온: [19.0, 19.0, 18.0, 18.0, 17.0, 17.0]
+2025-06-13 23:40:39,236 - INFO - API 호출: https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst with params: {'base_date': '20250611', 'base_time': '2330', 'nx': 60, 'ny': 127, 'numOfRows': 2880}
+2025-06-13 23:40:39,238 - DEBUG - 응답: {"response":{"header":{"resultCode":"00","resultMsg":"NORMAL_SERVICE"},"body":{"dataType":"JSON","items":{"item":[{"baseDate":"20250611","baseTime":"2300","category":"TMP","fcstDate":"20250612","fcstT
+2025-06-13 23:40:39,255 - DEBUG - API 응답 아이템 수: 980
+2025-06-13 23:40:39,274 - DEBUG - NaT ~ NaT
+2025-06-13 23:40:39,275 - DEBUG - 오늘 기온: []
+2025-06-13 23:40:39,276 - DEBUG - 어제 기온: []
+2025-06-13 23:40:59,505 - INFO - API 호출: https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst with params: {'base_date': '20250613', 'base_time': '2330', 'nx': 60, 'ny': 127, 'numOfRows': 2880}
+2025-06-13 23:40:59,506 - DEBUG - 응답: {"response":{"header":{"resultCode":"00","resultMsg":"NORMAL_SERVICE"},"body":{"dataType":"JSON","items":{"item":[{"baseDate":"20250613","baseTime":"2300","category":"TMP","fcstDate":"20250614","fcstT
+2025-06-13 23:40:59,511 - DEBUG - API 응답 아이템 수: 980
+2025-06-13 23:40:59,522 - DEBUG - NaT ~ NaT
+2025-06-13 23:40:59,523 - DEBUG - 오늘 기온: []
+2025-06-13 23:40:59,523 - DEBUG - 어제 기온: []
+2025-06-13 23:41:44,739 - INFO - API 호출: https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst with params: {'base_date': '20250613', 'base_time': '2330', 'nx': 60, 'ny': 127, 'numOfRows': 2880}
+2025-06-13 23:41:44,740 - DEBUG - 응답: {"response":{"header":{"resultCode":"00","resultMsg":"NORMAL_SERVICE"},"body":{"dataType":"JSON","items":{"item":[{"baseDate":"20250613","baseTime":"2300","category":"TMP","fcstDate":"20250614","fcstT
+2025-06-13 23:41:44,746 - DEBUG - API 응답 아이템 수: 980
+2025-06-13 23:41:44,756 - DEBUG - NaT ~ NaT
+2025-06-13 23:41:44,782 - DEBUG - Empty DataFrame
+Columns: [fcstDate, fcstTime, fcstValue, temp]
+Index: []
+2025-06-13 23:41:44,782 - DEBUG - 오늘 기온: []
+2025-06-13 23:41:44,783 - DEBUG - 어제 기온: []
+2025-06-13 23:44:30,463 - INFO - API 호출: https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst with params: {'base_date': '20250613', 'base_time': '2330', 'nx': 60, 'ny': 127, 'numOfRows': 2880}
+2025-06-13 23:44:30,464 - DEBUG - 응답: {"response":{"header":{"resultCode":"00","resultMsg":"NORMAL_SERVICE"},"body":{"dataType":"JSON","items":{"item":[{"baseDate":"20250613","baseTime":"2300","category":"TMP","fcstDate":"20250614","fcstT
+2025-06-13 23:44:30,477 - DEBUG - API 응답 아이템 수: 980
+2025-06-13 23:44:30,526 - DEBUG -    baseDate baseTime category  fcstDate fcstTime fcstValue  nx   ny
+0  20250613     2300      TMP  20250614     0000        22  60  127
+1  20250613     2300      UUU  20250614     0000      -0.7  60  127
+2  20250613     2300      VVV  20250614     0000       0.6  60  127
+3  20250613     2300      VEC  20250614     0000       127  60  127
+4  20250613     2300      WSD  20250614     0000         1  60  127
+2025-06-13 23:44:30,538 - DEBUG - NaT ~ NaT
+2025-06-13 23:44:30,538 - DEBUG - 오늘 기온: []
+2025-06-13 23:44:30,539 - DEBUG - 어제 기온: []
+2025-06-13 23:47:27,511 - INFO - API 호출: https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst with params: {'base_date': '20250613', 'base_time': '2330', 'nx': 60, 'ny': 127, 'numOfRows': 2880}
+2025-06-13 23:47:27,512 - DEBUG - 응답: {"response":{"header":{"resultCode":"00","resultMsg":"NORMAL_SERVICE"},"body":{"dataType":"JSON","items":{"item":[{"baseDate":"20250613","baseTime":"2300","category":"TMP","fcstDate":"20250614","fcstT
+2025-06-13 23:47:27,517 - DEBUG - API 응답 아이템 수: 980
+2025-06-13 23:47:27,534 - DEBUG -    baseDate baseTime category  fcstDate fcstTime fcstValue  nx   ny
+0  20250613     2300      TMP  20250614     0000        22  60  127
+1  20250613     2300      UUU  20250614     0000      -0.7  60  127
+2  20250613     2300      VVV  20250614     0000       0.6  60  127
+3  20250613     2300      VEC  20250614     0000       127  60  127
+4  20250613     2300      WSD  20250614     0000         1  60  127
+2025-06-13 23:48:14,679 - INFO - API 호출: https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst with params: {'base_date': '20250613', 'base_time': '2330', 'nx': 60, 'ny': 127, 'numOfRows': 2880}
+2025-06-13 23:48:14,680 - DEBUG - 응답: {"response":{"header":{"resultCode":"00","resultMsg":"NORMAL_SERVICE"},"body":{"dataType":"JSON","items":{"item":[{"baseDate":"20250613","baseTime":"2300","category":"TMP","fcstDate":"20250614","fcstT
+2025-06-13 23:48:14,684 - DEBUG - API 응답 아이템 수: 980
+2025-06-13 23:48:14,700 - DEBUG -    baseDate baseTime category  fcstDate fcstTime fcstValue  nx   ny
+0  20250613     2300      TMP  20250614     0000        22  60  127
+1  20250613     2300      UUU  20250614     0000      -0.7  60  127
+2  20250613     2300      VVV  20250614     0000       0.6  60  127
+3  20250613     2300      VEC  20250614     0000       127  60  127
+4  20250613     2300      WSD  20250614     0000         1  60  127
+2025-06-13 23:53:57,861 - INFO - API 호출: https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtNcst with params: {'base_date': '20250613', 'base_time': '2300', 'nx': 60, 'ny': 127}
+2025-06-13 23:53:57,862 - DEBUG - 응답: {"response":{"header":{"resultCode":"00","resultMsg":"NORMAL_SERVICE"},"body":{"dataType":"JSON","items":{"item":[{"baseDate":"20250613","baseTime":"2300","category":"PTY","nx":60,"ny":127,"obsrValue"
+2025-06-13 23:53:57,862 - DEBUG - API 응답 아이템 수: 8
+2025-06-13 23:53:58,980 - INFO - API 호출: https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtNcst with params: {'base_date': '20250613', 'base_time': '0000', 'nx': 60, 'ny': 127}
+2025-06-13 23:53:58,982 - DEBUG - 응답: {"response":{"header":{"resultCode":"00","resultMsg":"NORMAL_SERVICE"},"body":{"dataType":"JSON","items":{"item":[{"baseDate":"20250613","baseTime":"0000","category":"PTY","nx":60,"ny":127,"obsrValue"
+2025-06-13 23:53:58,982 - DEBUG - API 응답 아이템 수: 8
+2025-06-13 23:54:01,558 - INFO - API 호출: https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst with params: {'base_date': '20250613', 'base_time': '2330', 'nx': 60, 'ny': 127, 'numOfRows': 2880}
+2025-06-13 23:54:01,558 - DEBUG - 응답: {"response":{"header":{"resultCode":"00","resultMsg":"NORMAL_SERVICE"},"body":{"dataType":"JSON","items":{"item":[{"baseDate":"20250613","baseTime":"2300","category":"TMP","fcstDate":"20250614","fcstT
+2025-06-13 23:54:01,565 - DEBUG - API 응답 아이템 수: 980
+2025-06-13 23:54:01,577 - DEBUG -    baseDate baseTime category  fcstDate fcstTime fcstValue  nx   ny
+0  20250613     2300      TMP  20250614     0000        22  60  127
+1  20250613     2300      UUU  20250614     0000      -0.7  60  127
+2  20250613     2300      VVV  20250614     0000       0.6  60  127
+3  20250613     2300      VEC  20250614     0000       127  60  127
+4  20250613     2300      WSD  20250614     0000         1  60  127
+2025-06-14 00:04:14,314 - INFO - API 호출: https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtNcst with params: {'base_date': '20250614', 'base_time': '0000', 'nx': 60, 'ny': 127}
+2025-06-14 00:04:14,315 - DEBUG - 응답: {"response":{"header":{"resultCode":"03","resultMsg":"NO_DATA"}}}
+2025-06-14 00:07:11,461 - INFO - API 호출: https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtNcst with params: {'base_date': '20250613', 'base_time': '2300', 'nx': 60, 'ny': 127}
+2025-06-14 00:07:11,461 - DEBUG - 응답: {"response":{"header":{"resultCode":"00","resultMsg":"NORMAL_SERVICE"},"body":{"dataType":"JSON","items":{"item":[{"baseDate":"20250613","baseTime":"2300","category":"PTY","nx":60,"ny":127,"obsrValue"
+2025-06-14 00:07:11,462 - DEBUG - API 응답 아이템 수: 8
+2025-06-14 00:07:12,330 - INFO - API 호출: https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtNcst with params: {'base_date': '20250613', 'base_time': '0000', 'nx': 60, 'ny': 127}
+2025-06-14 00:07:12,331 - DEBUG - 응답: {"response":{"header":{"resultCode":"10","resultMsg":"최근 1일 간의 자료만 제공합니다."}}}
+2025-06-14 00:08:18,456 - INFO - API 호출: https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtNcst with params: {'base_date': '20250613', 'base_time': '2300', 'nx': 60, 'ny': 127}
+2025-06-14 00:08:18,457 - DEBUG - 응답: {"response":{"header":{"resultCode":"00","resultMsg":"NORMAL_SERVICE"},"body":{"dataType":"JSON","items":{"item":[{"baseDate":"20250613","baseTime":"2300","category":"PTY","nx":60,"ny":127,"obsrValue"
+2025-06-14 00:08:18,457 - DEBUG - API 응답 아이템 수: 8
+2025-06-14 00:08:19,457 - INFO - API 호출: https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtNcst with params: {'base_date': '20250612', 'base_time': '2300', 'nx': 60, 'ny': 127}
+2025-06-14 00:08:19,458 - DEBUG - 응답: <OpenAPI_ServiceResponse>
+	<cmmMsgHeader>
+		<errMsg>SERVICE ERROR</errMsg>
+		<returnAuthMsg>APPLICATION_ERROR</returnAuthMsg>
+		<returnReasonCode>01</returnReasonCode>
+	</cmmMsgHeader>
+</OpenAPI_Servi
+2025-06-14 00:08:35,452 - INFO - API 호출: https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtNcst with params: {'base_date': '20250613', 'base_time': '2300', 'nx': 60, 'ny': 127}
+2025-06-14 00:08:35,453 - DEBUG - 응답: <OpenAPI_ServiceResponse>
+	<cmmMsgHeader>
+		<errMsg>SERVICE ERROR</errMsg>
+		<returnAuthMsg>APPLICATION_ERROR</returnAuthMsg>
+		<returnReasonCode>01</returnReasonCode>
+	</cmmMsgHeader>
+</OpenAPI_Servi
+2025-06-14 00:21:34,792 - INFO - API 호출: https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtNcst with params: {'base_date': '20250613', 'base_time': '2300', 'nx': 60, 'ny': 127}
+2025-06-14 00:21:34,792 - DEBUG - 응답: {"response":{"header":{"resultCode":"00","resultMsg":"NORMAL_SERVICE"},"body":{"dataType":"JSON","items":{"item":[{"baseDate":"20250613","baseTime":"2300","category":"PTY","nx":60,"ny":127,"obsrValue"
+2025-06-14 00:21:34,793 - DEBUG - API 응답 아이템 수: 8
+2025-06-14 00:21:35,680 - INFO - API 호출: https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtNcst with params: {'base_date': '20250612', 'base_time': '2300', 'nx': 60, 'ny': 127}
+2025-06-14 00:21:35,680 - DEBUG - 응답: <OpenAPI_ServiceResponse>
+	<cmmMsgHeader>
+		<errMsg>SERVICE ERROR</errMsg>
+		<returnAuthMsg>SERVICE_KEY_IS_NOT_REGISTERED_ERROR</returnAuthMsg>
+		<returnReasonCode>30</returnReasonCode>
+	</cmmMsgHeade
+2025-06-14 00:37:14,166 - INFO - API 호출: https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtNcst with params: {'base_date': '20250614', 'base_time': '0000', 'nx': 60, 'ny': 127}
+2025-06-14 00:37:14,167 - DEBUG - 응답: {"response":{"header":{"resultCode":"00","resultMsg":"NORMAL_SERVICE"},"body":{"dataType":"JSON","items":{"item":[{"baseDate":"20250614","baseTime":"0000","category":"PTY","nx":60,"ny":127,"obsrValue"
+2025-06-14 00:37:14,167 - DEBUG - API 응답 아이템 수: 8
+2025-06-14 00:37:15,173 - INFO - API 호출: https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtNcst with params: {'base_date': '20250613', 'base_time': '0000', 'nx': 60, 'ny': 127}
+2025-06-14 00:37:15,174 - DEBUG - 응답: {"response":{"header":{"resultCode":"10","resultMsg":"최근 1일 간의 자료만 제공합니다."}}}
+2025-06-14 00:54:48,296 - INFO - API 호출: https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtNcst with params: {'base_date': '20250613', 'base_time': '2300', 'nx': 60, 'ny': 127}
+2025-06-14 00:54:48,327 - DEBUG - 응답: {"response":{"header":{"resultCode":"00","resultMsg":"NORMAL_SERVICE"},"body":{"dataType":"JSON","items":{"item":[{"baseDate":"20250613","baseTime":"2300","category":"PTY","nx":60,"ny":127,"obsrValue"
+2025-06-14 00:54:48,328 - DEBUG - API 응답 아이템 수: 8
+2025-06-14 00:54:49,311 - INFO - API 호출: https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtNcst with params: {'base_date': '20250612', 'base_time': '2300', 'nx': 60, 'ny': 127}
+2025-06-14 00:54:49,311 - DEBUG - 응답: {"response":{"header":{"resultCode":"10","resultMsg":"최근 1일 간의 자료만 제공합니다."}}}
+2025-06-14 00:56:19,474 - INFO - API 호출: https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtNcst with params: {'base_date': '20250613', 'base_time': '2300', 'nx': 60, 'ny': 127}
+2025-06-14 00:56:19,474 - DEBUG - 응답: {"response":{"header":{"resultCode":"00","resultMsg":"NORMAL_SERVICE"},"body":{"dataType":"JSON","items":{"item":[{"baseDate":"20250613","baseTime":"2300","category":"PTY","nx":60,"ny":127,"obsrValue"
+2025-06-14 00:56:19,475 - DEBUG - API 응답 아이템 수: 8
+2025-06-14 00:56:20,504 - INFO - API 호출: https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtNcst with params: {'base_date': '20250613', 'base_time': '0000', 'nx': 60, 'ny': 127}
+2025-06-14 00:56:20,504 - DEBUG - 응답: {"response":{"header":{"resultCode":"10","resultMsg":"최근 1일 간의 자료만 제공합니다."}}}
+2025-06-14 01:12:21,826 - INFO - API 호출: https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtNcst with params: {'base_date': '20250613', 'base_time': '2300', 'nx': 60, 'ny': 127}
+2025-06-14 01:12:21,835 - DEBUG - 응답: {"response":{"header":{"resultCode":"00","resultMsg":"NORMAL_SERVICE"},"body":{"dataType":"JSON","items":{"item":[{"baseDate":"20250613","baseTime":"2300","category":"PTY","nx":60,"ny":127,"obsrValue"
+2025-06-14 01:12:21,837 - DEBUG - API 응답 아이템 수: 8
+2025-06-14 01:12:22,730 - INFO - API 호출: https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtNcst with params: {'base_date': '20250613', 'base_time': '0000', 'nx': 60, 'ny': 127}
+2025-06-14 01:12:22,731 - DEBUG - 응답: {"response":{"header":{"resultCode":"10","resultMsg":"최근 1일 간의 자료만 제공합니다."}}}
+2025-06-14 01:13:02,651 - INFO - API 호출: https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtNcst with params: {'base_date': '20250614', 'base_time': '0000', 'nx': 60, 'ny': 127}
+2025-06-14 01:13:02,653 - DEBUG - 응답: {"response":{"header":{"resultCode":"00","resultMsg":"NORMAL_SERVICE"},"body":{"dataType":"JSON","items":{"item":[{"baseDate":"20250614","baseTime":"0100","category":"PTY","nx":60,"ny":127,"obsrValue"
+2025-06-14 01:13:02,654 - DEBUG - API 응답 아이템 수: 8
+2025-06-14 01:13:03,682 - INFO - API 호출: https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtNcst with params: {'base_date': '20250613', 'base_time': '0100', 'nx': 60, 'ny': 127}
+2025-06-14 01:13:03,683 - DEBUG - 응답: {"response":{"header":{"resultCode":"10","resultMsg":"최근 1일 간의 자료만 제공합니다."}}}
+2025-06-14 01:14:00,646 - INFO - API 호출: https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtNcst with params: {'base_date': '20250614', 'base_time': '0100', 'nx': 60, 'ny': 127}
+2025-06-14 01:14:00,647 - DEBUG - 응답: {"response":{"header":{"resultCode":"00","resultMsg":"NORMAL_SERVICE"},"body":{"dataType":"JSON","items":{"item":[{"baseDate":"20250614","baseTime":"0100","category":"PTY","nx":60,"ny":127,"obsrValue"
+2025-06-14 01:14:00,647 - DEBUG - API 응답 아이템 수: 8
+2025-06-14 01:14:01,862 - INFO - API 호출: https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtNcst with params: {'base_date': '20250613', 'base_time': '0200', 'nx': 60, 'ny': 127}
+2025-06-14 01:14:01,862 - DEBUG - 응답: {"response":{"header":{"resultCode":"00","resultMsg":"NORMAL_SERVICE"},"body":{"dataType":"JSON","items":{"item":[{"baseDate":"20250613","baseTime":"0200","category":"PTY","nx":60,"ny":127,"obsrValue"
+2025-06-14 01:14:01,862 - DEBUG - API 응답 아이템 수: 8
+2025-06-14 01:14:02,783 - INFO - API 호출: https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst with params: {'base_date': '20250614', 'base_time': '2330', 'nx': 60, 'ny': 127, 'numOfRows': 2880}
+2025-06-14 01:14:02,783 - DEBUG - 응답: {"response":{"header":{"resultCode":"03","resultMsg":"NO_DATA"}}}
+2025-06-14 01:14:32,691 - INFO - API 호출: https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst with params: {'base_date': '20250613', 'base_time': '2330', 'nx': 60, 'ny': 127, 'numOfRows': 2880}
+2025-06-14 01:14:32,692 - DEBUG - 응답: {"response":{"header":{"resultCode":"00","resultMsg":"NORMAL_SERVICE"},"body":{"dataType":"JSON","items":{"item":[{"baseDate":"20250613","baseTime":"2300","category":"TMP","fcstDate":"20250614","fcstT
+2025-06-14 01:14:32,698 - DEBUG - API 응답 아이템 수: 980
+2025-06-14 01:14:32,874 - DEBUG -    baseDate baseTime category  fcstDate fcstTime fcstValue  nx   ny
+0  20250613     2300      TMP  20250614     0000        22  60  127
+1  20250613     2300      UUU  20250614     0000      -0.7  60  127
+2  20250613     2300      VVV  20250614     0000       0.6  60  127
+3  20250613     2300      VEC  20250614     0000       127  60  127
+4  20250613     2300      WSD  20250614     0000         1  60  127
+2025-06-14 01:15:19,300 - INFO - API 호출: https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst with params: {'base_date': '20250613', 'base_time': '2330', 'nx': 60, 'ny': 127, 'numOfRows': 2880}
+2025-06-14 01:15:19,301 - DEBUG - 응답: {"response":{"header":{"resultCode":"00","resultMsg":"NORMAL_SERVICE"},"body":{"dataType":"JSON","items":{"item":[{"baseDate":"20250613","baseTime":"2300","category":"TMP","fcstDate":"20250614","fcstT
+2025-06-14 01:15:19,310 - DEBUG - API 응답 아이템 수: 980
+2025-06-14 01:15:19,328 - DEBUG -    baseDate baseTime category  fcstDate fcstTime fcstValue  nx   ny
+0  20250613     2300      TMP  20250614     0000        22  60  127
+1  20250613     2300      UUU  20250614     0000      -0.7  60  127
+2  20250613     2300      VVV  20250614     0000       0.6  60  127
+3  20250613     2300      VEC  20250614     0000       127  60  127
+4  20250613     2300      WSD  20250614     0000         1  60  127
+2025-06-14 01:15:19,541 - DEBUG - 2025-06-13 23:00:00 ~ 2025-06-13 23:00:00
+2025-06-14 01:15:19,542 - DEBUG - 오늘 기온: []
+2025-06-14 01:15:19,542 - DEBUG - 어제 기온: [22.0, -0.7, 0.6, 127.0, 1.0, 4.0, 1.0, 60.0, nan, 0.5, 80.0, 0.0, 22.0, -0.7, 0.3, 111.0, 0.9, 4.0, 1.0, 60.0, nan, 0.5, 80.0, 0.0, 22.0, -0.4, 0.1, 101.0, 0.5, 4.0, 1.0, 67.0, nan, 2.0, 80.0, 0.0, 22.0, -0.3, 0.1, 104.0, 0.4, 4.0, 1.0, 67.0, nan, 2.0, 85.0, 0.0, 22.0, -0.8, 0.0, 90.0, 0.9, 4.0, 1.0, 64.0, nan, 0.5, 85.0, 0.0, 22.0, -1.4, 0.2, 98.0, 1.5, 4.0, 1.0, 60.0, nan, 1.0, 85.0, 0.0, 22.0, -2.0, 0.1, 93.0, 2.1, 4.0, 1.0, 60.0, nan, 0.5, 85.0, 0.0, 21.0, 22.0, -1.8, 0.7, 110.0, 2.0, 4.0, 1.0, 60.0, nan, 1.0, 85.0, 0.0, 24.0, -2.2, 1.5, 123.0, 2.7, 4.0, 1.0, 60.0, nan, 0.5, 85.0, 0.0, 25.0, -2.5, 0.5, 101.0, 2.6, 4.0, 1.0, 60.0, nan, 0.5, 85.0, 0.0, 26.0, -3.3, -0.5, 82.0, 3.4, 4.0, 0.0, 30.0, nan, 0.0, 80.0, 0.0, 28.0, -2.8, -0.1, 88.0, 2.9, 4.0, 0.0, 30.0, nan, 0.0, 65.0, 0.0, 30.0, -2.9, -0.8, 75.0, 3.1, 4.0, 0.0, 30.0, nan, 0.0, 60.0, 0.0, 30.0, -2.4, -1.2, 64.0, 2.8, 4.0, 0.0, 30.0, nan, 0.0, 55.0, 0.0, 30.0, -2.8, -2.1, 54.0, 3.6, 4.0, 0.0, 30.0, nan, 0.0, 55.0, 0.0, 30.0, -2.4, -2.1, 50.0, 3.3, 4.0, 0.0, 30.0, nan, 0.0, 50.0, 0.0, 30.0, 30.0, -1.9, -1.9, 46.0, 2.8, 4.0, 0.0, 30.0, nan, 0.0, 50.0, 0.0, 30.0, -1.9, -1.9, 46.0, 2.8, 4.0, 0.0, 30.0, nan, 0.0, 50.0, 0.0, 30.0, -1.3, -1.4, 45.0, 2.0, 4.0, 0.0, 30.0, nan, 0.0, 55.0, 0.0, 30.0, -0.5, -0.9, 34.0, 1.1, 4.0, 0.0, 30.0, nan, 0.0, 60.0, 0.0, 27.0, -0.5, -0.7, 41.0, 0.9, 3.0, 0.0, 20.0, nan, 0.0, 70.0, 0.0, 26.0, -1.0, -0.5, 66.0, 1.2, 4.0, 0.0, 30.0, nan, 0.0, 70.0, 0.0, 25.0, -1.2, -0.5, 69.0, 1.4, 4.0, 0.0, 30.0, nan, 0.0, 75.0, 0.0, 25.0, -0.5, -0.6, 45.0, 0.8, 4.0, 0.0, 30.0, nan, 0.0, 80.0, 0.0, 24.0, -0.4, -0.7, 36.0, 0.9, 4.0, 0.0, 30.0, nan, 0.0, 80.0, 0.0, 24.0, -0.4, -0.4, 51.0, 0.6, 4.0, 0.0, 30.0, nan, 0.0, 80.0, 0.0, 23.0, -0.5, -0.3, 63.0, 0.7, 4.0, 0.0, 30.0, nan, 0.0, 85.0, 0.0, 23.0, -0.5, 0.2, 108.0, 0.6, 4.0, 0.0, 30.0, nan, 0.0, 85.0, 0.0, 23.0, -0.5, 0.1, 99.0, 0.6, 4.0, 0.0, 30.0, nan, 0.0, 85.0, 0.0, 22.0, -0.7, 0.3, 111.0, 0.9, 4.0, 0.0, 30.0, nan, 0.0, 85.0, 0.0, 22.0, -1.0, 0.4, 110.0, 1.2, 4.0, 0.0, 30.0, nan, 0.0, 85.0, 0.0, 22.0, 22.0, -1.7, 0.8, 114.0, 2.0, 4.0, 0.0, 30.0, nan, 0.0, 85.0, 0.0, 24.0, -1.8, 1.3, 124.0, 2.3, 4.0, 0.0, 30.0, nan, 0.0, 70.0, 0.0, 25.0, -2.2, 2.2, 134.0, 3.2, 4.0, 0.0, 30.0, nan, 0.0, 70.0, 0.0, 27.0, -2.7, 2.7, 134.0, 3.9, 4.0, 0.0, 30.0, nan, 0.0, 65.0, 0.0, 27.0, -1.7, 2.8, 147.0, 3.3, 4.0, 0.0, 30.0, nan, 0.0, 55.0, 0.0, 28.0, -1.6, 2.9, 150.0, 3.4, 4.0, 0.0, 30.0, nan, 0.0, 55.0, 0.0, 28.0, -0.7, 3.7, 168.0, 3.8, 4.0, 0.0, 30.0, nan, 0.0, 55.0, 0.0, 28.0, 0.1, 4.4, 181.0, 4.4, 4.0, 0.0, 30.0, nan, 0.0, 55.0, 0.0, 28.0, 0.7, 4.3, 189.0, 4.4, 4.0, 0.0, 30.0, nan, 0.0, 60.0, 0.0, 28.0, 28.0, -0.3, 3.4, 173.0, 3.4, 4.0, 1.0, 60.0, nan, 3.0, 70.0, 0.0, 27.0, -0.3, 2.8, 172.0, 2.8, 4.0, 1.0, 60.0, nan, 2.0, 80.0, 0.0, 26.0, -0.9, 0.8, 129.0, 1.3, 4.0, 1.0, 60.0, nan, 2.0, 85.0, 0.0, 26.0, -1.2, 0.4, 107.0, 1.4, 4.0, 1.0, 99.0, nan, 5.0, 85.0, 0.0, 25.0, -1.2, 0.5, 111.0, 1.4, 4.0, 1.0, 100.0, nan, 2.0, 80.0, 0.0, 25.0, -1.2, 0.5, 111.0, 1.4, 4.0, 1.0, 100.0, nan, 2.0, 80.0, 0.0, 25.0, -1.8, 1.6, 130.0, 2.5, 4.0, 1.0, 60.0, nan, 3.0, 80.0, 0.0, 24.0, -0.7, 2.2, 160.0, 2.3, 4.0, 1.0, 60.0, nan, 3.0, 80.0, 0.0, 23.0, -0.1, 2.1, 175.0, 2.1, 4.0, 1.0, 60.0, nan, 0.5, 85.0, 0.0, 23.0, 2.1, 1.3, 239.0, 2.4, 4.0, 1.0, 60.0, nan, 1.5, 85.0, 0.0, 23.0, 2.5, 1.4, 241.0, 2.9, 4.0, 1.0, 60.0, nan, 1.1, 85.0, 0.0, 23.0, 2.5, 1.6, 237.0, 2.9, 4.0, 0.0, 30.0, nan, 0.0, 85.0, 0.0, 22.0, 2.0, 2.0, 225.0, 2.8, 4.0, 0.0, 30.0, nan, 0.0, 85.0, 0.0, 22.0, 1.0, 2.2, 205.0, 2.4, 4.0, 0.0, 30.0, nan, 0.0, 85.0, 0.0, 22.0, 0.9, 2.1, 203.0, 2.3, 4.0, 0.0, 30.0, nan, 0.0, 85.0, 0.0, 21.0, 22.0, 0.7, 2.4, 196.0, 2.5, 4.0, 0.0, 30.0, nan, 0.0, 90.0, 0.0, 23.0, 0.1, 2.2, 182.0, 2.2, 3.0, 0.0, 20.0, nan, 0.0, 95.0, 0.0, 23.0, 0.6, 2.4, 194.0, 2.5, 4.0, 0.0, 30.0, nan, 0.0, 90.0, 0.0, 24.0, 0.2, 2.0, 187.0, 2.1, 4.0, 0.0, 30.0, nan, 0.0, 85.0, 0.0, 25.0, 0.0, 2.2, 178.0, 2.2, 4.0, 0.0, 30.0, nan, 0.0, 85.0, 0.0, 25.0, 0.4, 2.7, 188.0, 2.7, 4.0, 0.0, 30.0, nan, 0.0, 80.0, 0.0, 27.0, 0.9, 2.3, 200.0, 2.5, 4.0, 0.0, 30.0, nan, 0.0, 75.0, 0.0, 27.0, 1.6, 2.7, 210.0, 3.1, 4.0, 0.0, 30.0, nan, 0.0, 65.0, 0.0, 28.0, 1.9, 2.5, 217.0, 3.1, 3.0, 0.0, 20.0, nan, 0.0, 60.0, 0.0, 29.0, 28.0, 1.5, 2.7, 210.0, 3.1, 1.0, 0.0, 0.0, nan, 0.0, 60.0, 0.0, 28.0, 0.9, 3.0, 197.0, 3.1, 3.0, 0.0, 20.0, nan, 0.0, 55.0, 0.0, 27.0, 0.4, 2.9, 188.0, 2.9, 3.0, 0.0, 20.0, nan, 0.0, 60.0, 0.0, 26.0, 0.1, 3.1, 182.0, 3.1, 4.0, 0.0, 30.0, nan, 0.0, 65.0, 0.0, 24.0, 0.2, 2.8, 184.0, 2.8, 3.0, 0.0, 20.0, nan, 0.0, 70.0, 0.0, 23.0, 0.0, 2.6, 180.0, 2.6, 3.0, 0.0, 20.0, nan, 0.0, 70.0, 0.0, 23.0, 0.0, 2.4, 180.0, 2.4, 1.0, 0.0, 0.0, nan, 0.0, 75.0, 0.0, 23.0, -0.1, 2.8, 176.0, 2.8, 1.0, 0.0, 0.0, nan, 0.0, 75.0, 0.0, 22.0, -0.2, 2.8, 174.0, 2.8, 3.0, 0.0, 20.0, nan, 0.0, 75.0, 0.0, 22.0, 0.6, 3.0, 191.0, 1.0, 3.0, 0.0, 20.0, nan, 0.0, 85.0, 0.0, 21.0, 0.0, 2.6, 180.0, 1.0, 3.0, 0.0, 20.0, nan, 0.0, 85.0, 0.0, 20.0, 23.0, 1.1, 3.5, 197.0, 1.0, 4.0, 0.0, 30.0, nan, 0.0, 80.0, 0.0, 25.0, 2.6, 3.0, 221.0, 2.0, 4.0, 0.0, 30.0, nan, 0.0, 70.0, 0.0, 27.0, 4.4, 3.4, 232.0, 2.0, 3.0, 0.0, 20.0, nan, 0.0, 65.0, 0.0, 28.0, 24.0, 3.3, 1.7, 243.0, 2.0, 1.0, 0.0, 0.0, nan, 0.0, 70.0, 0.0, 20.0, 1.2, 1.5, 219.0, 1.0, 1.0, 0.0, 0.0, nan, 0.0, 85.0, 0.0, 19.0, 0.6, 0.9, 214.0, 1.0, 1.0, 0.0, 0.0, nan, 0.0, 90.0, 0.0]
+2025-06-14 01:32:02,244 - INFO - API 호출: https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtNcst with params: {'base_date': '20250614', 'base_time': '0100', 'nx': 60, 'ny': 127}
+2025-06-14 01:32:02,245 - DEBUG - 응답: {"response":{"header":{"resultCode":"00","resultMsg":"NORMAL_SERVICE"},"body":{"dataType":"JSON","items":{"item":[{"baseDate":"20250614","baseTime":"0100","category":"PTY","nx":60,"ny":127,"obsrValue"
+2025-06-14 01:32:02,245 - DEBUG - API 응답 아이템 수: 8
+2025-06-14 01:32:03,422 - INFO - API 호출: https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtNcst with params: {'base_date': '20250613', 'base_time': '0200', 'nx': 60, 'ny': 127}
+2025-06-14 01:32:03,422 - DEBUG - 응답: {"response":{"header":{"resultCode":"00","resultMsg":"NORMAL_SERVICE"},"body":{"dataType":"JSON","items":{"item":[{"baseDate":"20250613","baseTime":"0200","category":"PTY","nx":60,"ny":127,"obsrValue"
+2025-06-14 01:32:03,423 - DEBUG - API 응답 아이템 수: 8
+2025-06-14 01:32:04,620 - INFO - API 호출: https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst with params: {'base_date': '20250613', 'base_time': '0000', 'nx': 60, 'ny': 127, 'numOfRows': 2880}
+2025-06-14 01:32:04,621 - DEBUG - 응답: {"response":{"header":{"resultCode":"03","resultMsg":"NO_DATA"}}}
+2025-06-14 01:32:39,319 - INFO - API 호출: https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst with params: {'base_date': '20250613', 'base_time': '0000', 'nx': 60, 'ny': 127, 'numOfRows': 2880}
+2025-06-14 01:32:39,320 - DEBUG - 응답: {"response":{"header":{"resultCode":"03","resultMsg":"NO_DATA"}}}
+2025-06-14 01:33:56,787 - INFO - API 호출: https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst with params: {'base_date': '20250613', 'base_time': '2330', 'nx': 60, 'ny': 127, 'numOfRows': 2880}
+2025-06-14 01:33:56,787 - DEBUG - 응답: {"response":{"header":{"resultCode":"00","resultMsg":"NORMAL_SERVICE"},"body":{"dataType":"JSON","items":{"item":[{"baseDate":"20250613","baseTime":"2300","category":"TMP","fcstDate":"20250614","fcstT
+2025-06-14 01:33:56,795 - DEBUG - API 응답 아이템 수: 980
+2025-06-14 01:33:56,816 - DEBUG -    baseDate baseTime category  fcstDate fcstTime fcstValue  nx   ny
+0  20250613     2300      TMP  20250614     0000        22  60  127
+1  20250613     2300      UUU  20250614     0000      -0.7  60  127
+2  20250613     2300      VVV  20250614     0000       0.6  60  127
+3  20250613     2300      VEC  20250614     0000       127  60  127
+4  20250613     2300      WSD  20250614     0000         1  60  127
+2025-06-14 01:33:56,823 - DEBUG - 2025-06-13 23:00:00 ~ 2025-06-13 23:00:00
+2025-06-14 01:33:56,824 - DEBUG - 오늘 기온: []
+2025-06-14 01:33:56,825 - DEBUG - 어제 기온: [22.0, -0.7, 0.6, 127.0, 1.0, 4.0, 1.0, 60.0, nan, 0.5, 80.0, 0.0, 22.0, -0.7, 0.3, 111.0, 0.9, 4.0, 1.0, 60.0, nan, 0.5, 80.0, 0.0, 22.0, -0.4, 0.1, 101.0, 0.5, 4.0, 1.0, 67.0, nan, 2.0, 80.0, 0.0, 22.0, -0.3, 0.1, 104.0, 0.4, 4.0, 1.0, 67.0, nan, 2.0, 85.0, 0.0, 22.0, -0.8, 0.0, 90.0, 0.9, 4.0, 1.0, 64.0, nan, 0.5, 85.0, 0.0, 22.0, -1.4, 0.2, 98.0, 1.5, 4.0, 1.0, 60.0, nan, 1.0, 85.0, 0.0, 22.0, -2.0, 0.1, 93.0, 2.1, 4.0, 1.0, 60.0, nan, 0.5, 85.0, 0.0, 21.0, 22.0, -1.8, 0.7, 110.0, 2.0, 4.0, 1.0, 60.0, nan, 1.0, 85.0, 0.0, 24.0, -2.2, 1.5, 123.0, 2.7, 4.0, 1.0, 60.0, nan, 0.5, 85.0, 0.0, 25.0, -2.5, 0.5, 101.0, 2.6, 4.0, 1.0, 60.0, nan, 0.5, 85.0, 0.0, 26.0, -3.3, -0.5, 82.0, 3.4, 4.0, 0.0, 30.0, nan, 0.0, 80.0, 0.0, 28.0, -2.8, -0.1, 88.0, 2.9, 4.0, 0.0, 30.0, nan, 0.0, 65.0, 0.0, 30.0, -2.9, -0.8, 75.0, 3.1, 4.0, 0.0, 30.0, nan, 0.0, 60.0, 0.0, 30.0, -2.4, -1.2, 64.0, 2.8, 4.0, 0.0, 30.0, nan, 0.0, 55.0, 0.0, 30.0, -2.8, -2.1, 54.0, 3.6, 4.0, 0.0, 30.0, nan, 0.0, 55.0, 0.0, 30.0, -2.4, -2.1, 50.0, 3.3, 4.0, 0.0, 30.0, nan, 0.0, 50.0, 0.0, 30.0, 30.0, -1.9, -1.9, 46.0, 2.8, 4.0, 0.0, 30.0, nan, 0.0, 50.0, 0.0, 30.0, -1.9, -1.9, 46.0, 2.8, 4.0, 0.0, 30.0, nan, 0.0, 50.0, 0.0, 30.0, -1.3, -1.4, 45.0, 2.0, 4.0, 0.0, 30.0, nan, 0.0, 55.0, 0.0, 30.0, -0.5, -0.9, 34.0, 1.1, 4.0, 0.0, 30.0, nan, 0.0, 60.0, 0.0, 27.0, -0.5, -0.7, 41.0, 0.9, 3.0, 0.0, 20.0, nan, 0.0, 70.0, 0.0, 26.0, -1.0, -0.5, 66.0, 1.2, 4.0, 0.0, 30.0, nan, 0.0, 70.0, 0.0, 25.0, -1.2, -0.5, 69.0, 1.4, 4.0, 0.0, 30.0, nan, 0.0, 75.0, 0.0, 25.0, -0.5, -0.6, 45.0, 0.8, 4.0, 0.0, 30.0, nan, 0.0, 80.0, 0.0, 24.0, -0.4, -0.7, 36.0, 0.9, 4.0, 0.0, 30.0, nan, 0.0, 80.0, 0.0, 24.0, -0.4, -0.4, 51.0, 0.6, 4.0, 0.0, 30.0, nan, 0.0, 80.0, 0.0, 23.0, -0.5, -0.3, 63.0, 0.7, 4.0, 0.0, 30.0, nan, 0.0, 85.0, 0.0, 23.0, -0.5, 0.2, 108.0, 0.6, 4.0, 0.0, 30.0, nan, 0.0, 85.0, 0.0, 23.0, -0.5, 0.1, 99.0, 0.6, 4.0, 0.0, 30.0, nan, 0.0, 85.0, 0.0, 22.0, -0.7, 0.3, 111.0, 0.9, 4.0, 0.0, 30.0, nan, 0.0, 85.0, 0.0, 22.0, -1.0, 0.4, 110.0, 1.2, 4.0, 0.0, 30.0, nan, 0.0, 85.0, 0.0, 22.0, 22.0, -1.7, 0.8, 114.0, 2.0, 4.0, 0.0, 30.0, nan, 0.0, 85.0, 0.0, 24.0, -1.8, 1.3, 124.0, 2.3, 4.0, 0.0, 30.0, nan, 0.0, 70.0, 0.0, 25.0, -2.2, 2.2, 134.0, 3.2, 4.0, 0.0, 30.0, nan, 0.0, 70.0, 0.0, 27.0, -2.7, 2.7, 134.0, 3.9, 4.0, 0.0, 30.0, nan, 0.0, 65.0, 0.0, 27.0, -1.7, 2.8, 147.0, 3.3, 4.0, 0.0, 30.0, nan, 0.0, 55.0, 0.0, 28.0, -1.6, 2.9, 150.0, 3.4, 4.0, 0.0, 30.0, nan, 0.0, 55.0, 0.0, 28.0, -0.7, 3.7, 168.0, 3.8, 4.0, 0.0, 30.0, nan, 0.0, 55.0, 0.0, 28.0, 0.1, 4.4, 181.0, 4.4, 4.0, 0.0, 30.0, nan, 0.0, 55.0, 0.0, 28.0, 0.7, 4.3, 189.0, 4.4, 4.0, 0.0, 30.0, nan, 0.0, 60.0, 0.0, 28.0, 28.0, -0.3, 3.4, 173.0, 3.4, 4.0, 1.0, 60.0, nan, 3.0, 70.0, 0.0, 27.0, -0.3, 2.8, 172.0, 2.8, 4.0, 1.0, 60.0, nan, 2.0, 80.0, 0.0, 26.0, -0.9, 0.8, 129.0, 1.3, 4.0, 1.0, 60.0, nan, 2.0, 85.0, 0.0, 26.0, -1.2, 0.4, 107.0, 1.4, 4.0, 1.0, 99.0, nan, 5.0, 85.0, 0.0, 25.0, -1.2, 0.5, 111.0, 1.4, 4.0, 1.0, 100.0, nan, 2.0, 80.0, 0.0, 25.0, -1.2, 0.5, 111.0, 1.4, 4.0, 1.0, 100.0, nan, 2.0, 80.0, 0.0, 25.0, -1.8, 1.6, 130.0, 2.5, 4.0, 1.0, 60.0, nan, 3.0, 80.0, 0.0, 24.0, -0.7, 2.2, 160.0, 2.3, 4.0, 1.0, 60.0, nan, 3.0, 80.0, 0.0, 23.0, -0.1, 2.1, 175.0, 2.1, 4.0, 1.0, 60.0, nan, 0.5, 85.0, 0.0, 23.0, 2.1, 1.3, 239.0, 2.4, 4.0, 1.0, 60.0, nan, 1.5, 85.0, 0.0, 23.0, 2.5, 1.4, 241.0, 2.9, 4.0, 1.0, 60.0, nan, 1.1, 85.0, 0.0, 23.0, 2.5, 1.6, 237.0, 2.9, 4.0, 0.0, 30.0, nan, 0.0, 85.0, 0.0, 22.0, 2.0, 2.0, 225.0, 2.8, 4.0, 0.0, 30.0, nan, 0.0, 85.0, 0.0, 22.0, 1.0, 2.2, 205.0, 2.4, 4.0, 0.0, 30.0, nan, 0.0, 85.0, 0.0, 22.0, 0.9, 2.1, 203.0, 2.3, 4.0, 0.0, 30.0, nan, 0.0, 85.0, 0.0, 21.0, 22.0, 0.7, 2.4, 196.0, 2.5, 4.0, 0.0, 30.0, nan, 0.0, 90.0, 0.0, 23.0, 0.1, 2.2, 182.0, 2.2, 3.0, 0.0, 20.0, nan, 0.0, 95.0, 0.0, 23.0, 0.6, 2.4, 194.0, 2.5, 4.0, 0.0, 30.0, nan, 0.0, 90.0, 0.0, 24.0, 0.2, 2.0, 187.0, 2.1, 4.0, 0.0, 30.0, nan, 0.0, 85.0, 0.0, 25.0, 0.0, 2.2, 178.0, 2.2, 4.0, 0.0, 30.0, nan, 0.0, 85.0, 0.0, 25.0, 0.4, 2.7, 188.0, 2.7, 4.0, 0.0, 30.0, nan, 0.0, 80.0, 0.0, 27.0, 0.9, 2.3, 200.0, 2.5, 4.0, 0.0, 30.0, nan, 0.0, 75.0, 0.0, 27.0, 1.6, 2.7, 210.0, 3.1, 4.0, 0.0, 30.0, nan, 0.0, 65.0, 0.0, 28.0, 1.9, 2.5, 217.0, 3.1, 3.0, 0.0, 20.0, nan, 0.0, 60.0, 0.0, 29.0, 28.0, 1.5, 2.7, 210.0, 3.1, 1.0, 0.0, 0.0, nan, 0.0, 60.0, 0.0, 28.0, 0.9, 3.0, 197.0, 3.1, 3.0, 0.0, 20.0, nan, 0.0, 55.0, 0.0, 27.0, 0.4, 2.9, 188.0, 2.9, 3.0, 0.0, 20.0, nan, 0.0, 60.0, 0.0, 26.0, 0.1, 3.1, 182.0, 3.1, 4.0, 0.0, 30.0, nan, 0.0, 65.0, 0.0, 24.0, 0.2, 2.8, 184.0, 2.8, 3.0, 0.0, 20.0, nan, 0.0, 70.0, 0.0, 23.0, 0.0, 2.6, 180.0, 2.6, 3.0, 0.0, 20.0, nan, 0.0, 70.0, 0.0, 23.0, 0.0, 2.4, 180.0, 2.4, 1.0, 0.0, 0.0, nan, 0.0, 75.0, 0.0, 23.0, -0.1, 2.8, 176.0, 2.8, 1.0, 0.0, 0.0, nan, 0.0, 75.0, 0.0, 22.0, -0.2, 2.8, 174.0, 2.8, 3.0, 0.0, 20.0, nan, 0.0, 75.0, 0.0, 22.0, 0.6, 3.0, 191.0, 1.0, 3.0, 0.0, 20.0, nan, 0.0, 85.0, 0.0, 21.0, 0.0, 2.6, 180.0, 1.0, 3.0, 0.0, 20.0, nan, 0.0, 85.0, 0.0, 20.0, 23.0, 1.1, 3.5, 197.0, 1.0, 4.0, 0.0, 30.0, nan, 0.0, 80.0, 0.0, 25.0, 2.6, 3.0, 221.0, 2.0, 4.0, 0.0, 30.0, nan, 0.0, 70.0, 0.0, 27.0, 4.4, 3.4, 232.0, 2.0, 3.0, 0.0, 20.0, nan, 0.0, 65.0, 0.0, 28.0, 24.0, 3.3, 1.7, 243.0, 2.0, 1.0, 0.0, 0.0, nan, 0.0, 70.0, 0.0, 20.0, 1.2, 1.5, 219.0, 1.0, 1.0, 0.0, 0.0, nan, 0.0, 85.0, 0.0, 19.0, 0.6, 0.9, 214.0, 1.0, 1.0, 0.0, 0.0, nan, 0.0, 90.0, 0.0]
+2025-06-14 01:43:30,379 - INFO - API 호출: https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtNcst with params: {'base_date': '20250614', 'base_time': '0100', 'nx': 60, 'ny': 127}
+2025-06-14 01:43:30,379 - DEBUG - 응답: {"response":{"header":{"resultCode":"00","resultMsg":"NORMAL_SERVICE"},"body":{"dataType":"JSON","items":{"item":[{"baseDate":"20250614","baseTime":"0100","category":"PTY","nx":60,"ny":127,"obsrValue"
+2025-06-14 01:43:30,380 - DEBUG - API 응답 아이템 수: 8
+2025-06-14 01:43:31,410 - INFO - API 호출: https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtNcst with params: {'base_date': '20250613', 'base_time': '0200', 'nx': 60, 'ny': 127}
+2025-06-14 01:43:31,410 - DEBUG - 응답: {"response":{"header":{"resultCode":"00","resultMsg":"NORMAL_SERVICE"},"body":{"dataType":"JSON","items":{"item":[{"baseDate":"20250613","baseTime":"0200","category":"PTY","nx":60,"ny":127,"obsrValue"
+2025-06-14 01:43:31,411 - DEBUG - API 응답 아이템 수: 8
+2025-06-14 01:43:33,455 - INFO - API 호출: https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst with params: {'base_date': '20250613', 'base_time': '2330', 'nx': 60, 'ny': 127, 'numOfRows': 2880}
+2025-06-14 01:43:33,456 - DEBUG - 응답: {"response":{"header":{"resultCode":"00","resultMsg":"NORMAL_SERVICE"},"body":{"dataType":"JSON","items":{"item":[{"baseDate":"20250613","baseTime":"2300","category":"TMP","fcstDate":"20250614","fcstT
+2025-06-14 01:43:33,462 - DEBUG - API 응답 아이템 수: 980
+2025-06-14 01:43:33,477 - DEBUG -    baseDate baseTime category  fcstDate fcstTime fcstValue  nx   ny
+0  20250613     2300      TMP  20250614     0000        22  60  127
+1  20250613     2300      UUU  20250614     0000      -0.7  60  127
+2  20250613     2300      VVV  20250614     0000       0.6  60  127
+3  20250613     2300      VEC  20250614     0000       127  60  127
+4  20250613     2300      WSD  20250614     0000         1  60  127
+2025-06-14 01:43:33,508 - DEBUG - 2025-06-14 00:00:00 ~ 2025-06-18 00:00:00
+2025-06-14 01:43:33,509 - DEBUG - 오늘 기온: [22.0, -0.7, 0.6, 127.0, 1.0, 4.0, 1.0, 60.0, nan, 0.5, 80.0, 0.0, 22.0, -0.7, 0.3, 111.0, 0.9, 4.0, 1.0, 60.0, nan, 0.5, 80.0, 0.0, 22.0, -0.4, 0.1, 101.0, 0.5, 4.0, 1.0, 67.0, nan, 2.0, 80.0, 0.0, 22.0, -0.3, 0.1, 104.0, 0.4, 4.0, 1.0, 67.0, nan, 2.0, 85.0, 0.0, 22.0, -0.8, 0.0, 90.0, 0.9, 4.0, 1.0, 64.0, nan, 0.5, 85.0, 0.0, 22.0, -1.4, 0.2, 98.0, 1.5, 4.0, 1.0, 60.0, nan, 1.0, 85.0, 0.0, 22.0, -2.0, 0.1, 93.0, 2.1, 4.0, 1.0, 60.0, nan, 0.5, 85.0, 0.0, 21.0, 22.0, -1.8, 0.7, 110.0, 2.0, 4.0, 1.0, 60.0, nan, 1.0, 85.0, 0.0, 24.0, -2.2, 1.5, 123.0, 2.7, 4.0, 1.0, 60.0, nan, 0.5, 85.0, 0.0, 25.0, -2.5, 0.5, 101.0, 2.6, 4.0, 1.0, 60.0, nan, 0.5, 85.0, 0.0, 26.0, -3.3, -0.5, 82.0, 3.4, 4.0, 0.0, 30.0, nan, 0.0, 80.0, 0.0, 28.0, -2.8, -0.1, 88.0, 2.9, 4.0, 0.0, 30.0, nan, 0.0, 65.0, 0.0, 30.0, -2.9, -0.8, 75.0, 3.1, 4.0, 0.0, 30.0, nan, 0.0, 60.0, 0.0, 30.0, -2.4, -1.2, 64.0, 2.8, 4.0, 0.0, 30.0, nan, 0.0, 55.0, 0.0, 30.0, -2.8, -2.1, 54.0, 3.6, 4.0, 0.0, 30.0, nan, 0.0, 55.0, 0.0, 30.0, -2.4, -2.1, 50.0, 3.3, 4.0, 0.0, 30.0, nan, 0.0, 50.0, 0.0, 30.0, 30.0, -1.9, -1.9, 46.0, 2.8, 4.0, 0.0, 30.0, nan, 0.0, 50.0, 0.0, 30.0, -1.9, -1.9, 46.0, 2.8, 4.0, 0.0, 30.0, nan, 0.0, 50.0, 0.0, 30.0, -1.3, -1.4, 45.0, 2.0, 4.0, 0.0, 30.0, nan, 0.0, 55.0, 0.0, 30.0, -0.5, -0.9, 34.0, 1.1, 4.0, 0.0, 30.0, nan, 0.0, 60.0, 0.0, 27.0, -0.5, -0.7, 41.0, 0.9, 3.0, 0.0, 20.0, nan, 0.0, 70.0, 0.0, 26.0, -1.0, -0.5, 66.0, 1.2, 4.0, 0.0, 30.0, nan, 0.0, 70.0, 0.0, 25.0, -1.2, -0.5, 69.0, 1.4, 4.0, 0.0, 30.0, nan, 0.0, 75.0, 0.0, 25.0, -0.5, -0.6, 45.0, 0.8, 4.0, 0.0, 30.0, nan, 0.0, 80.0, 0.0]
+2025-06-14 01:43:33,510 - DEBUG - 어제 기온: []
+2025-06-14 01:44:34,740 - INFO - API 호출: https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst with params: {'base_date': '20250612', 'base_time': '0000', 'nx': 60, 'ny': 127, 'numOfRows': 2880}
+2025-06-14 01:44:34,741 - DEBUG - 응답: {"response":{"header":{"resultCode":"03","resultMsg":"NO_DATA"}}}
+2025-06-14 01:45:04,035 - DEBUG - 오늘: 2025-06-14, 어제: 2025-06-13
+2025-06-14 01:45:06,866 - INFO - API 호출: https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst with params: {'base_date': '20250613', 'base_time': '2330', 'nx': 60, 'ny': 127, 'numOfRows': 2880}
+2025-06-14 01:45:06,866 - DEBUG - 응답: {"response":{"header":{"resultCode":"00","resultMsg":"NORMAL_SERVICE"},"body":{"dataType":"JSON","items":{"item":[{"baseDate":"20250613","baseTime":"2300","category":"TMP","fcstDate":"20250614","fcstT
+2025-06-14 01:45:06,873 - DEBUG - API 응답 아이템 수: 980
+2025-06-14 01:45:06,889 - DEBUG -    baseDate baseTime category  fcstDate fcstTime fcstValue  nx   ny
+0  20250613     2300      TMP  20250614     0000        22  60  127
+1  20250613     2300      UUU  20250614     0000      -0.7  60  127
+2  20250613     2300      VVV  20250614     0000       0.6  60  127
+3  20250613     2300      VEC  20250614     0000       127  60  127
+4  20250613     2300      WSD  20250614     0000         1  60  127
+2025-06-14 01:45:06,905 - DEBUG - 2025-06-14 00:00:00 ~ 2025-06-18 00:00:00
+2025-06-14 01:45:06,940 - DEBUG - 오늘 기온: [22.0, -0.7, 0.6, 127.0, 1.0, 4.0, 1.0, 60.0, nan, 0.5, 80.0, 0.0, 22.0, -0.7, 0.3, 111.0, 0.9, 4.0, 1.0, 60.0, nan, 0.5, 80.0, 0.0, 22.0, -0.4, 0.1, 101.0, 0.5, 4.0, 1.0, 67.0, nan, 2.0, 80.0, 0.0, 22.0, -0.3, 0.1, 104.0, 0.4, 4.0, 1.0, 67.0, nan, 2.0, 85.0, 0.0, 22.0, -0.8, 0.0, 90.0, 0.9, 4.0, 1.0, 64.0, nan, 0.5, 85.0, 0.0, 22.0, -1.4, 0.2, 98.0, 1.5, 4.0, 1.0, 60.0, nan, 1.0, 85.0, 0.0, 22.0, -2.0, 0.1, 93.0, 2.1, 4.0, 1.0, 60.0, nan, 0.5, 85.0, 0.0, 21.0, 22.0, -1.8, 0.7, 110.0, 2.0, 4.0, 1.0, 60.0, nan, 1.0, 85.0, 0.0, 24.0, -2.2, 1.5, 123.0, 2.7, 4.0, 1.0, 60.0, nan, 0.5, 85.0, 0.0, 25.0, -2.5, 0.5, 101.0, 2.6, 4.0, 1.0, 60.0, nan, 0.5, 85.0, 0.0, 26.0, -3.3, -0.5, 82.0, 3.4, 4.0, 0.0, 30.0, nan, 0.0, 80.0, 0.0, 28.0, -2.8, -0.1, 88.0, 2.9, 4.0, 0.0, 30.0, nan, 0.0, 65.0, 0.0, 30.0, -2.9, -0.8, 75.0, 3.1, 4.0, 0.0, 30.0, nan, 0.0, 60.0, 0.0, 30.0, -2.4, -1.2, 64.0, 2.8, 4.0, 0.0, 30.0, nan, 0.0, 55.0, 0.0, 30.0, -2.8, -2.1, 54.0, 3.6, 4.0, 0.0, 30.0, nan, 0.0, 55.0, 0.0, 30.0, -2.4, -2.1, 50.0, 3.3, 4.0, 0.0, 30.0, nan, 0.0, 50.0, 0.0, 30.0, 30.0, -1.9, -1.9, 46.0, 2.8, 4.0, 0.0, 30.0, nan, 0.0, 50.0, 0.0, 30.0, -1.9, -1.9, 46.0, 2.8, 4.0, 0.0, 30.0, nan, 0.0, 50.0, 0.0, 30.0, -1.3, -1.4, 45.0, 2.0, 4.0, 0.0, 30.0, nan, 0.0, 55.0, 0.0, 30.0, -0.5, -0.9, 34.0, 1.1, 4.0, 0.0, 30.0, nan, 0.0, 60.0, 0.0, 27.0, -0.5, -0.7, 41.0, 0.9, 3.0, 0.0, 20.0, nan, 0.0, 70.0, 0.0, 26.0, -1.0, -0.5, 66.0, 1.2, 4.0, 0.0, 30.0, nan, 0.0, 70.0, 0.0, 25.0, -1.2, -0.5, 69.0, 1.4, 4.0, 0.0, 30.0, nan, 0.0, 75.0, 0.0, 25.0, -0.5, -0.6, 45.0, 0.8, 4.0, 0.0, 30.0, nan, 0.0, 80.0, 0.0]
+2025-06-14 01:45:06,941 - DEBUG - 어제 기온: []
+2025-06-14 01:46:14,817 - DEBUG - 오늘: 2025-06-14, 어제: 2025-06-13
+2025-06-14 01:46:19,303 - INFO - API 호출: https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst with params: {'base_date': '20250613', 'base_time': '0146', 'nx': 60, 'ny': 127, 'numOfRows': 2880}
+2025-06-14 01:46:19,304 - DEBUG - 응답: {"response":{"header":{"resultCode":"03","resultMsg":"NO_DATA"}}}
+2025-06-14 01:47:03,693 - DEBUG - 오늘: 2025-06-14, 어제: 2025-06-13
+2025-06-14 01:47:22,836 - DEBUG - 오늘: 2025-06-14, 어제: 2025-06-13
+2025-06-14 01:47:25,175 - INFO - API 호출: https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst with params: {'base_date': '20250613', 'base_time': '0247', 'nx': 60, 'ny': 127, 'numOfRows': 2880}
+2025-06-14 01:47:25,176 - DEBUG - 응답: {"response":{"header":{"resultCode":"00","resultMsg":"NORMAL_SERVICE"},"body":{"dataType":"JSON","items":{"item":[{"baseDate":"20250613","baseTime":"0200","category":"TMP","fcstDate":"20250613","fcstT
+2025-06-14 01:47:25,180 - DEBUG - API 응답 아이템 수: 944
+2025-06-14 01:47:25,195 - DEBUG -    baseDate baseTime category  fcstDate fcstTime fcstValue  nx   ny
+0  20250613     0200      TMP  20250613     0300        20  60  127
+1  20250613     0200      UUU  20250613     0300      -0.3  60  127
+2  20250613     0200      VVV  20250613     0300      -0.1  60  127
+3  20250613     0200      VEC  20250613     0300        76  60  127
+4  20250613     0200      WSD  20250613     0300       0.4  60  127
+2025-06-14 01:47:25,203 - DEBUG - 2025-06-13 03:00:00 ~ 2025-06-17 00:00:00
+2025-06-14 01:47:25,204 - DEBUG - 오늘 기온: [23.0, -0.7, 0.6, 127.0, 1.0, 4.0, 0.0, 30.0, nan, 0.0, 85.0, 0.0, 23.0, -0.7, 0.3, 111.0, 0.9, 4.0, 0.0, 30.0, nan, 0.0, 85.0, 0.0, 23.0, -0.4, 0.1, 101.0, 0.5, 4.0, 1.0, 67.0, nan, 2.0, 80.0, 0.0, 23.0, -0.3, 0.1, 104.0, 0.4, 4.0, 1.0, 67.0, nan, 2.0, 85.0, 0.0, 23.0, -0.8, 0.0, 90.0, 0.9, 4.0, 1.0, 64.0, nan, 0.5, 85.0, 0.0, 23.0, -1.4, 0.2, 98.0, 1.5, 4.0, 1.0, 60.0, nan, 1.0, 85.0, 0.0, 23.0, -2.0, 0.1, 93.0, 2.1, 4.0, 0.0, 30.0, nan, 0.0, 85.0, 0.0, 21.0, 22.0, -1.8, 0.7, 110.0, 2.0, 4.0, 1.0, 60.0, nan, 1.0, 85.0, 0.0, 23.0, -2.2, 1.5, 123.0, 2.7, 4.0, 1.0, 60.0, nan, 0.5, 90.0, 0.0, 24.0, -2.5, 0.5, 101.0, 2.6, 4.0, 1.0, 60.0, nan, 0.5, 90.0, 0.0, 25.0, -3.3, -0.5, 82.0, 3.4, 4.0, 0.0, 30.0, nan, 0.0, 85.0, 0.0, 27.0, -2.8, -0.1, 88.0, 2.9, 4.0, 0.0, 30.0, nan, 0.0, 70.0, 0.0, 28.0, -2.9, -0.8, 75.0, 3.1, 4.0, 0.0, 30.0, nan, 0.0, 65.0, 0.0, 29.0, -2.4, -1.2, 64.0, 2.8, 4.0, 0.0, 30.0, nan, 0.0, 65.0, 0.0, 30.0, -2.8, -2.1, 54.0, 3.6, 4.0, 0.0, 30.0, nan, 0.0, 55.0, 0.0, 30.0, -2.4, -2.1, 50.0, 3.3, 4.0, 0.0, 30.0, nan, 0.0, 55.0, 0.0, 30.0, 30.0, -1.9, -1.9, 46.0, 2.8, 4.0, 0.0, 30.0, nan, 0.0, 50.0, 0.0, 30.0, -1.9, -1.9, 46.0, 2.8, 4.0, 0.0, 30.0, nan, 0.0, 50.0, 0.0, 30.0, -1.3, -1.4, 45.0, 2.0, 4.0, 0.0, 30.0, nan, 0.0, 55.0, 0.0, 29.0, -0.5, -0.9, 34.0, 1.1, 4.0, 0.0, 30.0, nan, 0.0, 60.0, 0.0, 28.0, -0.5, -0.7, 41.0, 0.9, 3.0, 0.0, 20.0, nan, 0.0, 70.0, 0.0, 27.0, -1.0, -0.5, 66.0, 1.2, 4.0, 0.0, 30.0, nan, 0.0, 75.0, 0.0, 26.0, -1.2, -0.5, 69.0, 1.4, 4.0, 0.0, 30.0, nan, 0.0, 75.0, 0.0, 25.0, -0.5, -0.6, 45.0, 0.8, 4.0, 0.0, 30.0, nan, 0.0, 80.0, 0.0]
+2025-06-14 01:47:25,205 - DEBUG - 어제 기온: [20.0, -0.3, -0.1, 76.0, 0.4, 1.0, 0.0, 0.0, nan, 0.0, 75.0, 0.0, 20.0, -0.2, 0.7, 157.0, 0.8, 1.0, 0.0, 0.0, nan, 0.0, 80.0, 0.0, 20.0, -0.2, 0.9, 162.0, 0.9, 1.0, 0.0, 0.0, nan, 0.0, 75.0, 0.0, 20.0, -0.4, 0.5, 135.0, 0.7, 1.0, 0.0, 0.0, nan, 0.0, 75.0, 0.0, 20.0, 20.0, -0.5, 0.8, 143.0, 1.0, 1.0, 0.0, 0.0, nan, 0.0, 70.0, 0.0, 22.0, -1.0, 0.9, 129.0, 1.4, 1.0, 0.0, 0.0, nan, 0.0, 70.0, 0.0, 23.0, -1.4, 0.8, 118.0, 1.7, 1.0, 0.0, 0.0, nan, 0.0, 65.0, 0.0, 24.0, -1.8, 1.0, 118.0, 2.1, 1.0, 0.0, 0.0, nan, 0.0, 60.0, 0.0, 26.0, -1.4, 1.1, 126.0, 1.9, 3.0, 0.0, 20.0, nan, 0.0, 50.0, 0.0, 28.0, -0.3, 2.6, 171.0, 2.6, 3.0, 0.0, 20.0, nan, 0.0, 50.0, 0.0, 28.0, -0.1, 2.4, 175.0, 2.4, 3.0, 0.0, 20.0, nan, 0.0, 45.0, 0.0, 26.0, 0.6, 2.4, 194.0, 2.5, 4.0, 0.0, 30.0, nan, 0.0, 80.0, 0.0, 26.0, 1.1, 1.9, 210.0, 2.2, 4.0, 0.0, 30.0, nan, 0.0, 80.0, 0.0, 30.0, 26.0, -0.4, 1.8, 164.0, 1.9, 4.0, 0.0, 30.0, nan, 0.0, 80.0, 0.0, 26.0, 0.0, 1.9, 177.0, 1.9, 4.0, 0.0, 30.0, nan, 0.0, 75.0, 0.0, 25.0, -1.3, 1.2, 131.0, 1.8, 4.0, 0.0, 30.0, nan, 0.0, 80.0, 0.0, 25.0, -1.8, 1.3, 124.0, 2.3, 4.0, 0.0, 30.0, nan, 0.0, 80.0, 0.0, 24.0, -1.7, 1.1, 121.0, 2.1, 4.0, 0.0, 30.0, nan, 0.0, 75.0, 0.0, 24.0, -1.4, 0.3, 101.0, 1.5, 4.0, 0.0, 30.0, nan, 0.0, 80.0, 0.0, 23.0, -2.1, 0.6, 105.0, 2.3, 4.0, 0.0, 30.0, nan, 0.0, 85.0, 0.0, 23.0, -1.1, 0.9, 127.0, 1.5, 4.0, 0.0, 30.0, nan, 0.0, 80.0, 0.0]
+2025-06-14 01:55:11,984 - INFO - API 호출: https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtNcst with params: {'base_date': '20250614', 'base_time': '0100', 'nx': 60, 'ny': 127}
+2025-06-14 01:55:11,985 - DEBUG - 응답: {"response":{"header":{"resultCode":"00","resultMsg":"NORMAL_SERVICE"},"body":{"dataType":"JSON","items":{"item":[{"baseDate":"20250614","baseTime":"0100","category":"PTY","nx":60,"ny":127,"obsrValue"
+2025-06-14 01:55:11,985 - DEBUG - API 응답 아이템 수: 8
+2025-06-14 01:55:27,564 - INFO - API 호출: https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtNcst with params: {'base_date': '20250613', 'base_time': '0200', 'nx': 60, 'ny': 127}
+2025-06-14 01:55:27,567 - DEBUG - 응답: <OpenAPI_ServiceResponse>
+	<cmmMsgHeader>
+		<errMsg>SERVICE ERROR</errMsg>
+		<returnAuthMsg>HTTP ROUTING ERROR</returnAuthMsg>
+		<returnReasonCode>04</returnReasonCode>
+	</cmmMsgHeader>
+</OpenAPI_Serv
+2025-06-14 01:56:15,028 - INFO - API 호출: https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtNcst with params: {'base_date': '20250614', 'base_time': '0100', 'nx': 60, 'ny': 127}
+2025-06-14 01:56:15,028 - DEBUG - 응답: {"response":{"header":{"resultCode":"00","resultMsg":"NORMAL_SERVICE"},"body":{"dataType":"JSON","items":{"item":[{"baseDate":"20250614","baseTime":"0100","category":"PTY","nx":60,"ny":127,"obsrValue"
+2025-06-14 01:56:15,029 - DEBUG - API 응답 아이템 수: 8
+2025-06-14 01:56:15,982 - INFO - API 호출: https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtNcst with params: {'base_date': '20250613', 'base_time': '0200', 'nx': 60, 'ny': 127}
+2025-06-14 01:56:15,983 - DEBUG - 응답: {"response":{"header":{"resultCode":"00","resultMsg":"NORMAL_SERVICE"},"body":{"dataType":"JSON","items":{"item":[{"baseDate":"20250613","baseTime":"0200","category":"PTY","nx":60,"ny":127,"obsrValue"
+2025-06-14 01:56:15,984 - DEBUG - API 응답 아이템 수: 8
+2025-06-14 01:56:15,988 - DEBUG - 오늘: 2025-06-14, 어제: 2025-06-13
+2025-06-14 02:01:26,670 - INFO - API 호출: https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtNcst with params: {'base_date': '20250614', 'base_time': '0200', 'nx': 60, 'ny': 127}
+2025-06-14 02:01:26,671 - DEBUG - 응답: <OpenAPI_ServiceResponse>
+	<cmmMsgHeader>
+		<errMsg>SERVICE ERROR</errMsg>
+		<returnAuthMsg>HTTP ROUTING ERROR</returnAuthMsg>
+		<returnReasonCode>04</returnReasonCode>
+	</cmmMsgHeader>
+</OpenAPI_Serv
+2025-06-14 02:01:52,844 - INFO - API 호출: https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtNcst with params: {'base_date': '20250614', 'base_time': '0200', 'nx': 60, 'ny': 127}
+2025-06-14 02:01:52,844 - DEBUG - 응답: <OpenAPI_ServiceResponse>
+	<cmmMsgHeader>
+		<errMsg>SERVICE ERROR</errMsg>
+		<returnAuthMsg>HTTP ROUTING ERROR</returnAuthMsg>
+		<returnReasonCode>04</returnReasonCode>
+	</cmmMsgHeader>
+</OpenAPI_Serv
+2025-06-14 02:03:17,886 - INFO - API 호출: https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtNcst with params: {'base_date': '20250614', 'base_time': '0200', 'nx': 60, 'ny': 127}
+2025-06-14 02:03:17,886 - DEBUG - 응답: {"response":{"header":{"resultCode":"03","resultMsg":"NO_DATA"}}}
+2025-06-14 02:03:48,727 - DEBUG - 오늘: 2025-06-14, 어제: 2025-06-13
+2025-06-14 02:03:49,646 - INFO - API 호출: https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst with params: {'base_date': '20250613', 'base_time': '0303', 'nx': 60, 'ny': 127, 'numOfRows': 2880}
+2025-06-14 02:03:49,647 - DEBUG - 응답: {"response":{"header":{"resultCode":"03","resultMsg":"NO_DATA"}}}
+2025-06-14 02:05:48,574 - DEBUG - 오늘: 2025-06-14, 어제: 2025-06-13
+2025-06-14 02:05:50,610 - INFO - API 호출: https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst with params: {'base_date': '20250613', 'base_time': '0200', 'nx': 60, 'ny': 127, 'numOfRows': 2880}
+2025-06-14 02:05:50,610 - DEBUG - 응답: {"response":{"header":{"resultCode":"00","resultMsg":"NORMAL_SERVICE"},"body":{"dataType":"JSON","items":{"item":[{"baseDate":"20250613","baseTime":"0200","category":"TMP","fcstDate":"20250613","fcstT
+2025-06-14 02:05:50,616 - DEBUG - API 응답 아이템 수: 944
+2025-06-14 02:05:50,631 - DEBUG -    baseDate baseTime category  fcstDate fcstTime fcstValue  nx   ny
+0  20250613     0200      TMP  20250613     0300        20  60  127
+1  20250613     0200      UUU  20250613     0300      -0.3  60  127
+2  20250613     0200      VVV  20250613     0300      -0.1  60  127
+3  20250613     0200      VEC  20250613     0300        76  60  127
+4  20250613     0200      WSD  20250613     0300       0.4  60  127
+2025-06-14 02:06:20,294 - INFO - API 호출: https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtNcst with params: {'base_date': '20250614', 'base_time': '0100', 'nx': 60, 'ny': 127}
+2025-06-14 02:06:20,295 - DEBUG - 응답: {"response":{"header":{"resultCode":"00","resultMsg":"NORMAL_SERVICE"},"body":{"dataType":"JSON","items":{"item":[{"baseDate":"20250614","baseTime":"0100","category":"PTY","nx":60,"ny":127,"obsrValue"
+2025-06-14 02:06:20,295 - DEBUG - API 응답 아이템 수: 8
+2025-06-14 02:06:21,166 - INFO - API 호출: https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtNcst with params: {'base_date': '20250613', 'base_time': '0200', 'nx': 60, 'ny': 127}
+2025-06-14 02:06:21,166 - DEBUG - 응답: {"response":{"header":{"resultCode":"10","resultMsg":"최근 1일 간의 자료만 제공합니다."}}}
+2025-06-14 02:10:27,163 - INFO - API 호출: https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtNcst with params: {'base_date': '20250614', 'base_time': '0200', 'nx': 60, 'ny': 127}
+2025-06-14 02:10:27,163 - DEBUG - 응답: {"response":{"header":{"resultCode":"00","resultMsg":"NORMAL_SERVICE"},"body":{"dataType":"JSON","items":{"item":[{"baseDate":"20250614","baseTime":"0200","category":"PTY","nx":60,"ny":127,"obsrValue"
+2025-06-14 02:10:27,164 - DEBUG - API 응답 아이템 수: 8
+2025-06-14 02:10:34,078 - WARNING - API 호출 재시도 2/5: https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtNcst with params: {'base_date': '20250613', 'base_time': '0300', 'nx': 60, 'ny': 127}
+2025-06-14 02:10:41,006 - WARNING - API 호출 재시도 2/5: https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtNcst with params: {'base_date': '20250613', 'base_time': '0300', 'nx': 60, 'ny': 127}
+2025-06-14 02:10:41,921 - INFO - API 호출: https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtNcst with params: {'base_date': '20250613', 'base_time': '0300', 'nx': 60, 'ny': 127}
+2025-06-14 02:10:41,922 - DEBUG - 응답: {"response":{"header":{"resultCode":"00","resultMsg":"NORMAL_SERVICE"},"body":{"dataType":"JSON","items":{"item":[{"baseDate":"20250613","baseTime":"0300","category":"PTY","nx":60,"ny":127,"obsrValue"
+2025-06-14 02:10:41,922 - DEBUG - API 응답 아이템 수: 8
+2025-06-14 02:10:41,924 - DEBUG - 오늘: 2025-06-14, 어제: 2025-06-13
+2025-06-14 02:10:43,989 - INFO - API 호출: https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst with params: {'base_date': '20250613', 'base_time': '0200', 'nx': 60, 'ny': 127, 'numOfRows': 2880}
+2025-06-14 02:10:43,990 - DEBUG - 응답: {"response":{"header":{"resultCode":"00","resultMsg":"NORMAL_SERVICE"},"body":{"dataType":"JSON","items":{"item":[{"baseDate":"20250613","baseTime":"0200","category":"TMP","fcstDate":"20250613","fcstT
+2025-06-14 02:10:43,998 - DEBUG - API 응답 아이템 수: 944
+2025-06-14 02:10:44,019 - DEBUG -    baseDate baseTime category  fcstDate fcstTime fcstValue  nx   ny
+0  20250613     0200      TMP  20250613     0300        20  60  127
+1  20250613     0200      UUU  20250613     0300      -0.3  60  127
+2  20250613     0200      VVV  20250613     0300      -0.1  60  127
+3  20250613     0200      VEC  20250613     0300        76  60  127
+4  20250613     0200      WSD  20250613     0300       0.4  60  127
+2025-06-14 02:10:44,044 - DEBUG - 2025-06-13 03:00:00 ~ 2025-06-17 00:00:00
+2025-06-14 02:10:44,044 - DEBUG - 오늘 기온: [23.0, 23.0, 23.0, 23.0, 23.0, 23.0, 23.0, 22.0, 23.0, 24.0, 25.0, 27.0, 28.0, 29.0, 30.0, 30.0, 30.0, 30.0, 30.0, 29.0, 28.0, 27.0, 26.0, 25.0]
+2025-06-14 02:10:44,045 - DEBUG - 어제 기온: [20.0, 20.0, 20.0, 20.0, 20.0, 22.0, 23.0, 24.0, 26.0, 28.0, 28.0, 26.0, 26.0, 26.0, 26.0, 25.0, 25.0, 24.0, 24.0, 23.0, 23.0]
