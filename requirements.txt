@@ -12,3 +12,4 @@ apscheduler
 celery
 pymongo
 gunicorn
+httpx
