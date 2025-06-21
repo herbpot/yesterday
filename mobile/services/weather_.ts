@@ -45,11 +45,13 @@ export async function ensureLocationPermission(): Promise<boolean> {
     console.log('iOS 위치 권한 상태:', status);
     if (status === 'denied') {
         Alert.alert("권한 거부됨", "위치 정보 접근 권한이 거부되어 날씨 정보를 정확히 가져올 수 없습니다. 앱 설정에서 변경해주세요.");
+        return false;
     } else if (status === 'granted') {
         console.log('iOS 위치 권한 획득 (항상 또는 사용 중)');
         return true;
     }
   }
+  return false; // 다른 플랫폼에서는 권한 요청을 하지 않음
 }
 
 
@@ -123,6 +125,9 @@ export async function getCoords(): Promise<LocationCoords | null> {
 const openMeteoURL = (lat: number, lon: number) =>
   `${process.env.EXPO_PUBLIC_API_BASE}meteo-weather/weather?lat=${lat}&lon=${lon}`;
 
+const gethourlyData = (lat: number, lon: number) => 
+  `${process.env.EXPO_PUBLIC_API_BASE}meteo-weather/weather?lat=${lat}&lon=${lon}`;
+
 export const WEATHER_IMAGES: Record<string, string> = {
   clear_day:   "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/2600.png", // ☀️
   clear_night: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f319.png", // 🌙
@@ -133,7 +138,7 @@ export const WEATHER_IMAGES: Record<string, string> = {
   thunder:     "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/26c8.png", // ⛈️
 };
 
-export async function fetchWeather(coords: LocationCoords | null): Promise<ParsedWeather> {
+export async function fetchWeather(coords: LocationCoords | null): Promise<ParsedWeatherResponse> {
   if (!coords) {
     throw new Error("위치 정보가 없습니다. 먼저 위치 권한을 확인해주세요.");
   }
@@ -142,7 +147,12 @@ export async function fetchWeather(coords: LocationCoords | null): Promise<Parse
     console.log("날씨 데이터 요청 URL:", url);
     const res = await fetch(url);
     if (!res.ok) throw new Error("날씨 데이터를 불러오지 못했습니다.");
-    return await res.json() as ParsedWeather;
+    
+    const url_ = openMeteoURL(coords.lat, coords.lon)
+    console.log("시간별 날씨 데이터 요청 URL:", url_);
+    const res_ = await fetch(url_);
+    if (!res.ok) throw new Error("시간별 날씨 데이터를 불러오지 못했습니다.");
+    return {"weather": (await res.json() as ParsedWeather), "hourlyWeather": (await res_.json() as ParsedHourlyWeather)};
   } catch (error: Error | any) {
     console.error("날씨 데이터 요청 실패:", error.message);
     throw error;
@@ -150,6 +160,11 @@ export async function fetchWeather(coords: LocationCoords | null): Promise<Parse
 }
 
 /* ────────────────────────────────  단계 3  응답 파싱  ──────────────────────────────── */
+export type ParsedWeatherResponse = {
+  weather: ParsedWeather;
+  hourlyWeather: ParsedHourlyWeather;
+};
+
 export type ParsedWeather = {
   imageKey: string;
   todayTemp: number;
@@ -160,6 +175,16 @@ export type ParsedWeather = {
   uvY: number;
   feels: number;
   feelsY: number;
+};
+
+export type ParsedHourlyWeather = {
+  todayHourlyData: HourlyData[];
+  yesterdayHourlyData: HourlyData[];
+}
+
+export type HourlyData = {
+  hour: string; // 예: "00", "06", "12", "18" 등 시간 레이블
+  temp: number;
 };
 
 export type LocationCoords = {
