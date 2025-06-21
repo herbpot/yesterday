@@ -1,103 +1,123 @@
 import { PermissionsAndroid, Platform, Linking, Alert } from "react-native";
-import BackgroundFetch from "react-native-background-fetch";
 import Geolocation from "react-native-geolocation-service";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 
 
 export async function ensureLocationPermission(): Promise<boolean> {
   if (Platform.OS === 'android') {
-    console.log("위치 권한 요청 중...");
-
-    const permissions = await PermissionsAndroid.requestMultiple([
-      PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
-      PermissionsAndroid.PERMISSIONS.ACCESS_BACKGROUND_LOCATION,
-    ]);
-
-    console.log('권한 요청 결과:', permissions);
-
-    const fineLocation = permissions[PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION];
-    const backgroundLocation = permissions[PermissionsAndroid.PERMISSIONS.ACCESS_BACKGROUND_LOCATION];
-
-    // ⚠️ 1. 정밀 위치 권한이 '다시 묻지 않음' 상태일 경우
-    if (fineLocation === 'never_ask_again') {
-      Alert.alert(
-        '위치 권한이 필요합니다',
-        '앱이 정상적으로 작동하려면 위치 권한이 필요합니다. 설정 화면에서 직접 권한을 허용해 주세요.',
-        [
-          { text: '취소', style: 'cancel' },
-          {
-            text: '설정 열기',
-            onPress: () => Linking.openSettings(),
-          },
-        ]
+    try {
+      const grantedFine = await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+        {
+          title: "위치 정보 접근 권한",
+          message: "현재 위치의 날씨 정보를 제공하기 위해 위치 정보 접근 권한이 필요합니다.",
+          buttonNeutral: "나중에",
+          buttonNegative: "거절",
+          buttonPositive: "허용",
+        }
       );
-      return false;
+      if (grantedFine === PermissionsAndroid.RESULTS.GRANTED) {
+        console.log("ACCESS_FINE_LOCATION 권한 획득");
+        if (Platform.Version >= 29) { // Android 10 이상인 경우 백그라운드 위치 권한 안내
+          Alert.alert(
+            "백그라운드 위치 권한 안내",
+            "위젯이 백그라운드에서도 날씨를 정확하게 업데이트하려면, 앱 설정에서 위치 권한을 '항상 허용'으로 변경해야 할 수 있습니다.",
+            [
+              { text: "알겠습니다" },
+              { text: "설정으로 이동", onPress: () => Linking.openSettings() } // 사용자를 앱 설정 화면으로 안내
+            ]
+          );
+        }
+        return true;
+      } else {
+        console.log("ACCESS_FINE_LOCATION 권한 거부됨");
+        Alert.alert("권한 거부됨", "위치 정보 접근 권한이 거부되어 날씨 정보를 정확히 가져올 수 없습니다.");
+        return false;
+      }
+    } catch (err) {
+      console.warn(err);
+      return false; 
+    }
+  } else if (Platform.OS === 'ios') {
+    // iOS의 경우 Info.plist에 다음 키와 설명 문자열을 추가해야 합니다:
+    // - NSLocationWhenInUseUsageDescription (앱 사용 중 위치 접근)
+    // - NSLocationAlwaysAndWhenInUseUsageDescription (항상 위치 접근 - 백그라운드용)
+    const status = await Geolocation.requestAuthorization('always'); // 'always' 또는 'whenInUse'
+    console.log('iOS 위치 권한 상태:', status);
+    if (status === 'denied') {
+        Alert.alert("권한 거부됨", "위치 정보 접근 권한이 거부되어 날씨 정보를 정확히 가져올 수 없습니다. 앱 설정에서 변경해주세요.");
+    } else if (status === 'granted') {
+        console.log('iOS 위치 권한 획득 (항상 또는 사용 중)');
+        return true;
+    }
+  }
+}
+
+
+export async function getCoords(): Promise<LocationCoords | null> {
+  if (Platform.OS === 'android') {
+    // 1. ACCESS_FINE_LOCATION 권한 확인
+    const hasFineLocationPermission = await PermissionsAndroid.check(
+      PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION
+    );
+
+    if (!hasFineLocationPermission) {
+      console.error(
+        '[getCoords] ACCESS_FINE_LOCATION 권한이 없습니다. ' +
+        '위젯이 정확히 동작하려면 앱을 실행하여 위치 권한을 먼저 허용해야 합니다.'
+      );
+      // 위젯 컨텍스트에서는 UI를 통한 즉각적인 권한 요청이 어렵고 바람직하지 않습니다.
+      // 앱 실행 시 권한을 받도록 유도해야 합니다.
+      return null;
     }
 
-    // ⚠️ 2. 백그라운드 위치 권한 거부됨
-    if (backgroundLocation !== 'granted') {
-      Alert.alert(
-        '백그라운드 위치 권한 미허용',
-        '일부 기능은 백그라운드 위치 권한이 필요할 수 있습니다.',
-        [{ text: '확인' }]
+    // 2. ACCESS_BACKGROUND_LOCATION 권한 확인 (Android 10 이상)
+    // 이 권한이 없으면 앱이 실제로 백그라운드 상태일 때 위치 정보를 가져오지 못할 수 있습니다.
+    if (Platform.Version >= 29) { // Android 10 (Q)
+      const hasBackgroundLocationPermission = await PermissionsAndroid.check(
+        PermissionsAndroid.PERMISSIONS.ACCESS_BACKGROUND_LOCATION
       );
-      // 권한 거부됐지만 강제 종료는 아님
+      if (!hasBackgroundLocationPermission) {
+        console.warn(
+          '[getCoords] ACCESS_BACKGROUND_LOCATION 권한이 없습니다. ' +
+          '앱이 백그라운드에 있을 때 위젯 업데이트를 위한 위치 정보 접근이 제한될 수 있습니다. ' +
+          '최상의 경험을 위해 앱 설정에서 위치 권한을 "항상 허용"으로 변경해주세요.'
+        );
+        // 백그라운드 권한이 없더라도 일단 위치 정보 가져오기를 시도합니다.
+        // OS 정책이나 앱 상태에 따라 성공할 수도, 실패할 수도 있습니다.
+      }
     }
-
-    // ✅ 최종적으로 권한이 모두 허용되었는지 확인
-    return fineLocation === 'granted' && backgroundLocation === 'granted';
+  } else if (Platform.OS === 'ios') {
+    // iOS의 경우, Geolocation.requestAuthorization('always' 또는 'whenInUse')를 호출하여 권한을 요청하고,
+    // Info.plist에 NSLocationWhenInUseUsageDescription 와 NSCLocationAlwaysAndWhenInUseUsageDescription 키를 추가해야 합니다.
+    // getCoords 함수 호출 전에 앱 로직에서 권한 상태를 확인하고 관리하는 것이 좋습니다.
+    const iosAuthStatus = await Geolocation.requestAuthorization('whenInUse'); // 또는 'always'
+    if (iosAuthStatus !== 'granted' && iosAuthStatus !== 'restricted') { // restricted는 부모 통제 등
+        console.warn('[getCoords] iOS 위치 권한이 충분하지 않습니다:', iosAuthStatus);
+        // return null; // iOS에서는 권한 상태에 따라 다르게 처리 가능
+    }
   }
 
-  // Android가 아니라면 true 반환
-  return true;
-}
-
-
-export async function initBackgroundLocation() {
-  // 퍼미션 (foreground + background)
-  console.log("init background job")
-  await BackgroundFetch.configure(
-    { minimumFetchInterval: 10, enableHeadless: true },
-    async taskId => {
-      console.log("background locationion")
-      Geolocation.getCurrentPosition(
-        async pos => {
-          await AsyncStorage.setItem(
-            'userLocation',
-            JSON.stringify({ lat: pos.coords.latitude, lon: pos.coords.longitude })
-          );
-          console.log("background: ", pos)
-          BackgroundFetch.finish(taskId);
-        },
-        err => {
-          console.warn(err);
-          BackgroundFetch.finish(taskId);
-        },
-        { accuracy: { android: 'low' }, timeout: 10000 }
-      );
-    },
-    taskId => console.log(`timeout: ${taskId}`)
-  );
-  await BackgroundFetch.start();
-}
-
-export async function getCoords(): Promise<LocationCoords> {
-
-  // const loc = await AsyncStorage.getItem('userLocation')
-  // if (loc) { 
-  //   console.log("저장된 위치 정보:", loc);
-  //   return JSON.parse(loc) as LocationCoords;
-  // }else {
-  //   console.log("위치 정보가 없으므로 새로 요청합니다.");
-    Geolocation.getCurrentPosition(async (pos) => {
-      await AsyncStorage.setItem(
-        'userLocation',
-        JSON.stringify({ lat: pos.coords.latitude, lon: pos.coords.longitude })
-      );
-      console.log("gelolcation:", pos)
-    });
-    return JSON.parse(await AsyncStorage.getItem('userLocation')) as LocationCoords;
-  // }
+  return new Promise((resolve) => {
+    Geolocation.getCurrentPosition(
+      (position) => {
+        const { latitude, longitude } = position.coords;
+        console.log('[getCoords] 위치 정보 가져오기 성공:', { latitude, longitude });
+        resolve({ lat: latitude, lon: longitude });
+      },
+      (error) => {
+        console.error('[getCoords] 위치 정보 가져오기 실패:', error.code, error.message);
+        // error.code (PERMISSION_DENIED, POSITION_UNAVAILABLE, TIMEOUT, PLAY_SERVICES_NOT_AVAILABLE 등)
+        resolve(null); // 실패 시 null 반환
+      },
+      {
+        enableHighAccuracy: true,   // 높은 정확도 요청 (배터리 소모는 약간 더 클 수 있음)
+        timeout: 15000,             // 위치 요청 타임아웃 (15초)
+        maximumAge: 1000 * 60 * 5,  // 5분 이내의 캐시된 위치 정보 사용 허용 (0으로 하면 항상 새로고침)
+                                    // 위젯 업데이트 간격에 맞춰 조절 가능
+        showLocationDialog: false,  // (Android) 위치 서비스 비활성화 시 설정 다이얼로그 표시 안함 (위젯에서는 false 권장)
+      }
+    );
+  });
 }
 
 const openMeteoURL = (lat: number, lon: number) =>
@@ -113,7 +133,10 @@ export const WEATHER_IMAGES: Record<string, string> = {
   thunder:     "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/26c8.png", // ⛈️
 };
 
-export async function fetchWeather(coords: LocationCoords): Promise<ParsedWeather> {
+export async function fetchWeather(coords: LocationCoords | null): Promise<ParsedWeather> {
+  if (!coords) {
+    throw new Error("위치 정보가 없습니다. 먼저 위치 권한을 확인해주세요.");
+  }
   try {
     const url = openMeteoURL(coords.lat, coords.lon)
     console.log("날씨 데이터 요청 URL:", url);

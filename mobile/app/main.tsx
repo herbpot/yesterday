@@ -15,7 +15,7 @@ import {
   BannerAd,
   BannerAdSize,
 } from 'react-native-google-mobile-ads';
-import { getCoords, fetchWeather, WEATHER_IMAGES, initBackgroundLocation, ensureLocationPermission } from "../services/weather_"; // 날씨 서비스 (필요시 추가)
+import { getCoords, fetchWeather, WEATHER_IMAGES, ensureLocationPermission } from "../services/weather_"; // 날씨 서비스 (필요시 추가)
 
 const BANNER_ID = "ca-app-pub-4388792395765448/9451868044"; // 👉 실제 배포 시 실 광고 단위 ID로 교체
 
@@ -122,7 +122,6 @@ export default function AppMain({navigation}: { navigation: any }) {
       console.log("앱 시작: 위치 권한 요청 및 초기화");
       console.log(await ensureLocationPermission());
       await loadWeather();
-      await initBackgroundLocation();
     }
     init();
   }, []);
