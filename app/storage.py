@@ -9,9 +9,14 @@ import pytz
 
 from .logger import logger
 
+DEV = os.getenv("DEV", "false").lower() == "true"
+
 # ───────── MongoDB 연결
 mongo_client = MongoClient(os.getenv("MONGO_URL"))
 db = mongo_client.yesterday
+if DEV:
+    db = mongo_client.yesterday_dev  # 개발 환경에서는 별도의 컬렉션 사용
+    logger.info("Using development MongoDB collection: yesterday_dev")
 subs: Collection = db.subscribers  # 컬렉션 이름
 
 # ───────── Subscriber 데이터 구조

@@ -40,10 +40,13 @@ def send_push(messages: list[dict]) -> int:
         total += resp.success_count
     return total
 
+DEV = os.getenv("DEV", "false").lower() == "true"
 
 # MongoDB 연결
 mongo_client = MongoClient(os.getenv("MONGO_URL"))  # 예: mongodb+srv://user:pass@cluster.mongodb.net/dbname
 db = mongo_client.yesterday
+if DEV:
+    db = mongo_client.yesterday_dev  # 개발 환경에서는 별도의 컬렉션 사용
 notifications = db.notifications_sent
 
 # TTL 인덱스 초기화 (최초 1회만 실행되면 됨)
@@ -51,7 +54,11 @@ notifications = db.notifications_sent
 notifications.create_index("createdAt", expireAfterSeconds=86400)
 
 # Celery 설정
-app = Celery('tasks', broker=os.getenv("MONGO_URL") + "/broker")
+if DEV:
+    app = Celery('tasks', broker=os.getenv("MONGO_URL") + "/broker_dev")
+    logger.info("Using development broker for Celery")
+else:
+    app = Celery('tasks', broker=os.getenv("MONGO_URL") + "/broker")
 app.conf.update(
     task_serializer='json',
     result_serializer='json',
