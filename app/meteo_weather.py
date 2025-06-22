@@ -2,6 +2,7 @@ from fastapi import APIRouter, HTTPException, Query
 import httpx
 from typing import Literal, List, Dict, Any
 from datetime import datetime, timedelta, timezone # 사용되지 않아 제거
+import zoneinfo # Python 3.9 이상, 또는 pytz 라이브러리 사용
 
 app = APIRouter(prefix="/meteo-weather")
 
@@ -66,6 +67,23 @@ def code_to_key(code: int, is_day: Literal[0, 1]) -> str:
     # ⑦ 알 수 없는 코드 → 기본(흐림)으로
     return "cloudy"
 
+async def get_location_timezone(lat: float, lon: float) -> str:
+    """API에서 위치 시간대 정보를 가져옵니다."""
+    try:
+        # 최소한의 데이터 요청으로 시간대 정보를 얻음 (예: current_weather=true 만 요청)
+        url = f"https://api.open-meteo.com/v1/forecast?latitude={lat}&longitude={lon}&current_weather=true&timezone=auto"
+        async with httpx.AsyncClient() as client:
+            res = await client.get(url)
+            res.raise_for_status()
+            data = res.json()
+            timezone_str = data.get("timezone")
+            if not timezone_str:
+                 raise ValueError("API 응답에 시간대 정보가 누락되었습니다.")
+            return timezone_str
+    except httpx.HTTPStatusError as e:
+        raise HTTPException(status_code=e.response.status_code, detail=f"시간대 API 요청 실패: {e.response.status_code} - {e.response.text}")
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"시간대 정보 가져오는 중 오류 발생: {str(e)}")
 
 def build_weather_url(lat: float, lon: float) -> str:
     """현재 날씨 및 관련 데이터를 가져오기 위한 API URL을 생성합니다."""
@@ -78,18 +96,17 @@ def build_weather_url(lat: float, lon: float) -> str:
         f"timezone=auto"
     )
 
-def build_hourly_temperature_url(lat: float, lon: float) -> str:
-     """시간별 기온 데이터를 가져오기 위한 API URL을 생성합니다."""
-     # API는 일반적으로 'hourly=temperature_2m'만 요청해도 지난 7일 및 향후 3일의 시간별 데이터를 제공합니다.
-     # 시간대는 'auto'로 설정하여 API가 자동으로 결정하도록 합니다.
-     # 어제와 오늘의 완전한 24시간 비교를 위해 최소 48시간의 과거 데이터를 명시적으로 요청합니다.
-     return (
+def build_hourly_temperature_url_by_date_range(lat: float, lon: float, start_date_str: str, end_date_str: str) -> str:
+    """시간별 기온 데이터를 특정 날짜 범위 (YYYY-MM-DD)로 가져오기 위한 API URL을 생성합니다."""
+    # start_date와 end_date는 요청된 위치 시간대의 달력 날짜를 기준으로 해석됩니다.
+    return (
         f"https://api.open-meteo.com/v1/forecast?"
         f"latitude={lat}&longitude={lon}&"
         f"hourly=temperature_2m&" # 시간별 기온만 요청
-        f"past_hours=48&" # 최소 48시간의 과거 데이터 요청
-        f"timezone=auto" # 시간대 자동 설정
-     )
+        f"start_date={start_date_str}&" # 시작 날짜 지정 (위치 시간대 기준)
+        f"end_date={end_date_str}&"     # 끝 날짜 지정 (위치 시간대 기준)
+        f"timezone=auto" # 시간대 자동 설정 (응답에서 확인하여 사용)
+    )
 
 
 @app.get("/weather")
@@ -218,28 +235,52 @@ def parse_weather(j: dict) -> Dict[str, Any]:
 
 
 # 시간별 온도 비교를 위한 새 엔드포인트
-@app.get("/hourly-temperature")
-async def get_hourly_temperature(lat: float = Query(..., description="위도"), lon: float = Query(..., description="경도")) -> List[Dict[str, Any]]:
+
+@app.get("/hourly-temperature-calendar") # 엔드포인트 이름 변경
+async def get_hourly_temperature_calendar(lat: float = Query(..., description="위도"), lon: float = Query(..., description="경도")) -> List[Dict[str, Any]]:
     """
-    어제와 오늘의 시간별 기온 데이터를 가져옵니다.
+    어제(00:00-23:59)와 오늘(00:00-23:59)의 시간별 기온 데이터를 가져와 비교합니다.
+    위치 시간대를 기준으로 정확한 날짜 범위를 사용합니다.
 
     Args:
         lat: 위도.
         lon: 경도.
 
     Returns:
-        각 시간대별 어제와 오늘의 기온을 포함하는 딕셔너리 목록 (최대 24개 항목).
+        각 시간대별 어제와 오늘의 기온을 포함하는 딕셔너리 목록 (24개 항목).
         데이터가 없는 경우 해당 기온 값은 None이 됩니다.
     """
     try:
-        # build_hourly_temperature_url은 이미 past_hours=48을 요청하므로 충분한 데이터 확보
-        url = build_hourly_temperature_url(lat, lon)
+        # 1. 먼저 위치 시간대 정보를 가져옵니다.
+        timezone_str = await get_location_timezone(lat, lon)
+
+        # 2. 가져온 시간대를 사용하여 정확한 어제/오늘 달력 날짜를 계산합니다.
+        try:
+            # Open-Meteo는 IANA 시간대 이름을 반환합니다 (예: "Europe/Berlin").
+            location_tz = zoneinfo.ZoneInfo(timezone_str)
+        except zoneinfo.ZoneInfoNotFoundError:
+             raise RuntimeError(f"API에서 알 수 없는 시간대 문자열을 받았습니다: {timezone_str}")
+        except Exception as e:
+             raise RuntimeError(f"시간대 정보 처리 중 오류 발생: {e}")
+
+        # UTC 현재 시간을 위치 시간대로 변환하여 위치의 현재 시각을 얻음
+        now_location_tz = datetime.now(timezone.utc).astimezone(location_tz)
+        today_calendar_date = now_location_tz.date()
+        yesterday_calendar_date = today_calendar_date - timedelta(days=1)
+
+        # API 요청에 사용할 YYYY-MM-DD 형식의 날짜 문자열 생성
+        yesterday_date_str = yesterday_calendar_date.strftime("%Y-%m-%d")
+        today_date_str = today_calendar_date.strftime("%Y-%m-%d")
+
+        # 3. 위치 시간대 기준의 어제/오늘 날짜 범위로 API에 메인 데이터 요청
+        url = build_hourly_temperature_url_by_date_range(lat, lon, yesterday_date_str, today_date_str)
+
         async with httpx.AsyncClient() as client:
             res = await client.get(url)
-            res.raise_for_status() # 4xx 또는 5xx 상태 코드에 대해 예외 발생
+            res.raise_for_status()
             data = res.json()
 
-        # 시간별 데이터 파싱
+        # 4. API 응답 파싱 및 데이터 분류 (위치 시간대 기준 날짜와 비교)
         hourly_data = data.get("hourly")
 
         # 필수 키 및 형식 검증
@@ -249,79 +290,55 @@ async def get_hourly_temperature(lat: float = Query(..., description="위도"), 
         hourly_times = hourly_data["time"]
         hourly_temps = hourly_data["temperature_2m"]
 
-        n = len(hourly_times)
+        # 어제와 오늘의 시간별 기온을 저장할 딕셔너리
+        # 시간 문자열(HH:MM)을 키로 사용
+        yesterday_hourly_temps_map: Dict[str, float | None] = {}
+        today_hourly_temps_map: Dict[str, float | None] = {}
 
-        # 어제와 오늘의 완전한 24시간 비교를 위해서는 최소 48시간 데이터가 필요합니다.
-        # API 응답은 현재 시점으로부터 과거/미래 데이터를 시간 순서대로 제공합니다.
-        # 마지막 n개의 데이터 중, 마지막 24개가 오늘, 그 이전 24개가 어제 데이터가 됩니다.
-        # 즉, 전체 데이터의 마지막 48개 중에서 슬라이싱합니다.
-        # 예: 데이터 인덱스가 ... n-49, n-48, ..., n-25, n-24, ..., n-1
-        # 어제 데이터: 인덱스 n-48 부터 n-25 (총 24개) -> 파이썬 슬라이싱: [-48:-24]
-        # 오늘 데이터: 인덱스 n-24 부터 n-1 (총 24개) -> 파이썬 슬라이싱: [-24:]
+        # 시간별 데이터 순회 및 분류
+        for time_str, temp in zip(hourly_times, hourly_temps):
+            try:
+                # API 타임스탬프 파싱: API 문자열은 이미 위치 시간대 기준의 시간을 나타냅니다.
+                # 나이브 객체로 파싱하고, 그 객체의 date() 속성을 사용합니다.
+                dt_obj_naive = datetime.fromisoformat(time_str)
 
-        # 데이터가 48시간 미만이면 오류 발생 (Frontend 요청에 따라 처리)
-        if n < 48:
-             raise HTTPException(status_code=500, detail=f"시간별 온도 데이터를 충분히 가져오지 못했습니다. 최소 48시간 데이터가 필요합니다. 현재: {n} 시간 데이터만 사용 가능합니다.")
+                date_part = dt_obj_naive.date()
+                hour_part_str = dt_obj_naive.strftime("%H:00") # 시간 단위로 저장 (00:00, 01:00 등)
 
-        # 마지막 48시간 데이터에서 어제와 오늘 각각 24시간 데이터 슬라이싱
-        yesterday_times = hourly_times[-48:-24]
-        yesterday_temps = hourly_temps[-48:-24]
+                # 위치 시간대 기준의 어제/오늘 날짜와 비교
+                if date_part == yesterday_calendar_date:
+                    yesterday_hourly_temps_map[hour_part_str] = temp
+                elif date_part == today_calendar_date:
+                    today_hourly_temps_map[hour_part_str] = temp
+                # 다른 날짜 데이터는 무시 (요청 범위가 어제/오늘이므로 거의 없을 것으로 예상)
 
-        today_times = hourly_times[-24:]
-        today_temps = hourly_temps[-24:]
+            except (ValueError, TypeError) as e:
+                # 타임스탬프나 온도를 파싱하는 중 오류 발생 시 해당 항목은 건너뜁니다.
+                print(f"경고: 시간 데이터 '{time_str}' 또는 온도 값 '{temp}' 파싱 실패: {e}") # 또는 로깅
 
-        # 슬라이싱 결과의 길이가 24인지 확인 (n >= 48 조건 하에서는 항상 24여야 함)
-        if len(yesterday_times) != 24 or len(today_times) != 24:
-             # 이 경우는 n>=48 이면서 슬라이싱이 예상대로 동작하지 않은 매우 드문 경우이거나 로직 오류입니다.
-             raise RuntimeError(f"시간별 데이터 슬라이싱 결과가 예상과 다릅니다. 어제: {len(yesterday_times)}개, 오늘: {len(today_times)}개")
-
-
+        # 5. 비교 데이터 리스트 생성 (00:00부터 23:00까지 고정)
         comparison_data = []
-        # 어제와 오늘의 24시간 데이터를 인덱스 i (0~23)로 매칭하여 결과 리스트 생성
-        for i in range(24):
-             hour_str_today = None
-             yesterday_temp_val = None
-             today_temp_val = None
-
-             try:
-                  # today_times 리스트에서 i번째 시간 문자열 가져옴
-                  hour_str_today = today_times[i].split('T')[1]
-             except (IndexError, AttributeError, TypeError, ValueError):
-                  # 파싱 오류 시 None 또는 기본값 처리 (차트 라이브러리 요구사항에 맞게)
-                  # 여기서는 해당 시간이 어떤 시간대인지 알 수 없으므로 None 처리
-                  hour_str_today = None # 특정 시간대의 시간 문자열 가져오기 실패 시
-
-
-             try:
-                  # yesterday_temps 리스트에서 i번째 온도 값 가져옴
-                  yesterday_temp_val = yesterday_temps[i]
-             except (IndexError, TypeError):
-                  # 데이터가 없는 경우 None 처리
-                  yesterday_temp_val = None
-
-             try:
-                  # today_temps 리스트에서 i번째 온도 값 가져옴
-                  today_temp_val = today_temps[i]
-             except (IndexError, TypeError):
-                  # 데이터가 없는 경우 None 처리
-                  today_temp_val = None
-
-             comparison_data.append({
-                  "hour": hour_str_today, # 시간 레이블 (예: "00:00", "06:00")
-                  "yesterdayTemp": yesterday_temp_val,
-                  "todayTemp": today_temp_val
-             })
+        for hour in range(24):
+            hour_str = f"{hour:02}:00" # "00:00", "01:00", ..., "23:00"
+            comparison_data.append({
+                "hour": hour_str,
+                # 맵에서 해당 시간의 기온 값을 가져옵니다. 값이 없으면 None이 됩니다.
+                "yesterdayTemp": yesterday_hourly_temps_map.get(hour_str),
+                "todayTemp": today_hourly_temps_map.get(hour_str),
+            })
 
         return comparison_data
 
     except httpx.HTTPStatusError as e:
+         # API 요청 실패 (메인 데이터 요청 중 발생)
          raise HTTPException(status_code=e.response.status_code, detail=f"날씨 API 요청 실패: {e.response.status_code} - {e.response.text}")
     except ValueError as e:
-         # parse_weather와 마찬가지로 파싱 오류 처리
+         # 데이터 구조 오류 등
          raise HTTPException(status_code=500, detail=f"시간별 온도 데이터 파싱 또는 구조 오류: {e}")
     except RuntimeError as e:
-         # 슬라이싱 결과 오류 등 예상치 못한 로직 오류
+         # 시간대 처리, 데이터 슬라이싱/분류 로직 오류 등
          raise HTTPException(status_code=500, detail=f"시간별 온도 데이터 처리 로직 오류: {e}")
     except Exception as e:
         # 기타 예상치 못한 오류
         raise HTTPException(status_code=500, detail=f"시간별 온도 데이터 처리 중 예기치 않은 오류 발생: {str(e)}")
+    
