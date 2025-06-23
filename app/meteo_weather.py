@@ -92,7 +92,6 @@ def build_weather_url(lat: float, lon: float) -> str:
         f"latitude={lat}&longitude={lon}&"
         f"hourly=temperature_2m,relativehumidity_2m,uv_index,apparent_temperature,weathercode,is_day&" # weathercode, is_day도 hourly에 추가 요청 (current_weather와 함께 사용)
         f"current_weather=true&"
-        f"past_hours=48&" # 최소 48시간 데이터 요청 (어제 비교를 위해 충분한 데이터 확보)
         f"timezone=auto"
     )
 
