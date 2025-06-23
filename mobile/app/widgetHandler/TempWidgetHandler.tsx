@@ -25,7 +25,7 @@ export async function widgetTaskHandler(props: WidgetTaskHandlerProps) {
         if (!coords) {
           throw new Error("위치 정보를 가져올 수 없습니다.");
         }
-        const weatherData: ParsedWeather = await fetchWeather(coords);
+        const weatherData: ParsedWeather = (await fetchWeather(coords)).weather;
         console.log("[WidgetTaskHandler] Weather data fetched:", weatherData);
 
         // 성공적으로 날씨 데이터 가져오면 위젯 업데이트
@@ -62,7 +62,7 @@ export async function widgetTaskHandler(props: WidgetTaskHandlerProps) {
         props.renderWidget(<TempWidget loading={true} data={null} />);
         try {
           const coords = await getCoords();
-          const weatherData = await fetchWeather(coords);
+          const weatherData = (await fetchWeather(coords)).weather;
           props.renderWidget(<TempWidget data={weatherData} loading={false} />);
         } catch (error) {
           const errorMessage = error instanceof Error ? error.message : "알 수 없는 오류 발생";

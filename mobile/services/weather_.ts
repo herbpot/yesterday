@@ -126,7 +126,7 @@ const openMeteoURL = (lat: number, lon: number) =>
   `${process.env.EXPO_PUBLIC_API_BASE}meteo-weather/weather?lat=${lat}&lon=${lon}`;
 
 const gethourlyData = (lat: number, lon: number) => 
-  `${process.env.EXPO_PUBLIC_API_BASE}meteo-weather/weather?lat=${lat}&lon=${lon}`;
+  `${process.env.EXPO_PUBLIC_API_BASE}meteo-weather/hourly-temperature-calendar?lat=${lat}&lon=${lon}`;
 
 export const WEATHER_IMAGES: Record<string, string> = {
   clear_day:   "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/2600.png", // ☀️
@@ -148,7 +148,7 @@ export async function fetchWeather(coords: LocationCoords | null): Promise<Parse
     const res = await fetch(url);
     if (!res.ok) throw new Error("날씨 데이터를 불러오지 못했습니다.");
     
-    const url_ = openMeteoURL(coords.lat, coords.lon)
+    const url_ = gethourlyData(coords.lat, coords.lon)
     console.log("시간별 날씨 데이터 요청 URL:", url_);
     const res_ = await fetch(url_);
     if (!res.ok) throw new Error("시간별 날씨 데이터를 불러오지 못했습니다.");
