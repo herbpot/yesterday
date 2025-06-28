@@ -17,6 +17,7 @@ export async function widgetTaskHandler(props: WidgetTaskHandlerProps) {
   switch (widgetAction) {
     case 'WIDGET_ADDED': // 위젯이 처음 추가될 때
     case 'WIDGET_UPDATE': // 위젯 업데이트 요청 시 (주기적 또는 명시적)
+    case 'WIDGET_CLICK':
       // 로딩 상태 먼저 렌더링
       props.renderWidget(<TempWidget loading={true} data={null} />);
       try {
@@ -51,26 +52,6 @@ export async function widgetTaskHandler(props: WidgetTaskHandlerProps) {
       // 위젯이 삭제되었을 때 필요한 작업 (예: 관련 데이터 정리)
       console.log(`[WidgetTaskHandler] Widget Deleted: ${widgetInfo}`);
       break;
-
-    case 'WIDGET_CLICK':
-      // 위젯 내 특정 요소에 'clickAction'으로 커스텀 액션을 지정했을 때 호출됩니다.
-      // TempWidget의 최상위 FlexWidget에는 'OPEN_APP'이 지정되어 있어,
-      // 이 케이스는 해당 clickAction에 대한 추가 로직이 필요할 때 사용합니다.
-      // (예: props.clickAction === 'REFRESH_WEATHER' 등)
-      console.log(`[WidgetTaskHandler] Widget Clicked: ${widgetInfo}`, props.clickAction);
-      if (props.clickAction === 'REFRESH_WEATHER_MANUALLY') { // 예시 커스텀 액션
-        props.renderWidget(<TempWidget loading={true} data={null} />);
-        try {
-          const coords = await getCoords();
-          const weatherData = (await fetchWeather(coords)).weather;
-          props.renderWidget(<TempWidget data={weatherData} loading={false} />);
-        } catch (error) {
-          const errorMessage = error instanceof Error ? error.message : "알 수 없는 오류 발생";
-          props.renderWidget(<TempWidget error={errorMessage} data={null} loading={false} />);
-        }
-      }
-      break;
-
     default:
       console.log(`[WidgetTaskHandler] Unknown action: ${widgetAction}`);
       break;

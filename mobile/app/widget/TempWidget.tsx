@@ -61,7 +61,7 @@ export function TempWidget({ data, loading, error }: TempWidgetProps) {
     );
   }
 
-  const diff = Math.round(data.todayTemp - data.yesterdayTemp);
+  const diff = data.todayTemp - data.yesterdayTemp;
   const diffPrefix = diff > 0 ? '+' : '';
   // 반투명 배경에서는 텍스트 색상 대비가 중요합니다.
   const diffColor = diff > 0 ? '#FF8A80' : '#80D8FF'; // 예시: 밝은 빨강, 밝은 파랑
@@ -121,7 +121,7 @@ export function TempWidget({ data, loading, error }: TempWidgetProps) {
           }}
         />
         <TextWidget
-          text={`${diffArrow} ${diffPrefix}${Math.abs(diff)}° 어제보다`}
+          text={`${diffArrow} ${diffPrefix}${diff.toFixed(1)}° 어제보다`}
           style={{
             fontSize: 14,
             color: diffColor, // 텍스트 색상 확인
