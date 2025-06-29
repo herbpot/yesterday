@@ -67,7 +67,7 @@ export default function ChartScreen({ navigation }: ChartScreenProps) {
 
         const coords = await getCoords();
         const raw = await fetchWeather(coords);
-        console.log("차트 데이터 로딩 완료:", raw.hourlyWeather);
+        // console.log("차트 데이터 로딩 완료:", raw.hourlyWeather);
 
         // ⭐ 데이터 로딩 성공 시 원시 데이터와 차트용 데이터 모두 설정
         if (Array.isArray(raw.hourlyWeather) && raw.hourlyWeather.length > 0) {
@@ -169,15 +169,13 @@ export default function ChartScreen({ navigation }: ChartScreenProps) {
             </View>
           ): (
             <View style={chartStyles.contentArea}>
-              <Text style={chartStyles.chartLabel}>시간대별 기온 변화</Text>
-
               <View style={chartStyles.chartWrapper}>
                 <TemperatureChart
                   title=''
                   todayData={todayHourlyData}
                   yesterdayData={yesterdayHourlyData}
-                  // onSelectHour={handleSelectHour} // ⭐ 선택 핸들러 전달
-                  // selectedHour={selectedHour} // ⭐ 선택된 시간 상태 전달
+                  onSelectHour={handleSelectHour} // ⭐ 선택 핸들러 전달
+                  selectedHour={selectedHour} // ⭐ 선택된 시간 상태 전달
                 />
               </View>
 
@@ -258,6 +256,7 @@ const chartStyles = StyleSheet.create({
   // ⭐ TemperatureChart를 감싸는 래퍼 (배경, 그림자 등 스타일 적용)
   chartWrapper: {
     marginVertical: 16, // 차트 위아래 여백
+    padding: 15, // 차트 내부 여백
     borderRadius: 12, // 배경 둥글게
     backgroundColor: COLORS.cardBackground, // 배경색
     elevation: 2, // 안드로이드 그림자
