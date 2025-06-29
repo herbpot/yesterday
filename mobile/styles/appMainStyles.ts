@@ -80,6 +80,25 @@ const styles = StyleSheet.create({
        padding: 10, // 터치 영역 확보
        // bottom 위치는 AppMainScreen.tsx에서 계산하여 인라인 스타일로 적용합니다.
   },
+  chartButton: {
+       position: 'absolute',
+        left: 0,
+        right: 0,
+        alignItems: 'center',
+        zIndex: 1,
+        padding: 10, // 터치 영역 확보
+        bottom: 20, // 버튼을 화면 하단에서 약간 위로 위치시
+        backgroundColor: COLORS.primary, // 버튼 배경색
+        borderRadius: 20, // 둥근 모서리
+        width: 60, // 버튼 너비
+        height: 60, // 버튼 높이
+        justifyContent: 'center', //
+  },
+  chartButtonText: {
+    color: '#fff', // 버튼 텍스트 색상
+    fontSize: 16, // 텍스트 크기
+    fontWeight: 'bold', // 텍스트 두께
+  },
 });
 
 export default styles;
