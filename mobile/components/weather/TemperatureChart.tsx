@@ -7,11 +7,11 @@ import { COLORS } from '../../constants/colors';
 import { FONTS } from '../../constants/fonts';
 
 const CHART_COLORS = {
-  background: '#fff',
-  text: '#000000',
-  todayLine: '#4682B4',
-  yesterdayLine: '#B91C1C',
-  dotStroke: '#FFFFFF',
+  background: COLORS.cardBackground,
+  text: COLORS.text,
+  todayLine: COLORS.primary,
+  yesterdayLine: COLORS.negative,
+  dotStroke: COLORS.cardBackground,
 };
 
 interface ChartDataPoint {
@@ -51,7 +51,7 @@ const TemperatureChart = memo(
           value: d.temp,
           date: d.hour
         })),
-      [todayData, selectedHour]
+      [todayData]
     );
 
     const chartDataYesterday = useMemo(
@@ -71,51 +71,44 @@ const TemperatureChart = memo(
           data2={chartDataYesterday}
           isAnimated
           spacing={15}
-          color1="#8a56ce"
-          color2="#56acce"
-          startFillColor1="#8a56ce"
-          startFillColor2="#56acce"
-          endFillColor1="#8a56ce"
-          endFillColor2="#56acce"
+          color1={CHART_COLORS.todayLine}
+          color2={CHART_COLORS.yesterdayLine}
+          startFillColor1={CHART_COLORS.todayLine}
+          startFillColor2={CHART_COLORS.yesterdayLine}
+          endFillColor1={CHART_COLORS.todayLine}
+          endFillColor2={CHART_COLORS.yesterdayLine}
           startOpacity={0.9}
           endOpacity={0.2}
           initialSpacing={0}
           noOfSections={4}
-          yAxisColor="white"
+          yAxisColor={COLORS.text}
           yAxisThickness={0}
           rulesType="solid"
-          rulesColor="gray"
-          yAxisTextStyle={{color: 'gray'}}
+          rulesColor={COLORS.border}
+          yAxisTextStyle={{color: COLORS.text}}
           yAxisLabelSuffix="℃"
-          yAxisOffset={Math.min(...chartDataToday.map(d => d.value)) - 5}
-          xAxisColor="lightgray"
+          yAxisOffset={Math.min(...chartDataToday.map(d => d.value), ...chartDataYesterday.map(d=> d.value)) - 5}
+          xAxisColor={COLORS.border}
           pointerConfig={{
             pointerStripUptoDataPoint: true,
-            pointerStripColor: 'lightgray',
+            pointerStripColor: COLORS.border,
             pointerStripWidth: 2,
             strokeDashArray: [2, 5],
-            pointerColor: 'lightgray',
+            pointerColor: COLORS.border,
             radius: 4,
             pointerLabelWidth: 100,
             pointerLabelHeight: 120,
             pointerLabelComponent: items => {
-              console.log("Pointer items:", items);
               onSelectHour(items[0].date);
               return (
                 <View
-                  style={{
-                    height: 90,
-                    width: 100,
-                    justifyContent: 'center',
-                    marginTop: -30,
-                    marginLeft: -40,
-                  }}>
-                  <Text style={{color: 'white', fontSize: 14, marginBottom:6,textAlign:'center'}}>
+                  style={chartStyles.pointerLabelContainer}>
+                  <Text style={chartStyles.pointerLabelDate}>
                     {items[0].date}
                   </Text>
   
-                  <View style={{paddingHorizontal:14,paddingVertical:6, borderRadius:16, backgroundColor:'white'}}>
-                    <Text style={{fontWeight: 'bold',textAlign:'center'}}>
+                  <View style={chartStyles.pointerLabelDiffWrapper}>
+                    <Text style={chartStyles.pointerLabelDiffText}>
                       {(items[0].value - items[1].value).toFixed(1)}℃
                     </Text>
                   </View>
@@ -151,6 +144,33 @@ const styles = StyleSheet.create({
   noDataText: {
     fontSize: 16,
     color: CHART_COLORS.text,
+  },
+});
+
+const chartStyles = StyleSheet.create({
+  pointerLabelContainer: {
+    height: 90,
+    width: 100,
+    justifyContent: 'center',
+    marginTop: -30,
+    marginLeft: -40,
+  },
+  pointerLabelDate: {
+    color: COLORS.text,
+    fontSize: 14,
+    marginBottom: 6,
+    textAlign: 'center',
+  },
+  pointerLabelDiffWrapper: {
+    paddingHorizontal: 14,
+    paddingVertical: 6,
+    borderRadius: 16,
+    backgroundColor: COLORS.cardBackground,
+  },
+  pointerLabelDiffText: {
+    fontWeight: 'bold',
+    textAlign: 'center',
+    color: COLORS.text,
   },
 });
 
