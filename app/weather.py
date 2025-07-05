@@ -4,7 +4,7 @@ from pandas import to_datetime
 from timezonefinder import TimezoneFinder
 import logging
 from dotenv import load_dotenv
-load_dotenv("./.env")
+# load_dotenv("./.env")
 
 logger = logging.getLogger("..")
 handler = logging.StreamHandler()
@@ -13,18 +13,18 @@ logger.addHandler(handler)
 logger.setLevel(logging.INFO)
 
 # ───────── Redis 연결 ───────── #
-rdb = redis.Redis(
-    host=os.getenv("REDIS_HOST", "localhost"),
-    port=int(os.getenv("REDIS_PORT", "6379")),
-    decode_responses=True,
-)
+# rdb = redis.Redis(
+#     host=os.getenv("REDIS_HOST", "localhost"),
+#     port=int(os.getenv("REDIS_PORT", "6379")),
+#     decode_responses=True,
+# )
 
 # ───────── 공통 상수 ───────── #
 API_KEY   = os.environ["GOOGLE_MAPS_WEATHER_API_KEY"]
 BASE_URL  = "https://weather.googleapis.com/v1"
 LANG      = "ko"          # 한국어 응답
 
-tf = TimezoneFinder()
+# tf = TimezoneFinder()
 
 
 # ───────── 내부 유틸리티 ───────── #

@@ -2,7 +2,7 @@ from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import HTMLResponse
 from pydantic import BaseModel
-import sys, subprocess
+import sys
 
 from .logger import logger
 from .weather import get_compare, get_extremes
@@ -26,16 +26,6 @@ app.add_middleware(
 class Token(BaseModel):
     uid:   str
     token: str   # FCM / APNs
-
-async def _startup():
-    # start_scheduler()          # 백그라운드 스레드로 5분 루프 시작
-    subprocess.Popen(
-        ["celery", "-A", "app.tasks", "worker", "--loglevel=info"], # 실제 동작 시 "--pool=solo" 제거
-        stdout=sys.stdout,
-        stderr=sys.stderr,
-    )
-
-app.add_event_handler("startup", _startup)
 
 # ─────────────── 기온 비교 ─────────────── #
 
@@ -73,12 +63,12 @@ async def unregister(uid: str):
 
 @app.get("/test")
 async def test():
-    test_task.delay()  # Celery 작업으로 테스트 실행
+    test_task()  # Celery 작업으로 테스트 실행
     return {"status": "ok", "message": "Test endpoint is working"}
 
 @app.get("/notify_daily")
 async def notify_daily():
-    send_push_notification.delay()  # Celery 작업으로 푸시 알림 전송
+    send_push_notification()  # Celery 작업으로 푸시 알림 전송
     return {"status": "ok", "message": "Daily notification task started"}
 
 @app.get("/privacy-policy", response_class=HTMLResponse)

@@ -1,7 +1,7 @@
-from celery import Celery
 from datetime import datetime, timezone
 import pytz
 import os
+import json
 
 from pymongo import MongoClient
 from .weather import get_compare
@@ -11,17 +11,27 @@ from .logger import logger
 from firebase_admin import credentials, initialize_app, messaging
 import firebase_admin, os, logging
 from dotenv import load_dotenv
+from google.cloud import secretmanager
+
 load_dotenv()
 
-cred_path = os.getenv("FIREBASE_CRED")
-if not firebase_admin._apps and cred_path:
-    initialize_app(credentials.Certificate(cred_path))
-else:
-    logging.warning("Firebase not initialised – push disabled in task")
-    logging.warning(f"cred_path: {cred_path}, admin apps: {firebase_admin._apps}")
-    logging.warning(f"conditions: {not firebase_admin._apps and cred_path}")
-    logging.warning(os.listdir())
+def get_firebase_credentials():
+    try:
+        client = secretmanager.SecretManagerServiceClient()
+        secret_name = "projects/yesterday-460510/secrets/firebase-credentials/versions/latest"
+        response = client.access_secret_version(request={"name": secret_name})
+        return json.loads(response.payload.data.decode("UTF-8"))
+    except Exception as e:
+        logger.error(f"Failed to access secret: {e}")
+        return None
 
+if not firebase_admin._apps:
+    cred_json = get_firebase_credentials()
+    if cred_json:
+        cred = credentials.Certificate(cred_json)
+        initialize_app(cred)
+    else:
+        logging.warning("Firebase not initialised – push disabled in task")
 
 def send_push(messages: list[dict]) -> int:
     multicast = [
@@ -43,40 +53,20 @@ def send_push(messages: list[dict]) -> int:
 DEV = os.getenv("DEV", "false").lower() == "true"
 
 # MongoDB 연결
-mongo_client = MongoClient(os.getenv("MONGO_URL"))  # 예: mongodb+srv://user:pass@cluster.mongodb.net/dbname
-db = mongo_client.yesterday
-if DEV:
-    db = mongo_client.yesterday_dev  # 개발 환경에서는 별도의 컬렉션 사용
-notifications = db.notifications_sent
+# mongo_client = MongoClient(os.getenv("MONGO_URL"))  # 예: mongodb+srv://user:pass@cluster.mongodb.net/dbname
+# db = mongo_client.yesterday
+# if DEV:
+#     db = mongo_client.yesterday_dev  # 개발 환경에서는 별도의 컬렉션 사용
+# notifications = db.notifications_sent
 
-# TTL 인덱스 초기화 (최초 1회만 실행되면 됨)
-# createdAt으로부터 86400초(24시간) 후 문서 자동 삭제
-notifications.create_index("createdAt", expireAfterSeconds=86400)
+# # TTL 인덱스 초기화 (최초 1회만 실행되면 됨)
+# # createdAt으로부터 86400초(24시간) 후 문서 자동 삭제
+# notifications.create_index("createdAt", expireAfterSeconds=86400)
 
-# Celery 설정
-if DEV:
-    app = Celery('tasks', broker=os.getenv("MONGO_URL") + "/broker_dev")
-    logger.info("Using development broker for Celery")
-else:
-    app = Celery('tasks', broker=os.getenv("MONGO_URL") + "/broker")
-app.conf.update(
-    task_serializer='json',
-    result_serializer='json',
-    accept_content=['json'],
-    timezone='UTC',
-    enable_utc=True,
-)
-
-@app.on_after_configure.connect()
-def setup_periodic_tasks(sender, **kwargs):
-    sender.add_periodic_task(300.0, send_push_notification.s(), name='send push every 5 minutes')
-
-@app.task(name="test_task")
 def test_task():
     logger.info("Test task executed successfully!")
     return {"status": "success", "message": "Test task completed."}
 
-@app.task(name='send_push_notification')
 def send_push_notification():
     try:
             

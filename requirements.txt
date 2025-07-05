@@ -9,7 +9,7 @@ python-dotenv==1.0.1
 meteostat==1.6.8
 gunicorn
 apscheduler
-celery
 pymongo
 gunicorn
 httpx
+google-cloud-secret-manager

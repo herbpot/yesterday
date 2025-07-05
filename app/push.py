@@ -1,12 +1,11 @@
 from firebase_admin import credentials, initialize_app, messaging
 import firebase_admin, os, logging
+import json
+from .logger import logger
+from google.cloud import secretmanager
 
-cred_path = os.getenv("FIREBASE_CRED")
-if not firebase_admin._apps and cred_path:
-    initialize_app(credentials.Certificate(cred_path))
-else:
-    logging.warning("Firebase not initialised – push disabled")
-    logging.warning(f"cred_path: {cred_path}")
+if not firebase_admin._apps:
+    initialize_app()
 
 
 def send_push(messages: list[dict]) -> int:
