@@ -21,7 +21,7 @@ notifications_sent = db.notifications_sent
 def read_status():
     return {"status": "running"}
 
-@app.get("/privacy", response_class=HTMLResponse)
+@app.get("/privacy-policy", response_class=HTMLResponse)
 async def read_privacy():
     with open("app/PrivacyPolicy.html", "r", encoding="utf-8") as f:
         return f.read()
