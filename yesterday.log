@@ -70,3 +70,26 @@ compare: 37.644781, 126.664728
 compare: 37.644983, 126.664952
 compare: 37.644945, 126.664898
 compare: 37.644787, 126.66474
+[2025-07-07 03:05:46,315: ERROR/MainProcess] Task handler raised error: ValueError('not enough values to unpack (expected 3, got 0)')
+billiard.einfo.RemoteTraceback:
+"""
+Traceback (most recent call last):
+  File "D:\Users\user\anaconda3\Lib\site-packages\billiard\pool.py", line 362, in workloop
+    result = (True, prepare_result(fun(*args, **kwargs)))
+                                   ^^^^^^^^^^^^^^^^^^^^
+  File "D:\Users\user\anaconda3\Lib\site-packages\celery\app\trace.py", line 640, in fast_trace_task
+    tasks, accept, hostname = _loc
+    ^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: not enough values to unpack (expected 3, got 0)
+"""
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\Users\user\anaconda3\Lib\site-packages\billiard\pool.py", line 362, in workloop
+    result = (True, prepare_result(fun(*args, **kwargs)))
+                                   ^^^^^^^^^^^^^^^^^^^^
+  File "D:\Users\user\anaconda3\Lib\site-packages\celery\app\trace.py", line 640, in fast_trace_task
+    tasks, accept, hostname = _loc
+    ^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: not enough values to unpack (expected 3, got 0)

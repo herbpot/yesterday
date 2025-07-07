@@ -6,8 +6,12 @@ from pymongo.collection import Collection
 from datetime import datetime
 import os
 import pytz
+from dotenv import load_dotenv
 
 from .logger import logger
+
+load_dotenv(dotenv_path='/app/.env')
+
 
 DEV = os.getenv("DEV", "false").lower() == "true"
 

@@ -1,37 +1,33 @@
 from datetime import datetime, timezone
-import pytz
 import os
-import json
 
-from pymongo import MongoClient
-from .weather import get_compare
-from .storage import list_subscribers
+import asyncio
+from .meteo_weather import get_weather
+from .storage import list_subscribers, mongo_client
 from .logger import logger
 
-from firebase_admin import credentials, initialize_app, messaging
-import firebase_admin, os, logging
+from firebase_admin import initialize_app, messaging
+import firebase_admin, os
 from dotenv import load_dotenv
-from google.cloud import secretmanager
+from celery import Celery
 
-load_dotenv()
-
-def get_firebase_credentials():
-    try:
-        client = secretmanager.SecretManagerServiceClient()
-        secret_name = "projects/yesterday-460510/secrets/firebase-credentials/versions/latest"
-        response = client.access_secret_version(request={"name": secret_name})
-        return json.loads(response.payload.data.decode("UTF-8"))
-    except Exception as e:
-        logger.error(f"Failed to access secret: {e}")
-        return None
+load_dotenv(dotenv_path='/app/.env')
 
 if not firebase_admin._apps:
-    cred_json = get_firebase_credentials()
-    if cred_json:
-        cred = credentials.Certificate(cred_json)
-        initialize_app(cred)
-    else:
-        logging.warning("Firebase not initialised – push disabled in task")
+    initialize_app()
+
+mongo_url = os.getenv("MONGO_URL")
+celery = Celery("app.tasks", broker=mongo_url, backend=mongo_url)
+
+logger.info(f"Celery app initialized with broker and backend set to MongoDB. {mongo_url}")
+
+celery.conf.beat_schedule = {
+    'send-push-every-minute': {
+        'task': 'app.tasks.send_push_notification',
+        'schedule': 60.0,
+    },
+}
+celery.conf.timezone = 'UTC'
 
 def send_push(messages: list[dict]) -> int:
     multicast = [
@@ -52,21 +48,19 @@ def send_push(messages: list[dict]) -> int:
 
 DEV = os.getenv("DEV", "false").lower() == "true"
 
-# MongoDB 연결
-# mongo_client = MongoClient(os.getenv("MONGO_URL"))  # 예: mongodb+srv://user:pass@cluster.mongodb.net/dbname
-# db = mongo_client.yesterday
-# if DEV:
-#     db = mongo_client.yesterday_dev  # 개발 환경에서는 별도의 컬렉션 사용
-# notifications = db.notifications_sent
+db = mongo_client.yesterday
+if DEV:
+    db = mongo_client.yesterday_dev
+notifications = db.notifications_sent
 
-# # TTL 인덱스 초기화 (최초 1회만 실행되면 됨)
-# # createdAt으로부터 86400초(24시간) 후 문서 자동 삭제
-# notifications.create_index("createdAt", expireAfterSeconds=86400)
+notifications.create_index("createdAt", expireAfterSeconds=86400)
 
+@celery.task
 def test_task():
     logger.info("Test task executed successfully!")
     return {"status": "success", "message": "Test task completed."}
 
+@celery.task
 def send_push_notification():
     try:
             
@@ -81,9 +75,18 @@ def send_push_notification():
                 continue
 
             try:
-                diff = get_compare(sub.lat, sub.lon)
+                weather_data = asyncio.run(get_weather(sub.lat, sub.lon))
+                today_temp = weather_data.get("todayTemp")
+                yesterday_temp = weather_data.get("yesterdayTemp")
+
+                if today_temp is None or yesterday_temp is None:
+                    raise ValueError("오늘 또는 어제 기온 데이터를 가져올 수 없습니다.")
+
+                diff_delta = today_temp - yesterday_temp
+                diff_now = today_temp
+                diff = {"delta": diff_delta, "now": diff_now}
             except Exception as e:
-                logger.error(f"[{sub.uid}] get_compare error: {e}")
+                logger.error(f"[{sub.uid}] get_weather error: {e}")
                 continue
 
             w = "덥네요" if diff['delta'] > 0 else "춥네요"
