@@ -183,7 +183,7 @@ export default function ChartScreen({ navigation }: ChartScreenProps) {
               <View style={chartStyles.detailArea}>
                   {selectedHourData ? (
                       <>
-                          <Text style={chartStyles.detailTitle}>{selectedHourData.hour} 상세 정보</Text>
+                          <Text style={chartStyles.detailTitle}>{selectedHourData.hour}</Text>
                           {/* 기온 차이 */}
                           <View style={chartStyles.detailRow}>
                               <Text style={chartStyles.detailLabel}>기온:</Text>
@@ -275,9 +275,9 @@ const chartStyles = StyleSheet.create({
   },
   detailTitle: {
     ...FONTS.h3,
-    color: COLORS.primary,
+    // color: COLORS.primary,
     marginBottom: 10,
-    textAlign: 'center',
+    textAlign: 'left',
   },
   detailRow: {
     flexDirection: 'row',

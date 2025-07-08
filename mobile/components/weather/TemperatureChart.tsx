@@ -9,7 +9,7 @@ import { FONTS } from '../../constants/fonts';
 const CHART_COLORS = {
   background: COLORS.cardBackground,
   text: COLORS.text,
-  todayLine: COLORS.primary,
+  todayLine: COLORS.positive,
   yesterdayLine: COLORS.negative,
   dotStroke: COLORS.cardBackground,
 };
@@ -64,7 +64,17 @@ const TemperatureChart = memo(
     );
 
     return (
-      // <View style={styles.chartContainer}>
+      <View>
+        <View style={styles.legendContainer}>
+          <View style={styles.legendItem}>
+            <View style={[styles.legendColorBox, { backgroundColor: CHART_COLORS.todayLine }]} />
+            <Text style={styles.legendText}>오늘</Text>
+          </View>
+          <View style={styles.legendItem}>
+            <View style={[styles.legendColorBox, { backgroundColor: CHART_COLORS.yesterdayLine }]} />
+            <Text style={styles.legendText}>어제</Text>
+          </View>
+        </View>
         <LineChart
           areaChart
           data={chartDataToday}
@@ -144,6 +154,28 @@ const styles = StyleSheet.create({
   noDataText: {
     fontSize: 16,
     color: CHART_COLORS.text,
+  },
+  legendContainer: {
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    marginBottom: 10,
+    paddingHorizontal: 10,
+  },
+  legendItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginLeft: 15,
+  },
+  legendColorBox: {
+    width: 12,
+    height: 12,
+    borderRadius: 6,
+    marginRight: 5,
+  },
+  legendText: {
+    fontSize: 14,
+    color: CHART_COLORS.text,
+    fontFamily: FONTS.regular,
   },
 });
 

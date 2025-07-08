@@ -10,6 +10,7 @@ import { getCoords, fetchWeather, WEATHER_IMAGES } from "../../services/weather_
 
 import InfoCard from "./InfoCard";
 import DiffBadge from "./DiffBadge";
+import OutfitRecommendationCard from "../weather/OutfitRecommendationCard";
 
 // Helper function for outfit recommendation
 const getOutfitRecommendation = (feelsLike: number | null, tempDiff: number | undefined): string => {
@@ -26,7 +27,7 @@ const getOutfitRecommendation = (feelsLike: number | null, tempDiff: number | un
         } else if (tempDiff > 0) {
             diffMessage = "어제보다 조금 따뜻해요. ";
         } else if (tempDiff < 0) {
-            diffMessage = "어제보다 조금 쌀쌀해요. ";
+            diffMessage = "어제보다 조금 추워요. ";
         }
     }
 
@@ -192,7 +193,7 @@ const DiffView = () => {
 
                     {/* ... 메인 콘텐츠 (기온, 이미지, 카드, 버튼 등) ... */}
                     {/* 오늘·어제 기온 */}
-                    <View> {/* 그룹화를 위한 View 추가 */}
+                    <View>
                         <Text style={[FONTS.body, { color: COLORS.text, textAlign: 'center' }]}> {/* 중앙 정렬 추가 */}
                         현재 : {today?.toFixed(1)}°C
                         </Text>
@@ -202,10 +203,7 @@ const DiffView = () => {
                         {tempDiff !== undefined && <DiffBadge diff={tempDiff} unit="°C" />}
                     </View>
 
-                    {/* 옷차림 추천 텍스트 */}
-                    <Text style={[FONTS.h3, { color: COLORS.text, textAlign: 'center', marginTop: 20 }]}>
-                        {outfitRecommendation}
-                    </Text>
+                    
 
                     <View style={styles.imgWrapper}>
                     {memoizedImageSource && (
@@ -216,6 +214,9 @@ const DiffView = () => {
                         />
                     )}
                     </View>
+
+                    {/* 옷차림 추천 텍스트 */}
+                    <OutfitRecommendationCard content = {outfitRecommendation} />
 
                     <View style={styles.infoGrid}>
                     {humidity !== null && humidityY !== null && (

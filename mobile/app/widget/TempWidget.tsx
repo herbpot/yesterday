@@ -76,8 +76,8 @@ export function TempWidget({ data, loading, error }: TempWidgetProps) {
         alignItems: 'center',
         width: 'match_parent',
         height: 'match_parent',
-        paddingHorizontal: 16,
-        paddingVertical: 12,
+        paddingHorizontal: 12,
+        paddingVertical: 8,
         backgroundColor: COLORS.cardBackground, // 반투명 배경 적용
         borderRadius: 24,
       }}
@@ -85,21 +85,22 @@ export function TempWidget({ data, loading, error }: TempWidgetProps) {
       {/* ◀︎ 좌측 : 날씨 아이콘 */}
       <FlexWidget
         style={{
-          width: 80,
+          width: 60,
           alignItems: 'center',
           justifyContent: 'center',
-          marginRight: 8,
+          marginRight: 4,
+          height: 'match_parent', // 아이콘 높이를 맞추기 위해
         }}
       >
         <ImageWidget
           image={weatherIconResource}
-          imageWidth={64}
-          imageHeight={64}
-          style={{ width: 64, height: 64 }}
+          imageWidth={45}
+          imageHeight={45}
+          style={{ width: 45, height: 45 }}
         />
         <TextWidget
           text={data.description}
-          style={{ fontSize: 13, color: COLORS.subText, marginTop: 4 }} // 텍스트 색상 확인
+          style={{ fontSize: 11, color: COLORS.subText, marginTop: 2 }} // 텍스트 색상 확인
           maxLines={1}
         />
       </FlexWidget>
@@ -115,17 +116,17 @@ export function TempWidget({ data, loading, error }: TempWidgetProps) {
         <TextWidget
           text={`${data.todayTemp}°C`}
           style={{
-            fontSize: 36,
+            fontSize: 26,
             color: COLORS.text, // 텍스트 색상 확인
             fontWeight: 'bold',
           }}
         />
         <TextWidget
-          text={`${diffArrow} ${diffPrefix}${diff.toFixed(1)}° 어제보다`}
+          text={`${diffArrow} ${diffPrefix}${diff.toFixed(1)}°C`}
           style={{
-            fontSize: 14,
+            fontSize: 12,
             color: diffColor, // 텍스트 색상 확인
-            marginTop: 2,
+            marginTop: 1,
           }}
           maxLines={1}
         />

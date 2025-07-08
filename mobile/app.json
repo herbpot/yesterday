@@ -54,9 +54,9 @@
             {
               "name": "TempWidget",     
               "label": "Temp Widget",   
-              "minWidth": "220dp",
+              "minWidth": "110dp",
               "minHeight": "55dp",
-              "targetCellWidth": 3,
+              "targetCellWidth": 2,
               "targetCellHeight": 1,
               "description": "온도 위젯",
               "previewImage": "./assets/widget-preview/ttt.png",

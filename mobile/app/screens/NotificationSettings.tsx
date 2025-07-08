@@ -24,19 +24,6 @@ type Settings = {
   minute: number;
 };
 
-/* ───── 푸시 스케줄러 ───── */
-async function scheduleDailyPush({ hour, minute }: Settings) {
-  await Notifications.cancelAllScheduledNotificationsAsync();
-  await Notifications.scheduleNotificationAsync({
-    content: {
-      title: "오늘의 날씨 요약",
-      body: "지금 기온과 어제 대비 변화를 확인하세요!",
-      sound: "default",
-    },
-    trigger: { hour, minute, repeats: true },
-  });
-}
-
 export default function NotificationSettings() {
   const nav = useNavigation();
   const [settings, setSettings] = useState<Settings>({
@@ -57,8 +44,6 @@ export default function NotificationSettings() {
   /* ─── 상태 변경 시 저장 & (비)예약 ─── */
   useEffect(() => {
     AsyncStorage.setItem(STORE_KEY, JSON.stringify(settings));
-    if (settings.enabled) scheduleDailyPush(settings);
-    else Notifications.cancelAllScheduledNotificationsAsync();
   }, [settings]);
 
   /* 권한 요청 */
@@ -70,12 +55,16 @@ export default function NotificationSettings() {
   const toggleSwitch = () => {
     if (!settings.enabled) requestPermission();
     setSettings({ ...settings, enabled: !settings.enabled });
+    fetchNotification({ hour: 8, minute: 0 }); // 푸시 알림 등록
   };
 
   const onTimeChange = (_: any, date?: Date) => {
     setShowPicker(Platform.OS === "ios"); // iOS는 계속 open
-    if (date)
+    if (date){
       setSettings({ ...settings, hour: date.getHours(), minute: date.getMinutes() });
+      fetchNotification({ hour: date.getHours(), minute: date.getMinutes() }); // 푸시 알림 등록
+    }
+
   };
 
   return (

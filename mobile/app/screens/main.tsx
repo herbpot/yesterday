@@ -1,5 +1,7 @@
 // src/screens/AppMainScreen.tsx
-import React, { useCallback, useMemo, useState } from "react";
+import { useCallback, useMemo, useState, useEffect } from "react";
+import { PermissionsAndroid, Linking, Alert, Platform } from "react-native";
+import * as Notifications from 'expo-notifications';
 import {
   StatusBar,
   SafeAreaView,
@@ -19,9 +21,12 @@ import Animated, { runOnJS } from 'react-native-reanimated';
 import { COLORS } from '../../constants/colors';
 
 import DiffView from '../../components/ui/DiffView';
+import OutfitRecommendationCard from '../../components/weather/OutfitRecommendationCard';
 
 import styles from '../../styles/appMainStyles'; // 기존 스타일 시트
 import { FONTS } from "~/constants/fonts";
+import { WidgetPreview } from "react-native-android-widget";
+import { TempWidget } from "../widget/TempWidget";
 
 const BANNER_ID = "ca-app-pub-4388792395765448/9451868044"; // 👉 실제 배포 시 실 광고 단위 ID로 교체 (상수로 이동 고려)
 
@@ -49,6 +54,79 @@ const mainContainerStyles = StyleSheet.create({
 
 
 export default function AppMain({ navigation }: { navigation: any }) { // AppMainScreenProps
+  useEffect(() => {
+    const checkAndRequestPermissions = async () => {
+      // 위치 권한 확인 및 요청
+      if (Platform.OS === 'android') {
+        const foregroundGranted = await PermissionsAndroid.request(
+          PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+          {
+            title: "위치 권한",
+            message: "날씨 정보를 위해 위치 권한이 필요합니다.",
+            buttonNeutral: "나중에",
+            buttonNegative: "취소",
+            buttonPositive: "확인"
+          }
+        );
+
+        if (foregroundGranted === PermissionsAndroid.RESULTS.GRANTED) {
+          // 포그라운드 권한이 허용된 경우에만 백그라운드 권한 요청
+          const backgroundGranted = await PermissionsAndroid.request(
+            PermissionsAndroid.PERMISSIONS.ACCESS_BACKGROUND_LOCATION,
+            {
+              title: "백그라운드 위치 권한",
+              message: "위젯 및 백그라운드 날씨 업데이트를 위해 백그라운드 위치 권한이 필요합니다.",
+              buttonNeutral: "나중에",
+              buttonNegative: "취소",
+              buttonPositive: "확인"
+            }
+          );
+
+          if (backgroundGranted !== PermissionsAndroid.RESULTS.GRANTED) {
+            Alert.alert(
+              "권한 필요",
+              "백그라운드 위치 권한이 허용되지 않아 위젯 및 백그라운드 날씨 업데이트가 제한될 수 있습니다. 설정에서 권한을 '항상 허용'으로 변경해주세요.",
+              [
+                { text: "취소", style: "cancel" },
+                { text: "설정으로 이동", onPress: () => Linking.openSettings() }
+              ]
+            );
+          }
+        } else {
+          Alert.alert(
+            "권한 필요",
+            "위치 권한이 허용되지 않아 앱 사용에 제한이 있을 수 있습니다. 설정에서 권한을 허용해주세요.",
+            [
+              { text: "취소", style: "cancel" },
+              { text: "설정으로 이동", onPress: () => Linking.openSettings() }
+            ]
+          );
+        }
+      }
+          
+
+      // 알림 권한 확인 및 요청 (Expo Notifications 사용)
+      const { status: existingStatus } = await Notifications.getPermissionsAsync();
+      let finalStatus = existingStatus;
+      if (existingStatus !== 'granted') {
+        const { status } = await Notifications.requestPermissionsAsync();
+        finalStatus = status;
+      }
+      if (finalStatus !== 'granted') {
+        Alert.alert(
+          "권한 필요",
+          "알림 권한이 허용되지 않아 날씨 알림을 받을 수 없습니다. 설정에서 권한을 허용해주세요.",
+          [
+            { text: "취소", style: "cancel" },
+            { text: "설정으로 이동", onPress: () => Linking.openSettings() }
+          ]
+        );
+      }
+    };
+
+    checkAndRequestPermissions();
+  }, []);
+
   const [diffViewKey, setDiffViewKey] = useState(0);
 
   // ⭐ key 값을 증가시켜 DiffView를 강제로 새로고침(언마운트/마운트)하는 함수
@@ -118,7 +196,7 @@ export default function AppMain({ navigation }: { navigation: any }) { // AppMai
             <GestureDetector gesture={swipeUpGesture}>
               <Animated.View style={{ flex: 1 }}>
                 <DiffView key={diffViewKey}/>
-
+                
                 <View style={mainContainerStyles.swipeIndicatorContainer}>
                     <Svg width={30} height={30} viewBox="0 0 24 24" fill={COLORS.text}>
                         <Path d="M7 14l5-5 5 5z"/>
