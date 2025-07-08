@@ -78,7 +78,7 @@ def list_subscribers() -> list[Subscriber]:
 
             # 5분 이내에 포함되는지 확인
             delta = (alarm_time - local_now).total_seconds()
-            if not (0 <= delta <= 300):  # 0초 ~ 300초 = 5분
+            if not (0 <= delta <= 60):  # 0초 ~ 60초 = 1분
                 continue
 
             sub = Subscriber(
