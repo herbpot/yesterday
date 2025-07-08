@@ -53,7 +53,7 @@ if DEV:
     db = mongo_client.yesterday_dev
 notifications = db.notifications_sent
 
-notifications.create_index("createdAt", expireAfterSeconds=86400)
+notifications.create_index("createdAt", expireAfterSeconds=76400)
 
 @celery.task
 def test_task():
